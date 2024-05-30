@@ -42,7 +42,7 @@ describe('Can run AuthorisationAndPayment calls', () => {
             const cres = await fetch(requestChallengeAcsUrl, {
                     method: 'POST', // Specifying the request method
                     headers: {
-                        'Content-Type': 'application/json', // Specifying the content type in the header
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         threeDSSessionData: requestChallengedThreeDSSessionData,
