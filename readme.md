@@ -65,7 +65,7 @@ To build and compile the typescript sources to javascript use:
 
 
 ```shell
-npm install citypay-api-ts --save
+npm install citypay-api-ts-client --save
 ```
 
 Finally, you need to build the module:
