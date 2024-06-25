@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+    "rootDir": "src",
     "outDir": "dist",
     "lib": [
       "es6",
@@ -22,7 +23,6 @@
     "node_modules"
   ],
   "include": [
-    "test/**/*.spec.ts",
     "src/**/*.ts"
   ]
 }
