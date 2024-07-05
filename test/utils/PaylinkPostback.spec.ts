@@ -6,7 +6,7 @@ import {PaylinkPostback} from "../../src";
  * These unit tests are only for functionality added by the wrapper class.
  */
 
-const licenceKey: string = "PSMGE5KV2OJ78E54"
+const licenceKey: string = "AAAAAAAA11111111"
 
 const testData = {
     AVSResponse: ' ',
@@ -42,14 +42,14 @@ const testData = {
     isAuthorised: true,
     lastname: '',
     maskedPan: 'Mast***0009',
-    merchantid: 105,
+    merchantid: 1,
     mode: 'test',
     name_on_card: 'N E Body',
     postcode: '',
     receipt_url: 'https://payments.citypay.com/V1c/MjU5NDgyMzA0NTIzMDg0NjM4MDc/receipt=K1ws8TE6LpQn9D2YuPbVEfcurWp9UGmcpVuryPaxmQun',
     result: 1,
     sha1: 'R31oAzwWijfTqXKpeEAkNeolt5c=',
-    sha256: 'or1Irg+7p+18B28+2ElWE8hb57jiT2CPuHJ4FQ32qp8=',
+    sha256: 'JUv6MYNPTtloAau98b5wvTayQN0IKCeh0jTphS8qMIY=',
     status: 'O',
     title: '',
     transno: 6168
@@ -76,7 +76,7 @@ describe ("PaylinkPostback ", () => {
 
     it("should reject incorrect SHA256 signature", async () => {
         var incorrectData = testData;
-        incorrectData.sha256 = "AAAAAA+7p+18B28+2ElWE8hb57jiT2CPuHJ4FQ32qp8="
+        incorrectData.sha256 = "AAAAAANPTtloAau98b5wvTayQN0IKCeh0jTphS8qMIY="
 
         expect(() => PaylinkPostback.fromJson(incorrectData, licenceKey))
             .toThrow("Failed to authenticate data. SHA256 signature does not match.")
