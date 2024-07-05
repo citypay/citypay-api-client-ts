@@ -61,6 +61,7 @@ export * from './PaylinkEmailNotificationPath';
 export * from './PaylinkErrorCode';
 export * from './PaylinkFieldGuardModel';
 export * from './PaylinkPartPayments';
+export * from './PaylinkPostbackModel'
 export * from './PaylinkResendNotificationRequest';
 export * from './PaylinkSMSNotificationPath';
 export * from './PaylinkStateEvent';
