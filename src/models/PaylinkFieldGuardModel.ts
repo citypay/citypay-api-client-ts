@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -70,10 +70,8 @@ export interface PaylinkFieldGuardModel {
 /**
  * Check if a given object implements the PaylinkFieldGuardModel interface.
  */
-export function instanceOfPaylinkFieldGuardModel(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkFieldGuardModel(value: object): value is PaylinkFieldGuardModel {
+    return true;
 }
 
 export function PaylinkFieldGuardModelFromJSON(json: any): PaylinkFieldGuardModel {
@@ -81,37 +79,34 @@ export function PaylinkFieldGuardModelFromJSON(json: any): PaylinkFieldGuardMode
 }
 
 export function PaylinkFieldGuardModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkFieldGuardModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'fieldType': !exists(json, 'field_type') ? undefined : json['field_type'],
-        'label': !exists(json, 'label') ? undefined : json['label'],
-        'maxlen': !exists(json, 'maxlen') ? undefined : json['maxlen'],
-        'minlen': !exists(json, 'minlen') ? undefined : json['minlen'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'regex': !exists(json, 'regex') ? undefined : json['regex'],
-        'value': !exists(json, 'value') ? undefined : json['value'],
+        'fieldType': json['field_type'] == null ? undefined : json['field_type'],
+        'label': json['label'] == null ? undefined : json['label'],
+        'maxlen': json['maxlen'] == null ? undefined : json['maxlen'],
+        'minlen': json['minlen'] == null ? undefined : json['minlen'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'regex': json['regex'] == null ? undefined : json['regex'],
+        'value': json['value'] == null ? undefined : json['value'],
     };
 }
 
 export function PaylinkFieldGuardModelToJSON(value?: PaylinkFieldGuardModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'field_type': value.fieldType,
-        'label': value.label,
-        'maxlen': value.maxlen,
-        'minlen': value.minlen,
-        'name': value.name,
-        'regex': value.regex,
-        'value': value.value,
+        'field_type': value['fieldType'],
+        'label': value['label'],
+        'maxlen': value['maxlen'],
+        'minlen': value['minlen'],
+        'name': value['name'],
+        'regex': value['regex'],
+        'value': value['value'],
     };
 }
 

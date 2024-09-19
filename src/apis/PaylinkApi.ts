@@ -46,49 +46,49 @@ import {
     PaylinkTokenStatusChangeResponseToJSON,
 } from '../models/index';
 
-export interface PaylinkApiTokenAdjustmentRequest {
+export interface PaylinkApiTokenAdjustmentRequestRequest {
     token: string;
     paylink_adjustment_request: PaylinkAdjustmentRequest;
 }
 
-export interface PaylinkApiTokenCancelRequest {
+export interface PaylinkApiTokenCancelRequestRequest {
     token: string;
 }
 
-export interface PaylinkApiTokenChangesRequest {
+export interface PaylinkApiTokenChangesRequestRequest {
     paylink_token_status_change_request: PaylinkTokenStatusChangeRequest;
 }
 
-export interface PaylinkApiTokenCloseRequest {
+export interface PaylinkApiTokenCloseRequestRequest {
     token: string;
 }
 
-export interface PaylinkApiTokenCreateBillPaymentRequest {
+export interface PaylinkApiTokenCreateBillPaymentRequestRequest {
     paylink_bill_payment_token_request: PaylinkBillPaymentTokenRequest;
 }
 
-export interface PaylinkApiTokenCreateRequest {
+export interface PaylinkApiTokenCreateRequestRequest {
     paylink_token_request_model: PaylinkTokenRequestModel;
 }
 
-export interface PaylinkApiTokenPurgeAttachmentsRequest {
+export interface PaylinkApiTokenPurgeAttachmentsRequestRequest {
     token: string;
 }
 
-export interface PaylinkApiTokenReconciledRequest {
+export interface PaylinkApiTokenReconciledRequestRequest {
     token: string;
 }
 
-export interface PaylinkApiTokenReopenRequest {
+export interface PaylinkApiTokenReopenRequestRequest {
     token: string;
 }
 
-export interface PaylinkApiTokenResendNotificationRequest {
+export interface PaylinkApiTokenResendNotificationRequestRequest {
     token: string;
     paylink_resend_notification_request: PaylinkResendNotificationRequest;
 }
 
-export interface PaylinkApiTokenStatusRequest {
+export interface PaylinkApiTokenStatusRequestRequest {
     token: string;
 }
 
@@ -101,13 +101,19 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Adjusts a TokenRequest\'s amount value when for instance   1. a Token is created and the shopping cart is updated 2. an invoice is adjusted either due to part payment or due to increased incurred costs. 
      * Paylink Token Adjustment
      */
-    async tokenAdjustmentRequestRaw(requestParameters: PaylinkApiTokenAdjustmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenAdjustmentRequest.');
+    async tokenAdjustmentRequestRaw(requestParameters: PaylinkApiTokenAdjustmentRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenAdjustmentRequest().'
+            );
         }
 
-        if (requestParameters.paylink_adjustment_request === null || requestParameters.paylink_adjustment_request === undefined) {
-            throw new runtime.RequiredError('paylink_adjustment_request','Required parameter requestParameters.paylink_adjustment_request was null or undefined when calling tokenAdjustmentRequest.');
+        if (requestParameters['paylink_adjustment_request'] == null) {
+            throw new runtime.RequiredError(
+                'paylink_adjustment_request',
+                'Required parameter "paylink_adjustment_request" was null or undefined when calling tokenAdjustmentRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -117,15 +123,15 @@ export class PaylinkApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/adjustment`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/adjustment`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaylinkAdjustmentRequestToJSON(requestParameters.paylink_adjustment_request),
+            body: PaylinkAdjustmentRequestToJSON(requestParameters['paylink_adjustment_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
@@ -135,7 +141,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Adjusts a TokenRequest\'s amount value when for instance   1. a Token is created and the shopping cart is updated 2. an invoice is adjusted either due to part payment or due to increased incurred costs. 
      * Paylink Token Adjustment
      */
-    async tokenAdjustmentRequest(requestParameters: PaylinkApiTokenAdjustmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenAdjustmentRequest(requestParameters: PaylinkApiTokenAdjustmentRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenAdjustmentRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -144,9 +150,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
      * Cancel a Paylink Token
      */
-    async tokenCancelRequestRaw(requestParameters: PaylinkApiTokenCancelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenCancelRequest.');
+    async tokenCancelRequestRaw(requestParameters: PaylinkApiTokenCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenCancelRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -154,11 +163,11 @@ export class PaylinkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/cancel`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/cancel`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -171,7 +180,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
      * Cancel a Paylink Token
      */
-    async tokenCancelRequest(requestParameters: PaylinkApiTokenCancelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenCancelRequest(requestParameters: PaylinkApiTokenCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenCancelRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -180,9 +189,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Allows for the changes to a pre-existing token.
      * Paylink Token Audit
      */
-    async tokenChangesRequestRaw(requestParameters: PaylinkApiTokenChangesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenStatusChangeResponse>> {
-        if (requestParameters.paylink_token_status_change_request === null || requestParameters.paylink_token_status_change_request === undefined) {
-            throw new runtime.RequiredError('paylink_token_status_change_request','Required parameter requestParameters.paylink_token_status_change_request was null or undefined when calling tokenChangesRequest.');
+    async tokenChangesRequestRaw(requestParameters: PaylinkApiTokenChangesRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenStatusChangeResponse>> {
+        if (requestParameters['paylink_token_status_change_request'] == null) {
+            throw new runtime.RequiredError(
+                'paylink_token_status_change_request',
+                'Required parameter "paylink_token_status_change_request" was null or undefined when calling tokenChangesRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -192,7 +204,7 @@ export class PaylinkApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -200,7 +212,7 @@ export class PaylinkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaylinkTokenStatusChangeRequestToJSON(requestParameters.paylink_token_status_change_request),
+            body: PaylinkTokenStatusChangeRequestToJSON(requestParameters['paylink_token_status_change_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PaylinkTokenStatusChangeResponseFromJSON(jsonValue));
@@ -210,7 +222,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Allows for the changes to a pre-existing token.
      * Paylink Token Audit
      */
-    async tokenChangesRequest(requestParameters: PaylinkApiTokenChangesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenStatusChangeResponse> {
+    async tokenChangesRequest(requestParameters: PaylinkApiTokenChangesRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenStatusChangeResponse> {
         const response = await this.tokenChangesRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -219,9 +231,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Marks a Paylink Token as closed. This closes the Token for any future action and the Token will not appear in any status request calls. 
      * Close Paylink Token
      */
-    async tokenCloseRequestRaw(requestParameters: PaylinkApiTokenCloseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenCloseRequest.');
+    async tokenCloseRequestRaw(requestParameters: PaylinkApiTokenCloseRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenCloseRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -229,11 +244,11 @@ export class PaylinkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/close`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/close`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -246,7 +261,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Marks a Paylink Token as closed. This closes the Token for any future action and the Token will not appear in any status request calls. 
      * Close Paylink Token
      */
-    async tokenCloseRequest(requestParameters: PaylinkApiTokenCloseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenCloseRequest(requestParameters: PaylinkApiTokenCloseRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenCloseRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -255,9 +270,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  <img src=\"images/merchant-BPS-workflow.png\" alt=\"Paylink BPSv2 Overview\" width=\"50%\"/>    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of `https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en` becomes `citypay.com/Za48na3x`. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a `notification-path` property to the request.  ```json  {   \"sms_notification_path\": {       \"to\": \"+441534884000\"   },   \"email_notification_path\": {       \"to\": [\"help-desk@citypay.com\"],       \"cc\": [\"third-party@citypay.com\"],       \"reply\": [\"help@my-company.com\"]   } } ```  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - `BillPaymentSmsNotificationQueued` - identifies when an SMS notification has been queued for delivery - `BillPaymentSmsNotificationSent` - identifies when an SMS notification has been sent to the upstream network - `BillPaymentSmsNotificationDelivered` - identifies when an SMS notification has been delivered as notified by the upstream network - `BillPaymentSmsNotificationUndelivered` - identifies when an SMS notification has undelivered notification is provided by the upstream network - `BillPaymentSmsNotificationFailure` - identifies when an SMS notification has failed - `BillPaymentEmailNotificationQueued` -  identifies when an email notification has been queued for delivery - `BillPaymentEmailNotificationSent` -  identifies when an email notification has been accepted by our SMS forwarder - `BillPaymentEmailNotificationFailure` - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled `Health Surgery Ltd` the SMS may be sent to originate from `Health Surgery`.   SMS is also configured for a \"polite mode\". This mode ensures that SMSs aren\'t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |----------|----------|----------|-------------------------------------------------------------------------------------------------| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |----------|----------|----------|-------------------------------------------------------------------------------------------------| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  <img src=\"images/paylink-field-guards.png\" alt=\"Paylink Field Guards\" width=\"50%\"/>  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  ```json     [{       \"filename\": \"invoice1.pdf\",       \"mime-type\": \"application/pdf\"     },{       \"filename\": \"invoice2.pdf\",       \"data\": \"b4sE64Enc0dEd...=\",       \"mime-type\": \"application/pdf\"     }] ```  | Field     | Type   | Usage    | Description                                                                                                                                          | |-----------|--------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only `application/pdf` is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |--------|--------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------| | result | string | Required | `OK` should the file have uploaded or `UPLOAD` if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
      * Create Bill Payment Paylink Token
      */
-    async tokenCreateBillPaymentRequestRaw(requestParameters: PaylinkApiTokenCreateBillPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenCreated>> {
-        if (requestParameters.paylink_bill_payment_token_request === null || requestParameters.paylink_bill_payment_token_request === undefined) {
-            throw new runtime.RequiredError('paylink_bill_payment_token_request','Required parameter requestParameters.paylink_bill_payment_token_request was null or undefined when calling tokenCreateBillPaymentRequest.');
+    async tokenCreateBillPaymentRequestRaw(requestParameters: PaylinkApiTokenCreateBillPaymentRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenCreated>> {
+        if (requestParameters['paylink_bill_payment_token_request'] == null) {
+            throw new runtime.RequiredError(
+                'paylink_bill_payment_token_request',
+                'Required parameter "paylink_bill_payment_token_request" was null or undefined when calling tokenCreateBillPaymentRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -267,7 +285,7 @@ export class PaylinkApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -275,7 +293,7 @@ export class PaylinkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaylinkBillPaymentTokenRequestToJSON(requestParameters.paylink_bill_payment_token_request),
+            body: PaylinkBillPaymentTokenRequestToJSON(requestParameters['paylink_bill_payment_token_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PaylinkTokenCreatedFromJSON(jsonValue));
@@ -285,7 +303,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  <img src=\"images/merchant-BPS-workflow.png\" alt=\"Paylink BPSv2 Overview\" width=\"50%\"/>    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of `https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en` becomes `citypay.com/Za48na3x`. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a `notification-path` property to the request.  ```json  {   \"sms_notification_path\": {       \"to\": \"+441534884000\"   },   \"email_notification_path\": {       \"to\": [\"help-desk@citypay.com\"],       \"cc\": [\"third-party@citypay.com\"],       \"reply\": [\"help@my-company.com\"]   } } ```  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - `BillPaymentSmsNotificationQueued` - identifies when an SMS notification has been queued for delivery - `BillPaymentSmsNotificationSent` - identifies when an SMS notification has been sent to the upstream network - `BillPaymentSmsNotificationDelivered` - identifies when an SMS notification has been delivered as notified by the upstream network - `BillPaymentSmsNotificationUndelivered` - identifies when an SMS notification has undelivered notification is provided by the upstream network - `BillPaymentSmsNotificationFailure` - identifies when an SMS notification has failed - `BillPaymentEmailNotificationQueued` -  identifies when an email notification has been queued for delivery - `BillPaymentEmailNotificationSent` -  identifies when an email notification has been accepted by our SMS forwarder - `BillPaymentEmailNotificationFailure` - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled `Health Surgery Ltd` the SMS may be sent to originate from `Health Surgery`.   SMS is also configured for a \"polite mode\". This mode ensures that SMSs aren\'t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |----------|----------|----------|-------------------------------------------------------------------------------------------------| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |----------|----------|----------|-------------------------------------------------------------------------------------------------| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  <img src=\"images/paylink-field-guards.png\" alt=\"Paylink Field Guards\" width=\"50%\"/>  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  ```json     [{       \"filename\": \"invoice1.pdf\",       \"mime-type\": \"application/pdf\"     },{       \"filename\": \"invoice2.pdf\",       \"data\": \"b4sE64Enc0dEd...=\",       \"mime-type\": \"application/pdf\"     }] ```  | Field     | Type   | Usage    | Description                                                                                                                                          | |-----------|--------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only `application/pdf` is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |--------|--------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------| | result | string | Required | `OK` should the file have uploaded or `UPLOAD` if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
      * Create Bill Payment Paylink Token
      */
-    async tokenCreateBillPaymentRequest(requestParameters: PaylinkApiTokenCreateBillPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenCreated> {
+    async tokenCreateBillPaymentRequest(requestParameters: PaylinkApiTokenCreateBillPaymentRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenCreated> {
         const response = await this.tokenCreateBillPaymentRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -294,9 +312,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Creates a Paylink token from the CityPay API.
      * Create Paylink Token
      */
-    async tokenCreateRequestRaw(requestParameters: PaylinkApiTokenCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenCreated>> {
-        if (requestParameters.paylink_token_request_model === null || requestParameters.paylink_token_request_model === undefined) {
-            throw new runtime.RequiredError('paylink_token_request_model','Required parameter requestParameters.paylink_token_request_model was null or undefined when calling tokenCreateRequest.');
+    async tokenCreateRequestRaw(requestParameters: PaylinkApiTokenCreateRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenCreated>> {
+        if (requestParameters['paylink_token_request_model'] == null) {
+            throw new runtime.RequiredError(
+                'paylink_token_request_model',
+                'Required parameter "paylink_token_request_model" was null or undefined when calling tokenCreateRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -306,7 +327,7 @@ export class PaylinkApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -314,7 +335,7 @@ export class PaylinkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaylinkTokenRequestModelToJSON(requestParameters.paylink_token_request_model),
+            body: PaylinkTokenRequestModelToJSON(requestParameters['paylink_token_request_model']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PaylinkTokenCreatedFromJSON(jsonValue));
@@ -324,7 +345,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Creates a Paylink token from the CityPay API.
      * Create Paylink Token
      */
-    async tokenCreateRequest(requestParameters: PaylinkApiTokenCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenCreated> {
+    async tokenCreateRequest(requestParameters: PaylinkApiTokenCreateRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenCreated> {
         const response = await this.tokenCreateRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -333,9 +354,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Purges any attachments for a token for GDPR or DP reasons.
      * Purges any attachments for a Paylink Token
      */
-    async tokenPurgeAttachmentsRequestRaw(requestParameters: PaylinkApiTokenPurgeAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenPurgeAttachmentsRequest.');
+    async tokenPurgeAttachmentsRequestRaw(requestParameters: PaylinkApiTokenPurgeAttachmentsRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenPurgeAttachmentsRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -343,11 +367,11 @@ export class PaylinkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/purge-attachments`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/purge-attachments`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -360,7 +384,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Purges any attachments for a token for GDPR or DP reasons.
      * Purges any attachments for a Paylink Token
      */
-    async tokenPurgeAttachmentsRequest(requestParameters: PaylinkApiTokenPurgeAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenPurgeAttachmentsRequest(requestParameters: PaylinkApiTokenPurgeAttachmentsRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenPurgeAttachmentsRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -369,9 +393,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Marks a Paylink Token as reconciled when reconciliation is performed on the merchant\'s side.
      * Reconcile Paylink Token
      */
-    async tokenReconciledRequestRaw(requestParameters: PaylinkApiTokenReconciledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenReconciledRequest.');
+    async tokenReconciledRequestRaw(requestParameters: PaylinkApiTokenReconciledRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenReconciledRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -379,11 +406,11 @@ export class PaylinkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/reconciled`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/reconciled`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -396,7 +423,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Marks a Paylink Token as reconciled when reconciliation is performed on the merchant\'s side.
      * Reconcile Paylink Token
      */
-    async tokenReconciledRequest(requestParameters: PaylinkApiTokenReconciledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenReconciledRequest(requestParameters: PaylinkApiTokenReconciledRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenReconciledRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -405,9 +432,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Allows for a Paylink Token to be reopened if a Token has been previously closed and payment has not yet been made.
      * Reopen Paylink Token
      */
-    async tokenReopenRequestRaw(requestParameters: PaylinkApiTokenReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenReopenRequest.');
+    async tokenReopenRequestRaw(requestParameters: PaylinkApiTokenReopenRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenReopenRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -415,11 +445,11 @@ export class PaylinkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/reopen`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/reopen`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -432,7 +462,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Allows for a Paylink Token to be reopened if a Token has been previously closed and payment has not yet been made.
      * Reopen Paylink Token
      */
-    async tokenReopenRequest(requestParameters: PaylinkApiTokenReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenReopenRequest(requestParameters: PaylinkApiTokenReopenRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenReopenRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -441,13 +471,19 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Resend a notification for Paylink Token.
      * Resend a notification for Paylink Token
      */
-    async tokenResendNotificationRequestRaw(requestParameters: PaylinkApiTokenResendNotificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenResendNotificationRequest.');
+    async tokenResendNotificationRequestRaw(requestParameters: PaylinkApiTokenResendNotificationRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenResendNotificationRequest().'
+            );
         }
 
-        if (requestParameters.paylink_resend_notification_request === null || requestParameters.paylink_resend_notification_request === undefined) {
-            throw new runtime.RequiredError('paylink_resend_notification_request','Required parameter requestParameters.paylink_resend_notification_request was null or undefined when calling tokenResendNotificationRequest.');
+        if (requestParameters['paylink_resend_notification_request'] == null) {
+            throw new runtime.RequiredError(
+                'paylink_resend_notification_request',
+                'Required parameter "paylink_resend_notification_request" was null or undefined when calling tokenResendNotificationRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -457,15 +493,15 @@ export class PaylinkApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/resend-notification`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/resend-notification`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaylinkResendNotificationRequestToJSON(requestParameters.paylink_resend_notification_request),
+            body: PaylinkResendNotificationRequestToJSON(requestParameters['paylink_resend_notification_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
@@ -475,7 +511,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Resend a notification for Paylink Token.
      * Resend a notification for Paylink Token
      */
-    async tokenResendNotificationRequest(requestParameters: PaylinkApiTokenResendNotificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async tokenResendNotificationRequest(requestParameters: PaylinkApiTokenResendNotificationRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.tokenResendNotificationRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -484,9 +520,12 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Obtains the full status of a given Paylink Token.
      * Paylink Token Status
      */
-    async tokenStatusRequestRaw(requestParameters: PaylinkApiTokenStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenStatus>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling tokenStatusRequest.');
+    async tokenStatusRequestRaw(requestParameters: PaylinkApiTokenStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaylinkTokenStatus>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling tokenStatusRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -494,11 +533,11 @@ export class PaylinkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/paylink/{token}/status`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/paylink/{token}/status`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -511,7 +550,7 @@ export class PaylinkApi extends runtime.BaseAPI {
      * Obtains the full status of a given Paylink Token.
      * Paylink Token Status
      */
-    async tokenStatusRequest(requestParameters: PaylinkApiTokenStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenStatus> {
+    async tokenStatusRequest(requestParameters: PaylinkApiTokenStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaylinkTokenStatus> {
         const response = await this.tokenStatusRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

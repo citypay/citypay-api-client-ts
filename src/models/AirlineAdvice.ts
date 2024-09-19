@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AirlineSegment } from './AirlineSegment';
 import {
     AirlineSegmentFromJSON,
@@ -144,17 +144,15 @@ export interface AirlineAdvice {
 /**
  * Check if a given object implements the AirlineAdvice interface.
  */
-export function instanceOfAirlineAdvice(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "carrierName" in value;
-    isInstance = isInstance && "segment1" in value;
-    isInstance = isInstance && "ticketIssueCity" in value;
-    isInstance = isInstance && "ticketIssueDate" in value;
-    isInstance = isInstance && "ticketIssueName" in value;
-    isInstance = isInstance && "ticketNo" in value;
-    isInstance = isInstance && "transactionType" in value;
-
-    return isInstance;
+export function instanceOfAirlineAdvice(value: object): value is AirlineAdvice {
+    if (!('carrierName' in value) || value['carrierName'] === undefined) return false;
+    if (!('segment1' in value) || value['segment1'] === undefined) return false;
+    if (!('ticketIssueCity' in value) || value['ticketIssueCity'] === undefined) return false;
+    if (!('ticketIssueDate' in value) || value['ticketIssueDate'] === undefined) return false;
+    if (!('ticketIssueName' in value) || value['ticketIssueName'] === undefined) return false;
+    if (!('ticketNo' in value) || value['ticketNo'] === undefined) return false;
+    if (!('transactionType' in value) || value['transactionType'] === undefined) return false;
+    return true;
 }
 
 export function AirlineAdviceFromJSON(json: any): AirlineAdvice {
@@ -162,7 +160,7 @@ export function AirlineAdviceFromJSON(json: any): AirlineAdvice {
 }
 
 export function AirlineAdviceFromJSONTyped(json: any, ignoreDiscriminator: boolean): AirlineAdvice {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -174,43 +172,40 @@ export function AirlineAdviceFromJSONTyped(json: any, ignoreDiscriminator: boole
         'ticketIssueName': json['ticket_issue_name'],
         'ticketNo': json['ticket_no'],
         'transactionType': json['transaction_type'],
-        'conjunctionTicketIndicator': !exists(json, 'conjunction_ticket_indicator') ? undefined : json['conjunction_ticket_indicator'],
-        'eticketIndicator': !exists(json, 'eticket_indicator') ? undefined : json['eticket_indicator'],
-        'noAirSegments': !exists(json, 'no_air_segments') ? undefined : json['no_air_segments'],
-        'numberInParty': !exists(json, 'number_in_party') ? undefined : json['number_in_party'],
-        'originalTicketNo': !exists(json, 'original_ticket_no') ? undefined : json['original_ticket_no'],
-        'passengerName': !exists(json, 'passenger_name') ? undefined : json['passenger_name'],
-        'segment2': !exists(json, 'segment2') ? undefined : AirlineSegmentFromJSON(json['segment2']),
-        'segment3': !exists(json, 'segment3') ? undefined : AirlineSegmentFromJSON(json['segment3']),
-        'segment4': !exists(json, 'segment4') ? undefined : AirlineSegmentFromJSON(json['segment4']),
+        'conjunctionTicketIndicator': json['conjunction_ticket_indicator'] == null ? undefined : json['conjunction_ticket_indicator'],
+        'eticketIndicator': json['eticket_indicator'] == null ? undefined : json['eticket_indicator'],
+        'noAirSegments': json['no_air_segments'] == null ? undefined : json['no_air_segments'],
+        'numberInParty': json['number_in_party'] == null ? undefined : json['number_in_party'],
+        'originalTicketNo': json['original_ticket_no'] == null ? undefined : json['original_ticket_no'],
+        'passengerName': json['passenger_name'] == null ? undefined : json['passenger_name'],
+        'segment2': json['segment2'] == null ? undefined : AirlineSegmentFromJSON(json['segment2']),
+        'segment3': json['segment3'] == null ? undefined : AirlineSegmentFromJSON(json['segment3']),
+        'segment4': json['segment4'] == null ? undefined : AirlineSegmentFromJSON(json['segment4']),
     };
 }
 
 export function AirlineAdviceToJSON(value?: AirlineAdvice | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'carrier_name': value.carrierName,
-        'segment1': AirlineSegmentToJSON(value.segment1),
-        'ticket_issue_city': value.ticketIssueCity,
-        'ticket_issue_date': (value.ticketIssueDate.toISOString().substring(0,10)),
-        'ticket_issue_name': value.ticketIssueName,
-        'ticket_no': value.ticketNo,
-        'transaction_type': value.transactionType,
-        'conjunction_ticket_indicator': value.conjunctionTicketIndicator,
-        'eticket_indicator': value.eticketIndicator,
-        'no_air_segments': value.noAirSegments,
-        'number_in_party': value.numberInParty,
-        'original_ticket_no': value.originalTicketNo,
-        'passenger_name': value.passengerName,
-        'segment2': AirlineSegmentToJSON(value.segment2),
-        'segment3': AirlineSegmentToJSON(value.segment3),
-        'segment4': AirlineSegmentToJSON(value.segment4),
+        'carrier_name': value['carrierName'],
+        'segment1': AirlineSegmentToJSON(value['segment1']),
+        'ticket_issue_city': value['ticketIssueCity'],
+        'ticket_issue_date': ((value['ticketIssueDate']).toISOString().substring(0,10)),
+        'ticket_issue_name': value['ticketIssueName'],
+        'ticket_no': value['ticketNo'],
+        'transaction_type': value['transactionType'],
+        'conjunction_ticket_indicator': value['conjunctionTicketIndicator'],
+        'eticket_indicator': value['eticketIndicator'],
+        'no_air_segments': value['noAirSegments'],
+        'number_in_party': value['numberInParty'],
+        'original_ticket_no': value['originalTicketNo'],
+        'passenger_name': value['passengerName'],
+        'segment2': AirlineSegmentToJSON(value['segment2']),
+        'segment3': AirlineSegmentToJSON(value['segment3']),
+        'segment4': AirlineSegmentToJSON(value['segment4']),
     };
 }
 

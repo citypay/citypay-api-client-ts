@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { NetSummaryResponse } from './NetSummaryResponse';
 import {
     NetSummaryResponseFromJSON,
@@ -78,10 +78,8 @@ export interface MerchantBatchResponse {
 /**
  * Check if a given object implements the MerchantBatchResponse interface.
  */
-export function instanceOfMerchantBatchResponse(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfMerchantBatchResponse(value: object): value is MerchantBatchResponse {
+    return true;
 }
 
 export function MerchantBatchResponseFromJSON(json: any): MerchantBatchResponse {
@@ -89,37 +87,34 @@ export function MerchantBatchResponseFromJSON(json: any): MerchantBatchResponse 
 }
 
 export function MerchantBatchResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerchantBatchResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'batchClosed': !exists(json, 'batch_closed') ? undefined : (new Date(json['batch_closed'])),
-        'batchNo': !exists(json, 'batch_no') ? undefined : json['batch_no'],
-        'batchStatus': !exists(json, 'batch_status') ? undefined : json['batch_status'],
-        'batchStatusCode': !exists(json, 'batch_status_code') ? undefined : json['batch_status_code'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'merchantid': !exists(json, 'merchantid') ? undefined : json['merchantid'],
-        'netSummary': !exists(json, 'net_summary') ? undefined : NetSummaryResponseFromJSON(json['net_summary']),
+        'batchClosed': json['batch_closed'] == null ? undefined : (new Date(json['batch_closed'])),
+        'batchNo': json['batch_no'] == null ? undefined : json['batch_no'],
+        'batchStatus': json['batch_status'] == null ? undefined : json['batch_status'],
+        'batchStatusCode': json['batch_status_code'] == null ? undefined : json['batch_status_code'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'merchantid': json['merchantid'] == null ? undefined : json['merchantid'],
+        'netSummary': json['net_summary'] == null ? undefined : NetSummaryResponseFromJSON(json['net_summary']),
     };
 }
 
 export function MerchantBatchResponseToJSON(value?: MerchantBatchResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batch_closed': value.batchClosed === undefined ? undefined : (value.batchClosed.toISOString()),
-        'batch_no': value.batchNo,
-        'batch_status': value.batchStatus,
-        'batch_status_code': value.batchStatusCode,
-        'currency': value.currency,
-        'merchantid': value.merchantid,
-        'net_summary': NetSummaryResponseToJSON(value.netSummary),
+        'batch_closed': value['batchClosed'] == null ? undefined : ((value['batchClosed']).toISOString()),
+        'batch_no': value['batchNo'],
+        'batch_status': value['batchStatus'],
+        'batch_status_code': value['batchStatusCode'],
+        'currency': value['currency'],
+        'merchantid': value['merchantid'],
+        'net_summary': NetSummaryResponseToJSON(value['netSummary']),
     };
 }
 

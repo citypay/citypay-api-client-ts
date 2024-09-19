@@ -49,50 +49,50 @@ import {
     RegisterCardToJSON,
 } from '../models/index';
 
-export interface CardHolderAccountApiAccountCardDeleteRequest {
+export interface CardHolderAccountApiAccountCardDeleteRequestRequest {
     accountid: string;
     card_id: string;
     force?: boolean;
 }
 
-export interface CardHolderAccountApiAccountCardRegisterRequest {
+export interface CardHolderAccountApiAccountCardRegisterRequestRequest {
     accountid: string;
     register_card: RegisterCard;
 }
 
-export interface CardHolderAccountApiAccountCardStatusRequest {
+export interface CardHolderAccountApiAccountCardStatusRequestRequest {
     accountid: string;
     card_id: string;
     card_status: CardStatus;
 }
 
-export interface CardHolderAccountApiAccountChangeContactRequest {
+export interface CardHolderAccountApiAccountChangeContactRequestRequest {
     accountid: string;
     contact_details: ContactDetails;
 }
 
-export interface CardHolderAccountApiAccountCreate {
+export interface CardHolderAccountApiAccountCreateRequest {
     account_create: AccountCreate;
 }
 
-export interface CardHolderAccountApiAccountDeleteRequest {
+export interface CardHolderAccountApiAccountDeleteRequestRequest {
     accountid: string;
 }
 
-export interface CardHolderAccountApiAccountExistsRequest {
+export interface CardHolderAccountApiAccountExistsRequestRequest {
     accountid: string;
 }
 
-export interface CardHolderAccountApiAccountRetrieveRequest {
+export interface CardHolderAccountApiAccountRetrieveRequestRequest {
     accountid: string;
 }
 
-export interface CardHolderAccountApiAccountStatusRequest {
+export interface CardHolderAccountApiAccountStatusRequestRequest {
     accountid: string;
     account_status: AccountStatus;
 }
 
-export interface CardHolderAccountApiChargeRequest {
+export interface CardHolderAccountApiChargeRequestRequest {
     charge_request: ChargeRequest;
 }
 
@@ -105,29 +105,35 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Deletes a card from the account. The card will be marked for deletion before a subsequent purge will clear the card permanently. 
      * Card Deletion
      */
-    async accountCardDeleteRequestRaw(requestParameters: CardHolderAccountApiAccountCardDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountCardDeleteRequest.');
+    async accountCardDeleteRequestRaw(requestParameters: CardHolderAccountApiAccountCardDeleteRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountCardDeleteRequest().'
+            );
         }
 
-        if (requestParameters.card_id === null || requestParameters.card_id === undefined) {
-            throw new runtime.RequiredError('card_id','Required parameter requestParameters.card_id was null or undefined when calling accountCardDeleteRequest.');
+        if (requestParameters['card_id'] == null) {
+            throw new runtime.RequiredError(
+                'card_id',
+                'Required parameter "card_id" was null or undefined when calling accountCardDeleteRequest().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.force !== undefined) {
-            queryParameters['force'] = requestParameters.force;
+        if (requestParameters['force'] != null) {
+            queryParameters['force'] = requestParameters['force'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}/card/{cardId}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))).replace(`{${"cardId"}}`, encodeURIComponent(String(requestParameters.card_id))),
+            path: `/v6/account/{accountid}/card/{cardId}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))).replace(`{${"cardId"}}`, encodeURIComponent(String(requestParameters['card_id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -140,7 +146,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Deletes a card from the account. The card will be marked for deletion before a subsequent purge will clear the card permanently. 
      * Card Deletion
      */
-    async accountCardDeleteRequest(requestParameters: CardHolderAccountApiAccountCardDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async accountCardDeleteRequest(requestParameters: CardHolderAccountApiAccountCardDeleteRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.accountCardDeleteRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -149,13 +155,19 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for a card to be registered for the account. The card will be added for future  processing and will be available as a tokenised value for future processing.  The card will be validated for  0. Being a valid card number (luhn check) 0. Having a valid expiry date 0. Being a valid bin value. 
      * Card Registration
      */
-    async accountCardRegisterRequestRaw(requestParameters: CardHolderAccountApiAccountCardRegisterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountCardRegisterRequest.');
+    async accountCardRegisterRequestRaw(requestParameters: CardHolderAccountApiAccountCardRegisterRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountCardRegisterRequest().'
+            );
         }
 
-        if (requestParameters.register_card === null || requestParameters.register_card === undefined) {
-            throw new runtime.RequiredError('register_card','Required parameter requestParameters.register_card was null or undefined when calling accountCardRegisterRequest.');
+        if (requestParameters['register_card'] == null) {
+            throw new runtime.RequiredError(
+                'register_card',
+                'Required parameter "register_card" was null or undefined when calling accountCardRegisterRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -165,15 +177,15 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}/register`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))),
+            path: `/v6/account/{accountid}/register`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RegisterCardToJSON(requestParameters.register_card),
+            body: RegisterCardToJSON(requestParameters['register_card']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CardHolderAccountFromJSON(jsonValue));
@@ -183,7 +195,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for a card to be registered for the account. The card will be added for future  processing and will be available as a tokenised value for future processing.  The card will be validated for  0. Being a valid card number (luhn check) 0. Having a valid expiry date 0. Being a valid bin value. 
      * Card Registration
      */
-    async accountCardRegisterRequest(requestParameters: CardHolderAccountApiAccountCardRegisterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
+    async accountCardRegisterRequest(requestParameters: CardHolderAccountApiAccountCardRegisterRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
         const response = await this.accountCardRegisterRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -192,17 +204,26 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Updates the status of a card for processing. The following values are available  | Status | Description |  |--------|-------------| | Active | The card is active for processing and can be used for charging against with a valid token | | Inactive | The card is inactive for processing and cannot be used for processing, it will require reactivation before being used to charge | | Expired | The card has expired either due to the expiry date no longer being valid or due to a replacement card being issued | 
      * Card Status
      */
-    async accountCardStatusRequestRaw(requestParameters: CardHolderAccountApiAccountCardStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountCardStatusRequest.');
+    async accountCardStatusRequestRaw(requestParameters: CardHolderAccountApiAccountCardStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountCardStatusRequest().'
+            );
         }
 
-        if (requestParameters.card_id === null || requestParameters.card_id === undefined) {
-            throw new runtime.RequiredError('card_id','Required parameter requestParameters.card_id was null or undefined when calling accountCardStatusRequest.');
+        if (requestParameters['card_id'] == null) {
+            throw new runtime.RequiredError(
+                'card_id',
+                'Required parameter "card_id" was null or undefined when calling accountCardStatusRequest().'
+            );
         }
 
-        if (requestParameters.card_status === null || requestParameters.card_status === undefined) {
-            throw new runtime.RequiredError('card_status','Required parameter requestParameters.card_status was null or undefined when calling accountCardStatusRequest.');
+        if (requestParameters['card_status'] == null) {
+            throw new runtime.RequiredError(
+                'card_status',
+                'Required parameter "card_status" was null or undefined when calling accountCardStatusRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -212,15 +233,15 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}/card/{cardId}/status`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))).replace(`{${"cardId"}}`, encodeURIComponent(String(requestParameters.card_id))),
+            path: `/v6/account/{accountid}/card/{cardId}/status`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))).replace(`{${"cardId"}}`, encodeURIComponent(String(requestParameters['card_id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CardStatusToJSON(requestParameters.card_status),
+            body: CardStatusToJSON(requestParameters['card_status']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
@@ -230,7 +251,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Updates the status of a card for processing. The following values are available  | Status | Description |  |--------|-------------| | Active | The card is active for processing and can be used for charging against with a valid token | | Inactive | The card is inactive for processing and cannot be used for processing, it will require reactivation before being used to charge | | Expired | The card has expired either due to the expiry date no longer being valid or due to a replacement card being issued | 
      * Card Status
      */
-    async accountCardStatusRequest(requestParameters: CardHolderAccountApiAccountCardStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async accountCardStatusRequest(requestParameters: CardHolderAccountApiAccountCardStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.accountCardStatusRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -239,13 +260,19 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for the ability to change the contact details for an account.
      * Contact Details Update
      */
-    async accountChangeContactRequestRaw(requestParameters: CardHolderAccountApiAccountChangeContactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountChangeContactRequest.');
+    async accountChangeContactRequestRaw(requestParameters: CardHolderAccountApiAccountChangeContactRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountChangeContactRequest().'
+            );
         }
 
-        if (requestParameters.contact_details === null || requestParameters.contact_details === undefined) {
-            throw new runtime.RequiredError('contact_details','Required parameter requestParameters.contact_details was null or undefined when calling accountChangeContactRequest.');
+        if (requestParameters['contact_details'] == null) {
+            throw new runtime.RequiredError(
+                'contact_details',
+                'Required parameter "contact_details" was null or undefined when calling accountChangeContactRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -255,15 +282,15 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}/contact`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))),
+            path: `/v6/account/{accountid}/contact`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ContactDetailsToJSON(requestParameters.contact_details),
+            body: ContactDetailsToJSON(requestParameters['contact_details']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CardHolderAccountFromJSON(jsonValue));
@@ -273,7 +300,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for the ability to change the contact details for an account.
      * Contact Details Update
      */
-    async accountChangeContactRequest(requestParameters: CardHolderAccountApiAccountChangeContactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
+    async accountChangeContactRequest(requestParameters: CardHolderAccountApiAccountChangeContactRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
         const response = await this.accountChangeContactRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -282,9 +309,12 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Creates a new card holder account and initialises the account ready for adding cards.
      * Account Create
      */
-    async accountCreateRaw(requestParameters: CardHolderAccountApiAccountCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
-        if (requestParameters.account_create === null || requestParameters.account_create === undefined) {
-            throw new runtime.RequiredError('account_create','Required parameter requestParameters.account_create was null or undefined when calling accountCreate.');
+    async accountCreateRaw(requestParameters: CardHolderAccountApiAccountCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
+        if (requestParameters['account_create'] == null) {
+            throw new runtime.RequiredError(
+                'account_create',
+                'Required parameter "account_create" was null or undefined when calling accountCreate().'
+            );
         }
 
         const queryParameters: any = {};
@@ -294,7 +324,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -302,7 +332,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: AccountCreateToJSON(requestParameters.account_create),
+            body: AccountCreateToJSON(requestParameters['account_create']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CardHolderAccountFromJSON(jsonValue));
@@ -312,7 +342,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Creates a new card holder account and initialises the account ready for adding cards.
      * Account Create
      */
-    async accountCreate(requestParameters: CardHolderAccountApiAccountCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
+    async accountCreate(requestParameters: CardHolderAccountApiAccountCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
         const response = await this.accountCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -321,9 +351,12 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for the deletion of an account. The account will marked for deletion and subsequent purging. No further transactions will be alowed to be processed or actioned against this account. 
      * Account Deletion
      */
-    async accountDeleteRequestRaw(requestParameters: CardHolderAccountApiAccountDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountDeleteRequest.');
+    async accountDeleteRequestRaw(requestParameters: CardHolderAccountApiAccountDeleteRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountDeleteRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -331,11 +364,11 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))),
+            path: `/v6/account/{accountid}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -348,7 +381,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for the deletion of an account. The account will marked for deletion and subsequent purging. No further transactions will be alowed to be processed or actioned against this account. 
      * Account Deletion
      */
-    async accountDeleteRequest(requestParameters: CardHolderAccountApiAccountDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async accountDeleteRequest(requestParameters: CardHolderAccountApiAccountDeleteRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.accountDeleteRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -357,9 +390,12 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Checks that an account exists and is active by providing the account id as a url parameter. 
      * Account Exists
      */
-    async accountExistsRequestRaw(requestParameters: CardHolderAccountApiAccountExistsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Exists>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountExistsRequest.');
+    async accountExistsRequestRaw(requestParameters: CardHolderAccountApiAccountExistsRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Exists>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountExistsRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -367,11 +403,11 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account-exists/{accountid}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))),
+            path: `/v6/account-exists/{accountid}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -384,7 +420,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Checks that an account exists and is active by providing the account id as a url parameter. 
      * Account Exists
      */
-    async accountExistsRequest(requestParameters: CardHolderAccountApiAccountExistsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Exists> {
+    async accountExistsRequest(requestParameters: CardHolderAccountApiAccountExistsRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Exists> {
         const response = await this.accountExistsRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -393,9 +429,12 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for the retrieval of a card holder account for the given `id`. Should duplicate accounts exist for the same `id`, the first account created with that `id` will be returned.  The account can be used for tokenisation processing by listing all cards assigned to the account. The returned cards will include all `active`, `inactive` and `expired` cards. This can be used to  enable a card holder to view their wallet and make constructive choices on which card to use. 
      * Account Retrieval
      */
-    async accountRetrieveRequestRaw(requestParameters: CardHolderAccountApiAccountRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountRetrieveRequest.');
+    async accountRetrieveRequestRaw(requestParameters: CardHolderAccountApiAccountRetrieveRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CardHolderAccount>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountRetrieveRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -403,11 +442,11 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))),
+            path: `/v6/account/{accountid}`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -420,7 +459,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Allows for the retrieval of a card holder account for the given `id`. Should duplicate accounts exist for the same `id`, the first account created with that `id` will be returned.  The account can be used for tokenisation processing by listing all cards assigned to the account. The returned cards will include all `active`, `inactive` and `expired` cards. This can be used to  enable a card holder to view their wallet and make constructive choices on which card to use. 
      * Account Retrieval
      */
-    async accountRetrieveRequest(requestParameters: CardHolderAccountApiAccountRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
+    async accountRetrieveRequest(requestParameters: CardHolderAccountApiAccountRetrieveRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CardHolderAccount> {
         const response = await this.accountRetrieveRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -429,13 +468,19 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Updates the status of an account. An account can have the following statuses applied  | Status | Description | |--------|-------------| | Active | The account is active for processing | | Disabled | The account has been disabled and cannot be used for processing. The account will require reactivation to continue procesing | 
      * Account Status
      */
-    async accountStatusRequestRaw(requestParameters: CardHolderAccountApiAccountStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.accountid === null || requestParameters.accountid === undefined) {
-            throw new runtime.RequiredError('accountid','Required parameter requestParameters.accountid was null or undefined when calling accountStatusRequest.');
+    async accountStatusRequestRaw(requestParameters: CardHolderAccountApiAccountStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['accountid'] == null) {
+            throw new runtime.RequiredError(
+                'accountid',
+                'Required parameter "accountid" was null or undefined when calling accountStatusRequest().'
+            );
         }
 
-        if (requestParameters.account_status === null || requestParameters.account_status === undefined) {
-            throw new runtime.RequiredError('account_status','Required parameter requestParameters.account_status was null or undefined when calling accountStatusRequest.');
+        if (requestParameters['account_status'] == null) {
+            throw new runtime.RequiredError(
+                'account_status',
+                'Required parameter "account_status" was null or undefined when calling accountStatusRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -445,15 +490,15 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/account/{accountid}/status`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters.accountid))),
+            path: `/v6/account/{accountid}/status`.replace(`{${"accountid"}}`, encodeURIComponent(String(requestParameters['accountid']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: AccountStatusToJSON(requestParameters.account_status),
+            body: AccountStatusToJSON(requestParameters['account_status']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
@@ -463,7 +508,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * Updates the status of an account. An account can have the following statuses applied  | Status | Description | |--------|-------------| | Active | The account is active for processing | | Disabled | The account has been disabled and cannot be used for processing. The account will require reactivation to continue procesing | 
      * Account Status
      */
-    async accountStatusRequest(requestParameters: CardHolderAccountApiAccountStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async accountStatusRequest(requestParameters: CardHolderAccountApiAccountStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.accountStatusRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -472,9 +517,12 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling `/account-register-card` with the card details  or retrieved using `/account-retrieve`  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage    _Should an account be used with 3DSv2, the card holder name should also be stored alongside the card as this is a required field with both Visa and MasterCard for risk analysis._. 
      * Charge
      */
-    async chargeRequestRaw(requestParameters: CardHolderAccountApiChargeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Decision>> {
-        if (requestParameters.charge_request === null || requestParameters.charge_request === undefined) {
-            throw new runtime.RequiredError('charge_request','Required parameter requestParameters.charge_request was null or undefined when calling chargeRequest.');
+    async chargeRequestRaw(requestParameters: CardHolderAccountApiChargeRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Decision>> {
+        if (requestParameters['charge_request'] == null) {
+            throw new runtime.RequiredError(
+                'charge_request',
+                'Required parameter "charge_request" was null or undefined when calling chargeRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -484,7 +532,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -492,7 +540,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ChargeRequestToJSON(requestParameters.charge_request),
+            body: ChargeRequestToJSON(requestParameters['charge_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DecisionFromJSON(jsonValue));
@@ -502,7 +550,7 @@ export class CardHolderAccountApi extends runtime.BaseAPI {
      * A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling `/account-register-card` with the card details  or retrieved using `/account-retrieve`  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage    _Should an account be used with 3DSv2, the card holder name should also be stored alongside the card as this is a required field with both Visa and MasterCard for risk analysis._. 
      * Charge
      */
-    async chargeRequest(requestParameters: CardHolderAccountApiChargeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Decision> {
+    async chargeRequest(requestParameters: CardHolderAccountApiChargeRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Decision> {
         const response = await this.chargeRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

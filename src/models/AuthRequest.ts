@@ -12,25 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AirlineAdvice } from './AirlineAdvice';
-import {
-    AirlineAdviceFromJSON,
-    AirlineAdviceFromJSONTyped,
-    AirlineAdviceToJSON,
-} from './AirlineAdvice';
+import { mapValues } from '../runtime';
 import type { ContactDetails } from './ContactDetails';
 import {
     ContactDetailsFromJSON,
     ContactDetailsFromJSONTyped,
     ContactDetailsToJSON,
 } from './ContactDetails';
-import type { EventDataModel } from './EventDataModel';
-import {
-    EventDataModelFromJSON,
-    EventDataModelFromJSONTyped,
-    EventDataModelToJSON,
-} from './EventDataModel';
 import type { ExternalMPI } from './ExternalMPI';
 import {
     ExternalMPIFromJSON,
@@ -43,12 +31,24 @@ import {
     MCC6012FromJSONTyped,
     MCC6012ToJSON,
 } from './MCC6012';
+import type { AirlineAdvice } from './AirlineAdvice';
+import {
+    AirlineAdviceFromJSON,
+    AirlineAdviceFromJSONTyped,
+    AirlineAdviceToJSON,
+} from './AirlineAdvice';
 import type { ThreeDSecure } from './ThreeDSecure';
 import {
     ThreeDSecureFromJSON,
     ThreeDSecureFromJSONTyped,
     ThreeDSecureToJSON,
 } from './ThreeDSecure';
+import type { EventDataModel } from './EventDataModel';
+import {
+    EventDataModelFromJSON,
+    EventDataModelFromJSONTyped,
+    EventDataModelToJSON,
+} from './EventDataModel';
 
 /**
  * 
@@ -294,16 +294,14 @@ export interface AuthRequest {
 /**
  * Check if a given object implements the AuthRequest interface.
  */
-export function instanceOfAuthRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "cardnumber" in value;
-    isInstance = isInstance && "expmonth" in value;
-    isInstance = isInstance && "expyear" in value;
-    isInstance = isInstance && "identifier" in value;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfAuthRequest(value: object): value is AuthRequest {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('cardnumber' in value) || value['cardnumber'] === undefined) return false;
+    if (!('expmonth' in value) || value['expmonth'] === undefined) return false;
+    if (!('expyear' in value) || value['expyear'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function AuthRequestFromJSON(json: any): AuthRequest {
@@ -311,7 +309,7 @@ export function AuthRequestFromJSON(json: any): AuthRequest {
 }
 
 export function AuthRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AuthRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -322,58 +320,55 @@ export function AuthRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'expyear': json['expyear'],
         'identifier': json['identifier'],
         'merchantid': json['merchantid'],
-        'airlineData': !exists(json, 'airline_data') ? undefined : AirlineAdviceFromJSON(json['airline_data']),
-        'avsPostcodePolicy': !exists(json, 'avs_postcode_policy') ? undefined : json['avs_postcode_policy'],
-        'billTo': !exists(json, 'bill_to') ? undefined : ContactDetailsFromJSON(json['bill_to']),
-        'csc': !exists(json, 'csc') ? undefined : json['csc'],
-        'cscPolicy': !exists(json, 'csc_policy') ? undefined : json['csc_policy'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'duplicatePolicy': !exists(json, 'duplicate_policy') ? undefined : json['duplicate_policy'],
-        'eventManagement': !exists(json, 'event_management') ? undefined : EventDataModelFromJSON(json['event_management']),
-        'externalMpi': !exists(json, 'external_mpi') ? undefined : ExternalMPIFromJSON(json['external_mpi']),
-        'matchAvsa': !exists(json, 'match_avsa') ? undefined : json['match_avsa'],
-        'mcc6012': !exists(json, 'mcc6012') ? undefined : MCC6012FromJSON(json['mcc6012']),
-        'nameOnCard': !exists(json, 'name_on_card') ? undefined : json['name_on_card'],
-        'shipTo': !exists(json, 'ship_to') ? undefined : ContactDetailsFromJSON(json['ship_to']),
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
-        'threedsecure': !exists(json, 'threedsecure') ? undefined : ThreeDSecureFromJSON(json['threedsecure']),
-        'transInfo': !exists(json, 'trans_info') ? undefined : json['trans_info'],
-        'transType': !exists(json, 'trans_type') ? undefined : json['trans_type'],
+        'airlineData': json['airline_data'] == null ? undefined : AirlineAdviceFromJSON(json['airline_data']),
+        'avsPostcodePolicy': json['avs_postcode_policy'] == null ? undefined : json['avs_postcode_policy'],
+        'billTo': json['bill_to'] == null ? undefined : ContactDetailsFromJSON(json['bill_to']),
+        'csc': json['csc'] == null ? undefined : json['csc'],
+        'cscPolicy': json['csc_policy'] == null ? undefined : json['csc_policy'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'duplicatePolicy': json['duplicate_policy'] == null ? undefined : json['duplicate_policy'],
+        'eventManagement': json['event_management'] == null ? undefined : EventDataModelFromJSON(json['event_management']),
+        'externalMpi': json['external_mpi'] == null ? undefined : ExternalMPIFromJSON(json['external_mpi']),
+        'matchAvsa': json['match_avsa'] == null ? undefined : json['match_avsa'],
+        'mcc6012': json['mcc6012'] == null ? undefined : MCC6012FromJSON(json['mcc6012']),
+        'nameOnCard': json['name_on_card'] == null ? undefined : json['name_on_card'],
+        'shipTo': json['ship_to'] == null ? undefined : ContactDetailsFromJSON(json['ship_to']),
+        'tag': json['tag'] == null ? undefined : json['tag'],
+        'threedsecure': json['threedsecure'] == null ? undefined : ThreeDSecureFromJSON(json['threedsecure']),
+        'transInfo': json['trans_info'] == null ? undefined : json['trans_info'],
+        'transType': json['trans_type'] == null ? undefined : json['trans_type'],
     };
 }
 
 export function AuthRequestToJSON(value?: AuthRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'cardnumber': value.cardnumber,
-        'expmonth': value.expmonth,
-        'expyear': value.expyear,
-        'identifier': value.identifier,
-        'merchantid': value.merchantid,
-        'airline_data': AirlineAdviceToJSON(value.airlineData),
-        'avs_postcode_policy': value.avsPostcodePolicy,
-        'bill_to': ContactDetailsToJSON(value.billTo),
-        'csc': value.csc,
-        'csc_policy': value.cscPolicy,
-        'currency': value.currency,
-        'duplicate_policy': value.duplicatePolicy,
-        'event_management': EventDataModelToJSON(value.eventManagement),
-        'external_mpi': ExternalMPIToJSON(value.externalMpi),
-        'match_avsa': value.matchAvsa,
-        'mcc6012': MCC6012ToJSON(value.mcc6012),
-        'name_on_card': value.nameOnCard,
-        'ship_to': ContactDetailsToJSON(value.shipTo),
-        'tag': value.tag,
-        'threedsecure': ThreeDSecureToJSON(value.threedsecure),
-        'trans_info': value.transInfo,
-        'trans_type': value.transType,
+        'amount': value['amount'],
+        'cardnumber': value['cardnumber'],
+        'expmonth': value['expmonth'],
+        'expyear': value['expyear'],
+        'identifier': value['identifier'],
+        'merchantid': value['merchantid'],
+        'airline_data': AirlineAdviceToJSON(value['airlineData']),
+        'avs_postcode_policy': value['avsPostcodePolicy'],
+        'bill_to': ContactDetailsToJSON(value['billTo']),
+        'csc': value['csc'],
+        'csc_policy': value['cscPolicy'],
+        'currency': value['currency'],
+        'duplicate_policy': value['duplicatePolicy'],
+        'event_management': EventDataModelToJSON(value['eventManagement']),
+        'external_mpi': ExternalMPIToJSON(value['externalMpi']),
+        'match_avsa': value['matchAvsa'],
+        'mcc6012': MCC6012ToJSON(value['mcc6012']),
+        'name_on_card': value['nameOnCard'],
+        'ship_to': ContactDetailsToJSON(value['shipTo']),
+        'tag': value['tag'],
+        'threedsecure': ThreeDSecureToJSON(value['threedsecure']),
+        'trans_info': value['transInfo'],
+        'trans_type': value['transType'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -31,11 +31,9 @@ export interface DomainKeyCheckRequest {
 /**
  * Check if a given object implements the DomainKeyCheckRequest interface.
  */
-export function instanceOfDomainKeyCheckRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "domainKey" in value;
-
-    return isInstance;
+export function instanceOfDomainKeyCheckRequest(value: object): value is DomainKeyCheckRequest {
+    if (!('domainKey' in value) || value['domainKey'] === undefined) return false;
+    return true;
 }
 
 export function DomainKeyCheckRequestFromJSON(json: any): DomainKeyCheckRequest {
@@ -43,7 +41,7 @@ export function DomainKeyCheckRequestFromJSON(json: any): DomainKeyCheckRequest 
 }
 
 export function DomainKeyCheckRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainKeyCheckRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -53,15 +51,12 @@ export function DomainKeyCheckRequestFromJSONTyped(json: any, ignoreDiscriminato
 }
 
 export function DomainKeyCheckRequestToJSON(value?: DomainKeyCheckRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'domain_key': value.domainKey,
+        'domain_key': value['domainKey'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -104,10 +104,8 @@ export interface ContactDetails {
 /**
  * Check if a given object implements the ContactDetails interface.
  */
-export function instanceOfContactDetails(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfContactDetails(value: object): value is ContactDetails {
+    return true;
 }
 
 export function ContactDetailsFromJSON(json: any): ContactDetails {
@@ -115,49 +113,46 @@ export function ContactDetailsFromJSON(json: any): ContactDetails {
 }
 
 export function ContactDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContactDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'address1': !exists(json, 'address1') ? undefined : json['address1'],
-        'address2': !exists(json, 'address2') ? undefined : json['address2'],
-        'address3': !exists(json, 'address3') ? undefined : json['address3'],
-        'area': !exists(json, 'area') ? undefined : json['area'],
-        'company': !exists(json, 'company') ? undefined : json['company'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
-        'email': !exists(json, 'email') ? undefined : json['email'],
-        'firstname': !exists(json, 'firstname') ? undefined : json['firstname'],
-        'lastname': !exists(json, 'lastname') ? undefined : json['lastname'],
-        'mobileNo': !exists(json, 'mobile_no') ? undefined : json['mobile_no'],
-        'postcode': !exists(json, 'postcode') ? undefined : json['postcode'],
-        'telephoneNo': !exists(json, 'telephone_no') ? undefined : json['telephone_no'],
-        'title': !exists(json, 'title') ? undefined : json['title'],
+        'address1': json['address1'] == null ? undefined : json['address1'],
+        'address2': json['address2'] == null ? undefined : json['address2'],
+        'address3': json['address3'] == null ? undefined : json['address3'],
+        'area': json['area'] == null ? undefined : json['area'],
+        'company': json['company'] == null ? undefined : json['company'],
+        'country': json['country'] == null ? undefined : json['country'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'firstname': json['firstname'] == null ? undefined : json['firstname'],
+        'lastname': json['lastname'] == null ? undefined : json['lastname'],
+        'mobileNo': json['mobile_no'] == null ? undefined : json['mobile_no'],
+        'postcode': json['postcode'] == null ? undefined : json['postcode'],
+        'telephoneNo': json['telephone_no'] == null ? undefined : json['telephone_no'],
+        'title': json['title'] == null ? undefined : json['title'],
     };
 }
 
 export function ContactDetailsToJSON(value?: ContactDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'address1': value.address1,
-        'address2': value.address2,
-        'address3': value.address3,
-        'area': value.area,
-        'company': value.company,
-        'country': value.country,
-        'email': value.email,
-        'firstname': value.firstname,
-        'lastname': value.lastname,
-        'mobile_no': value.mobileNo,
-        'postcode': value.postcode,
-        'telephone_no': value.telephoneNo,
-        'title': value.title,
+        'address1': value['address1'],
+        'address2': value['address2'],
+        'address3': value['address3'],
+        'area': value['area'],
+        'company': value['company'],
+        'country': value['country'],
+        'email': value['email'],
+        'firstname': value['firstname'],
+        'lastname': value['lastname'],
+        'mobile_no': value['mobileNo'],
+        'postcode': value['postcode'],
+        'telephone_no': value['telephoneNo'],
+        'title': value['title'],
     };
 }
 

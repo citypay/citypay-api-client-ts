@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -147,16 +147,14 @@ export interface BatchTransactionResultModel {
 /**
  * Check if a given object implements the BatchTransactionResultModel interface.
  */
-export function instanceOfBatchTransactionResultModel(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accountId" in value;
-    isInstance = isInstance && "identifier" in value;
-    isInstance = isInstance && "merchantid" in value;
-    isInstance = isInstance && "message" in value;
-    isInstance = isInstance && "result" in value;
-    isInstance = isInstance && "resultCode" in value;
-
-    return isInstance;
+export function instanceOfBatchTransactionResultModel(value: object): value is BatchTransactionResultModel {
+    if (!('accountId' in value) || value['accountId'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    if (!('message' in value) || value['message'] === undefined) return false;
+    if (!('result' in value) || value['result'] === undefined) return false;
+    if (!('resultCode' in value) || value['resultCode'] === undefined) return false;
+    return true;
 }
 
 export function BatchTransactionResultModelFromJSON(json: any): BatchTransactionResultModel {
@@ -164,7 +162,7 @@ export function BatchTransactionResultModelFromJSON(json: any): BatchTransaction
 }
 
 export function BatchTransactionResultModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchTransactionResultModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -175,40 +173,37 @@ export function BatchTransactionResultModelFromJSONTyped(json: any, ignoreDiscri
         'message': json['message'],
         'result': json['result'],
         'resultCode': json['result_code'],
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'authcode': !exists(json, 'authcode') ? undefined : json['authcode'],
-        'datetime': !exists(json, 'datetime') ? undefined : (new Date(json['datetime'])),
-        'maskedpan': !exists(json, 'maskedpan') ? undefined : json['maskedpan'],
-        'scheme': !exists(json, 'scheme') ? undefined : json['scheme'],
-        'schemeId': !exists(json, 'scheme_id') ? undefined : json['scheme_id'],
-        'schemeLogo': !exists(json, 'scheme_logo') ? undefined : json['scheme_logo'],
-        'transno': !exists(json, 'transno') ? undefined : json['transno'],
+        'amount': json['amount'] == null ? undefined : json['amount'],
+        'authcode': json['authcode'] == null ? undefined : json['authcode'],
+        'datetime': json['datetime'] == null ? undefined : (new Date(json['datetime'])),
+        'maskedpan': json['maskedpan'] == null ? undefined : json['maskedpan'],
+        'scheme': json['scheme'] == null ? undefined : json['scheme'],
+        'schemeId': json['scheme_id'] == null ? undefined : json['scheme_id'],
+        'schemeLogo': json['scheme_logo'] == null ? undefined : json['scheme_logo'],
+        'transno': json['transno'] == null ? undefined : json['transno'],
     };
 }
 
 export function BatchTransactionResultModelToJSON(value?: BatchTransactionResultModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'account_id': value.accountId,
-        'identifier': value.identifier,
-        'merchantid': value.merchantid,
-        'message': value.message,
-        'result': value.result,
-        'result_code': value.resultCode,
-        'amount': value.amount,
-        'authcode': value.authcode,
-        'datetime': value.datetime === undefined ? undefined : (value.datetime.toISOString()),
-        'maskedpan': value.maskedpan,
-        'scheme': value.scheme,
-        'scheme_id': value.schemeId,
-        'scheme_logo': value.schemeLogo,
-        'transno': value.transno,
+        'account_id': value['accountId'],
+        'identifier': value['identifier'],
+        'merchantid': value['merchantid'],
+        'message': value['message'],
+        'result': value['result'],
+        'result_code': value['resultCode'],
+        'amount': value['amount'],
+        'authcode': value['authcode'],
+        'datetime': value['datetime'] == null ? undefined : ((value['datetime']).toISOString()),
+        'maskedpan': value['maskedpan'],
+        'scheme': value['scheme'],
+        'scheme_id': value['schemeId'],
+        'scheme_logo': value['schemeLogo'],
+        'transno': value['transno'],
     };
 }
 

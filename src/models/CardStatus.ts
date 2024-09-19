@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,10 +36,8 @@ export interface CardStatus {
 /**
  * Check if a given object implements the CardStatus interface.
  */
-export function instanceOfCardStatus(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCardStatus(value: object): value is CardStatus {
+    return true;
 }
 
 export function CardStatusFromJSON(json: any): CardStatus {
@@ -47,27 +45,24 @@ export function CardStatusFromJSON(json: any): CardStatus {
 }
 
 export function CardStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): CardStatus {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'cardStatus': !exists(json, 'card_status') ? undefined : json['card_status'],
-        '_default': !exists(json, 'default') ? undefined : json['default'],
+        'cardStatus': json['card_status'] == null ? undefined : json['card_status'],
+        '_default': json['default'] == null ? undefined : json['default'],
     };
 }
 
 export function CardStatusToJSON(value?: CardStatus | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'card_status': value.cardStatus,
-        'default': value._default,
+        'card_status': value['cardStatus'],
+        'default': value['_default'],
     };
 }
 

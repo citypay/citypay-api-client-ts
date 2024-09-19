@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -44,12 +44,10 @@ export interface DomainKeyRequest {
 /**
  * Check if a given object implements the DomainKeyRequest interface.
  */
-export function instanceOfDomainKeyRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "domain" in value;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfDomainKeyRequest(value: object): value is DomainKeyRequest {
+    if (!('domain' in value) || value['domain'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function DomainKeyRequestFromJSON(json: any): DomainKeyRequest {
@@ -57,29 +55,26 @@ export function DomainKeyRequestFromJSON(json: any): DomainKeyRequest {
 }
 
 export function DomainKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainKeyRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'domain': json['domain'],
         'merchantid': json['merchantid'],
-        'live': !exists(json, 'live') ? undefined : json['live'],
+        'live': json['live'] == null ? undefined : json['live'],
     };
 }
 
 export function DomainKeyRequestToJSON(value?: DomainKeyRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'domain': value.domain,
-        'merchantid': value.merchantid,
-        'live': value.live,
+        'domain': value['domain'],
+        'merchantid': value['merchantid'],
+        'live': value['live'],
     };
 }
 

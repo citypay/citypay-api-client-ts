@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,11 +42,9 @@ export interface Exists {
 /**
  * Check if a given object implements the Exists interface.
  */
-export function instanceOfExists(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "_exists" in value;
-
-    return isInstance;
+export function instanceOfExists(value: object): value is Exists {
+    if (!('_exists' in value) || value['_exists'] === undefined) return false;
+    return true;
 }
 
 export function ExistsFromJSON(json: any): Exists {
@@ -54,29 +52,26 @@ export function ExistsFromJSON(json: any): Exists {
 }
 
 export function ExistsFromJSONTyped(json: any, ignoreDiscriminator: boolean): Exists {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         '_exists': json['exists'],
-        'active': !exists(json, 'active') ? undefined : json['active'],
-        'lastModified': !exists(json, 'last_modified') ? undefined : (new Date(json['last_modified'])),
+        'active': json['active'] == null ? undefined : json['active'],
+        'lastModified': json['last_modified'] == null ? undefined : (new Date(json['last_modified'])),
     };
 }
 
 export function ExistsToJSON(value?: Exists | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'exists': value._exists,
-        'active': value.active,
-        'last_modified': value.lastModified === undefined ? undefined : (value.lastModified.toISOString()),
+        'exists': value['_exists'],
+        'active': value['active'],
+        'last_modified': value['lastModified'] == null ? undefined : ((value['lastModified']).toISOString()),
     };
 }
 

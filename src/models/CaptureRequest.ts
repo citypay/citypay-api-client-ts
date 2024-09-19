@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AirlineAdvice } from './AirlineAdvice';
 import {
     AirlineAdviceFromJSON,
@@ -79,11 +79,9 @@ export interface CaptureRequest {
 /**
  * Check if a given object implements the CaptureRequest interface.
  */
-export function instanceOfCaptureRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfCaptureRequest(value: object): value is CaptureRequest {
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function CaptureRequestFromJSON(json: any): CaptureRequest {
@@ -91,35 +89,32 @@ export function CaptureRequestFromJSON(json: any): CaptureRequest {
 }
 
 export function CaptureRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CaptureRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'merchantid': json['merchantid'],
-        'airlineData': !exists(json, 'airline_data') ? undefined : AirlineAdviceFromJSON(json['airline_data']),
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'eventManagement': !exists(json, 'event_management') ? undefined : EventDataModelFromJSON(json['event_management']),
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'transno': !exists(json, 'transno') ? undefined : json['transno'],
+        'airlineData': json['airline_data'] == null ? undefined : AirlineAdviceFromJSON(json['airline_data']),
+        'amount': json['amount'] == null ? undefined : json['amount'],
+        'eventManagement': json['event_management'] == null ? undefined : EventDataModelFromJSON(json['event_management']),
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'transno': json['transno'] == null ? undefined : json['transno'],
     };
 }
 
 export function CaptureRequestToJSON(value?: CaptureRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'merchantid': value.merchantid,
-        'airline_data': AirlineAdviceToJSON(value.airlineData),
-        'amount': value.amount,
-        'event_management': EventDataModelToJSON(value.eventManagement),
-        'identifier': value.identifier,
-        'transno': value.transno,
+        'merchantid': value['merchantid'],
+        'airline_data': AirlineAdviceToJSON(value['airlineData']),
+        'amount': value['amount'],
+        'event_management': EventDataModelToJSON(value['eventManagement']),
+        'identifier': value['identifier'],
+        'transno': value['transno'],
     };
 }
 

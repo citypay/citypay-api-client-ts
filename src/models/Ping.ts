@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,10 +30,8 @@ export interface Ping {
 /**
  * Check if a given object implements the Ping interface.
  */
-export function instanceOfPing(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPing(value: object): value is Ping {
+    return true;
 }
 
 export function PingFromJSON(json: any): Ping {
@@ -41,25 +39,22 @@ export function PingFromJSON(json: any): Ping {
 }
 
 export function PingFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ping {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
     };
 }
 
 export function PingToJSON(value?: Ping | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'identifier': value.identifier,
+        'identifier': value['identifier'],
     };
 }
 

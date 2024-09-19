@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ContactDetails } from './ContactDetails';
 import {
     ContactDetailsFromJSON,
@@ -277,16 +277,14 @@ export interface DirectPostRequest {
 /**
  * Check if a given object implements the DirectPostRequest interface.
  */
-export function instanceOfDirectPostRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "cardnumber" in value;
-    isInstance = isInstance && "expmonth" in value;
-    isInstance = isInstance && "expyear" in value;
-    isInstance = isInstance && "identifier" in value;
-    isInstance = isInstance && "mac" in value;
-
-    return isInstance;
+export function instanceOfDirectPostRequest(value: object): value is DirectPostRequest {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('cardnumber' in value) || value['cardnumber'] === undefined) return false;
+    if (!('expmonth' in value) || value['expmonth'] === undefined) return false;
+    if (!('expyear' in value) || value['expyear'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    if (!('mac' in value) || value['mac'] === undefined) return false;
+    return true;
 }
 
 export function DirectPostRequestFromJSON(json: any): DirectPostRequest {
@@ -294,7 +292,7 @@ export function DirectPostRequestFromJSON(json: any): DirectPostRequest {
 }
 
 export function DirectPostRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectPostRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -305,56 +303,53 @@ export function DirectPostRequestFromJSONTyped(json: any, ignoreDiscriminator: b
         'expyear': json['expyear'],
         'identifier': json['identifier'],
         'mac': json['mac'],
-        'avsPostcodePolicy': !exists(json, 'avs_postcode_policy') ? undefined : json['avs_postcode_policy'],
-        'billTo': !exists(json, 'bill_to') ? undefined : ContactDetailsFromJSON(json['bill_to']),
-        'csc': !exists(json, 'csc') ? undefined : json['csc'],
-        'cscPolicy': !exists(json, 'csc_policy') ? undefined : json['csc_policy'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'duplicatePolicy': !exists(json, 'duplicate_policy') ? undefined : json['duplicate_policy'],
-        'matchAvsa': !exists(json, 'match_avsa') ? undefined : json['match_avsa'],
-        'nameOnCard': !exists(json, 'name_on_card') ? undefined : json['name_on_card'],
-        'nonce': !exists(json, 'nonce') ? undefined : json['nonce'],
-        'redirectFailure': !exists(json, 'redirect_failure') ? undefined : json['redirect_failure'],
-        'redirectSuccess': !exists(json, 'redirect_success') ? undefined : json['redirect_success'],
-        'shipTo': !exists(json, 'ship_to') ? undefined : ContactDetailsFromJSON(json['ship_to']),
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
-        'threedsecure': !exists(json, 'threedsecure') ? undefined : ThreeDSecureFromJSON(json['threedsecure']),
-        'transInfo': !exists(json, 'trans_info') ? undefined : json['trans_info'],
-        'transType': !exists(json, 'trans_type') ? undefined : json['trans_type'],
+        'avsPostcodePolicy': json['avs_postcode_policy'] == null ? undefined : json['avs_postcode_policy'],
+        'billTo': json['bill_to'] == null ? undefined : ContactDetailsFromJSON(json['bill_to']),
+        'csc': json['csc'] == null ? undefined : json['csc'],
+        'cscPolicy': json['csc_policy'] == null ? undefined : json['csc_policy'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'duplicatePolicy': json['duplicate_policy'] == null ? undefined : json['duplicate_policy'],
+        'matchAvsa': json['match_avsa'] == null ? undefined : json['match_avsa'],
+        'nameOnCard': json['name_on_card'] == null ? undefined : json['name_on_card'],
+        'nonce': json['nonce'] == null ? undefined : json['nonce'],
+        'redirectFailure': json['redirect_failure'] == null ? undefined : json['redirect_failure'],
+        'redirectSuccess': json['redirect_success'] == null ? undefined : json['redirect_success'],
+        'shipTo': json['ship_to'] == null ? undefined : ContactDetailsFromJSON(json['ship_to']),
+        'tag': json['tag'] == null ? undefined : json['tag'],
+        'threedsecure': json['threedsecure'] == null ? undefined : ThreeDSecureFromJSON(json['threedsecure']),
+        'transInfo': json['trans_info'] == null ? undefined : json['trans_info'],
+        'transType': json['trans_type'] == null ? undefined : json['trans_type'],
     };
 }
 
 export function DirectPostRequestToJSON(value?: DirectPostRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'cardnumber': value.cardnumber,
-        'expmonth': value.expmonth,
-        'expyear': value.expyear,
-        'identifier': value.identifier,
-        'mac': value.mac,
-        'avs_postcode_policy': value.avsPostcodePolicy,
-        'bill_to': ContactDetailsToJSON(value.billTo),
-        'csc': value.csc,
-        'csc_policy': value.cscPolicy,
-        'currency': value.currency,
-        'duplicate_policy': value.duplicatePolicy,
-        'match_avsa': value.matchAvsa,
-        'name_on_card': value.nameOnCard,
-        'nonce': value.nonce,
-        'redirect_failure': value.redirectFailure,
-        'redirect_success': value.redirectSuccess,
-        'ship_to': ContactDetailsToJSON(value.shipTo),
-        'tag': value.tag,
-        'threedsecure': ThreeDSecureToJSON(value.threedsecure),
-        'trans_info': value.transInfo,
-        'trans_type': value.transType,
+        'amount': value['amount'],
+        'cardnumber': value['cardnumber'],
+        'expmonth': value['expmonth'],
+        'expyear': value['expyear'],
+        'identifier': value['identifier'],
+        'mac': value['mac'],
+        'avs_postcode_policy': value['avsPostcodePolicy'],
+        'bill_to': ContactDetailsToJSON(value['billTo']),
+        'csc': value['csc'],
+        'csc_policy': value['cscPolicy'],
+        'currency': value['currency'],
+        'duplicate_policy': value['duplicatePolicy'],
+        'match_avsa': value['matchAvsa'],
+        'name_on_card': value['nameOnCard'],
+        'nonce': value['nonce'],
+        'redirect_failure': value['redirectFailure'],
+        'redirect_success': value['redirectSuccess'],
+        'ship_to': ContactDetailsToJSON(value['shipTo']),
+        'tag': value['tag'],
+        'threedsecure': ThreeDSecureToJSON(value['threedsecure']),
+        'trans_info': value['transInfo'],
+        'trans_type': value['transType'],
     };
 }
 

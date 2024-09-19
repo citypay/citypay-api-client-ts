@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BatchTransactionResultModel } from './BatchTransactionResultModel';
 import {
     BatchTransactionResultModelFromJSON,
@@ -76,16 +76,14 @@ export interface BatchReportResponseModel {
 /**
  * Check if a given object implements the BatchReportResponseModel interface.
  */
-export function instanceOfBatchReportResponseModel(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "batchDate" in value;
-    isInstance = isInstance && "batchId" in value;
-    isInstance = isInstance && "batchStatus" in value;
-    isInstance = isInstance && "clientAccountId" in value;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
+export function instanceOfBatchReportResponseModel(value: object): value is BatchReportResponseModel {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('batchDate' in value) || value['batchDate'] === undefined) return false;
+    if (!('batchId' in value) || value['batchId'] === undefined) return false;
+    if (!('batchStatus' in value) || value['batchStatus'] === undefined) return false;
+    if (!('clientAccountId' in value) || value['clientAccountId'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
 }
 
 export function BatchReportResponseModelFromJSON(json: any): BatchReportResponseModel {
@@ -93,7 +91,7 @@ export function BatchReportResponseModelFromJSON(json: any): BatchReportResponse
 }
 
 export function BatchReportResponseModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchReportResponseModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -108,20 +106,17 @@ export function BatchReportResponseModelFromJSONTyped(json: any, ignoreDiscrimin
 }
 
 export function BatchReportResponseModelToJSON(value?: BatchReportResponseModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'batch_date': (value.batchDate.toISOString().substring(0,10)),
-        'batch_id': value.batchId,
-        'batch_status': value.batchStatus,
-        'client_account_id': value.clientAccountId,
-        'transactions': ((value.transactions as Array<any>).map(BatchTransactionResultModelToJSON)),
+        'amount': value['amount'],
+        'batch_date': ((value['batchDate']).toISOString().substring(0,10)),
+        'batch_id': value['batchId'],
+        'batch_status': value['batchStatus'],
+        'client_account_id': value['clientAccountId'],
+        'transactions': ((value['transactions'] as Array<any>).map(BatchTransactionResultModelToJSON)),
     };
 }
 

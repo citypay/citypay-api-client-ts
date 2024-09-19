@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -56,10 +56,8 @@ export interface RequestChallenged {
 /**
  * Check if a given object implements the RequestChallenged interface.
  */
-export function instanceOfRequestChallenged(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfRequestChallenged(value: object): value is RequestChallenged {
+    return true;
 }
 
 export function RequestChallengedFromJSON(json: any): RequestChallenged {
@@ -67,33 +65,30 @@ export function RequestChallengedFromJSON(json: any): RequestChallenged {
 }
 
 export function RequestChallengedFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestChallenged {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'acsUrl': !exists(json, 'acs_url') ? undefined : json['acs_url'],
-        'creq': !exists(json, 'creq') ? undefined : json['creq'],
-        'merchantid': !exists(json, 'merchantid') ? undefined : json['merchantid'],
-        'threedserverTransId': !exists(json, 'threedserver_trans_id') ? undefined : json['threedserver_trans_id'],
-        'transno': !exists(json, 'transno') ? undefined : json['transno'],
+        'acsUrl': json['acs_url'] == null ? undefined : json['acs_url'],
+        'creq': json['creq'] == null ? undefined : json['creq'],
+        'merchantid': json['merchantid'] == null ? undefined : json['merchantid'],
+        'threedserverTransId': json['threedserver_trans_id'] == null ? undefined : json['threedserver_trans_id'],
+        'transno': json['transno'] == null ? undefined : json['transno'],
     };
 }
 
 export function RequestChallengedToJSON(value?: RequestChallenged | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'acs_url': value.acsUrl,
-        'creq': value.creq,
-        'merchantid': value.merchantid,
-        'threedserver_trans_id': value.threedserverTransId,
-        'transno': value.transno,
+        'acs_url': value['acsUrl'],
+        'creq': value['creq'],
+        'merchantid': value['merchantid'],
+        'threedserver_trans_id': value['threedserverTransId'],
+        'transno': value['transno'],
     };
 }
 

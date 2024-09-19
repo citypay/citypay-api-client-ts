@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,10 +48,8 @@ export interface AclCheckResponseModel {
 /**
  * Check if a given object implements the AclCheckResponseModel interface.
  */
-export function instanceOfAclCheckResponseModel(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfAclCheckResponseModel(value: object): value is AclCheckResponseModel {
+    return true;
 }
 
 export function AclCheckResponseModelFromJSON(json: any): AclCheckResponseModel {
@@ -59,31 +57,28 @@ export function AclCheckResponseModelFromJSON(json: any): AclCheckResponseModel 
 }
 
 export function AclCheckResponseModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): AclCheckResponseModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'acl': !exists(json, 'acl') ? undefined : json['acl'],
-        'cache': !exists(json, 'cache') ? undefined : json['cache'],
-        'ip': !exists(json, 'ip') ? undefined : json['ip'],
-        'provider': !exists(json, 'provider') ? undefined : json['provider'],
+        'acl': json['acl'] == null ? undefined : json['acl'],
+        'cache': json['cache'] == null ? undefined : json['cache'],
+        'ip': json['ip'] == null ? undefined : json['ip'],
+        'provider': json['provider'] == null ? undefined : json['provider'],
     };
 }
 
 export function AclCheckResponseModelToJSON(value?: AclCheckResponseModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'acl': value.acl,
-        'cache': value.cache,
-        'ip': value.ip,
-        'provider': value.provider,
+        'acl': value['acl'],
+        'cache': value['cache'],
+        'ip': value['ip'],
+        'provider': value['provider'],
     };
 }
 

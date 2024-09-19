@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,10 +48,8 @@ export interface MCC6012 {
 /**
  * Check if a given object implements the MCC6012 interface.
  */
-export function instanceOfMCC6012(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfMCC6012(value: object): value is MCC6012 {
+    return true;
 }
 
 export function MCC6012FromJSON(json: any): MCC6012 {
@@ -59,31 +57,28 @@ export function MCC6012FromJSON(json: any): MCC6012 {
 }
 
 export function MCC6012FromJSONTyped(json: any, ignoreDiscriminator: boolean): MCC6012 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'recipientAccount': !exists(json, 'recipient_account') ? undefined : json['recipient_account'],
-        'recipientDob': !exists(json, 'recipient_dob') ? undefined : json['recipient_dob'],
-        'recipientLastname': !exists(json, 'recipient_lastname') ? undefined : json['recipient_lastname'],
-        'recipientPostcode': !exists(json, 'recipient_postcode') ? undefined : json['recipient_postcode'],
+        'recipientAccount': json['recipient_account'] == null ? undefined : json['recipient_account'],
+        'recipientDob': json['recipient_dob'] == null ? undefined : json['recipient_dob'],
+        'recipientLastname': json['recipient_lastname'] == null ? undefined : json['recipient_lastname'],
+        'recipientPostcode': json['recipient_postcode'] == null ? undefined : json['recipient_postcode'],
     };
 }
 
 export function MCC6012ToJSON(value?: MCC6012 | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'recipient_account': value.recipientAccount,
-        'recipient_dob': value.recipientDob,
-        'recipient_lastname': value.recipientLastname,
-        'recipient_postcode': value.recipientPostcode,
+        'recipient_account': value['recipientAccount'],
+        'recipient_dob': value['recipientDob'],
+        'recipient_lastname': value['recipientLastname'],
+        'recipient_postcode': value['recipientPostcode'],
     };
 }
 

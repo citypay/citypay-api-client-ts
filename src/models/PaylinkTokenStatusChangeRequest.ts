@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,12 +54,10 @@ export interface PaylinkTokenStatusChangeRequest {
 /**
  * Check if a given object implements the PaylinkTokenStatusChangeRequest interface.
  */
-export function instanceOfPaylinkTokenStatusChangeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "after" in value;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfPaylinkTokenStatusChangeRequest(value: object): value is PaylinkTokenStatusChangeRequest {
+    if (!('after' in value) || value['after'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkTokenStatusChangeRequestFromJSON(json: any): PaylinkTokenStatusChangeRequest {
@@ -67,33 +65,30 @@ export function PaylinkTokenStatusChangeRequestFromJSON(json: any): PaylinkToken
 }
 
 export function PaylinkTokenStatusChangeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkTokenStatusChangeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'after': (new Date(json['after'])),
         'merchantid': json['merchantid'],
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
-        'orderBy': !exists(json, 'orderBy') ? undefined : json['orderBy'],
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
+        'orderBy': json['orderBy'] == null ? undefined : json['orderBy'],
     };
 }
 
 export function PaylinkTokenStatusChangeRequestToJSON(value?: PaylinkTokenStatusChangeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'after': (value.after.toISOString()),
-        'merchantid': value.merchantid,
-        'maxResults': value.maxResults,
-        'nextToken': value.nextToken,
-        'orderBy': value.orderBy,
+        'after': ((value['after']).toISOString()),
+        'merchantid': value['merchantid'],
+        'maxResults': value['maxResults'],
+        'nextToken': value['nextToken'],
+        'orderBy': value['orderBy'],
     };
 }
 
