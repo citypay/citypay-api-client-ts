@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,12 +48,10 @@ export interface BatchTransaction {
 /**
  * Check if a given object implements the BatchTransaction interface.
  */
-export function instanceOfBatchTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accountId" in value;
-    isInstance = isInstance && "amount" in value;
-
-    return isInstance;
+export function instanceOfBatchTransaction(value: object): value is BatchTransaction {
+    if (!('accountId' in value) || value['accountId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
 }
 
 export function BatchTransactionFromJSON(json: any): BatchTransaction {
@@ -61,31 +59,28 @@ export function BatchTransactionFromJSON(json: any): BatchTransaction {
 }
 
 export function BatchTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'accountId': json['account_id'],
         'amount': json['amount'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'merchantid': !exists(json, 'merchantid') ? undefined : json['merchantid'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'merchantid': json['merchantid'] == null ? undefined : json['merchantid'],
     };
 }
 
 export function BatchTransactionToJSON(value?: BatchTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'account_id': value.accountId,
-        'amount': value.amount,
-        'identifier': value.identifier,
-        'merchantid': value.merchantid,
+        'account_id': value['accountId'],
+        'amount': value['amount'],
+        'identifier': value['identifier'],
+        'merchantid': value['merchantid'],
     };
 }
 

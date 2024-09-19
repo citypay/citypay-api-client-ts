@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,10 +60,8 @@ export interface MerchantBatchReportRequest {
 /**
  * Check if a given object implements the MerchantBatchReportRequest interface.
  */
-export function instanceOfMerchantBatchReportRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfMerchantBatchReportRequest(value: object): value is MerchantBatchReportRequest {
+    return true;
 }
 
 export function MerchantBatchReportRequestFromJSON(json: any): MerchantBatchReportRequest {
@@ -71,35 +69,32 @@ export function MerchantBatchReportRequestFromJSON(json: any): MerchantBatchRepo
 }
 
 export function MerchantBatchReportRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerchantBatchReportRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dateFrom': !exists(json, 'date_from') ? undefined : (new Date(json['date_from'])),
-        'dateUntil': !exists(json, 'date_until') ? undefined : (new Date(json['date_until'])),
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'merchantId': !exists(json, 'merchant_id') ? undefined : json['merchant_id'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
-        'orderBy': !exists(json, 'orderBy') ? undefined : json['orderBy'],
+        'dateFrom': json['date_from'] == null ? undefined : (new Date(json['date_from'])),
+        'dateUntil': json['date_until'] == null ? undefined : (new Date(json['date_until'])),
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'merchantId': json['merchant_id'] == null ? undefined : json['merchant_id'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
+        'orderBy': json['orderBy'] == null ? undefined : json['orderBy'],
     };
 }
 
 export function MerchantBatchReportRequestToJSON(value?: MerchantBatchReportRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'date_from': value.dateFrom === undefined ? undefined : (value.dateFrom.toISOString().substring(0,10)),
-        'date_until': value.dateUntil === undefined ? undefined : (value.dateUntil.toISOString().substring(0,10)),
-        'maxResults': value.maxResults,
-        'merchant_id': value.merchantId,
-        'nextToken': value.nextToken,
-        'orderBy': value.orderBy,
+        'date_from': value['dateFrom'] == null ? undefined : ((value['dateFrom']).toISOString().substring(0,10)),
+        'date_until': value['dateUntil'] == null ? undefined : ((value['dateUntil']).toISOString().substring(0,10)),
+        'maxResults': value['maxResults'],
+        'merchant_id': value['merchantId'],
+        'nextToken': value['nextToken'],
+        'orderBy': value['orderBy'],
     };
 }
 

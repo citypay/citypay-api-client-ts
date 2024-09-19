@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -58,12 +58,10 @@ export interface DomainKeyResponse {
 /**
  * Check if a given object implements the DomainKeyResponse interface.
  */
-export function instanceOfDomainKeyResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "domain" in value;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfDomainKeyResponse(value: object): value is DomainKeyResponse {
+    if (!('domain' in value) || value['domain'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function DomainKeyResponseFromJSON(json: any): DomainKeyResponse {
@@ -71,33 +69,30 @@ export function DomainKeyResponseFromJSON(json: any): DomainKeyResponse {
 }
 
 export function DomainKeyResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainKeyResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'domain': json['domain'],
         'merchantid': json['merchantid'],
-        'dateCreated': !exists(json, 'date_created') ? undefined : (new Date(json['date_created'])),
-        'domainKey': !exists(json, 'domain_key') ? undefined : json['domain_key'],
-        'live': !exists(json, 'live') ? undefined : json['live'],
+        'dateCreated': json['date_created'] == null ? undefined : (new Date(json['date_created'])),
+        'domainKey': json['domain_key'] == null ? undefined : json['domain_key'],
+        'live': json['live'] == null ? undefined : json['live'],
     };
 }
 
 export function DomainKeyResponseToJSON(value?: DomainKeyResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'domain': value.domain,
-        'merchantid': value.merchantid,
-        'date_created': value.dateCreated === undefined ? undefined : (value.dateCreated.toISOString()),
-        'domain_key': value.domainKey,
-        'live': value.live,
+        'domain': value['domain'],
+        'merchantid': value['merchantid'],
+        'date_created': value['dateCreated'] == null ? undefined : ((value['dateCreated']).toISOString()),
+        'domain_key': value['domainKey'],
+        'live': value['live'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,10 +48,8 @@ export interface PaylinkUI {
 /**
  * Check if a given object implements the PaylinkUI interface.
  */
-export function instanceOfPaylinkUI(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkUI(value: object): value is PaylinkUI {
+    return true;
 }
 
 export function PaylinkUIFromJSON(json: any): PaylinkUI {
@@ -59,31 +57,28 @@ export function PaylinkUIFromJSON(json: any): PaylinkUI {
 }
 
 export function PaylinkUIFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkUI {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'addressMandatory': !exists(json, 'address_mandatory') ? undefined : json['address_mandatory'],
-        'formAutoComplete': !exists(json, 'form_auto_complete') ? undefined : json['form_auto_complete'],
-        'ordering': !exists(json, 'ordering') ? undefined : json['ordering'],
-        'postcodeMandatory': !exists(json, 'postcode_mandatory') ? undefined : json['postcode_mandatory'],
+        'addressMandatory': json['address_mandatory'] == null ? undefined : json['address_mandatory'],
+        'formAutoComplete': json['form_auto_complete'] == null ? undefined : json['form_auto_complete'],
+        'ordering': json['ordering'] == null ? undefined : json['ordering'],
+        'postcodeMandatory': json['postcode_mandatory'] == null ? undefined : json['postcode_mandatory'],
     };
 }
 
 export function PaylinkUIToJSON(value?: PaylinkUI | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'address_mandatory': value.addressMandatory,
-        'form_auto_complete': value.formAutoComplete,
-        'ordering': value.ordering,
-        'postcode_mandatory': value.postcodeMandatory,
+        'address_mandatory': value['addressMandatory'],
+        'form_auto_complete': value['formAutoComplete'],
+        'ordering': value['ordering'],
+        'postcode_mandatory': value['postcodeMandatory'],
     };
 }
 

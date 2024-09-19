@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -43,12 +43,10 @@ export interface PaResAuthRequest {
 /**
  * Check if a given object implements the PaResAuthRequest interface.
  */
-export function instanceOfPaResAuthRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "md" in value;
-    isInstance = isInstance && "pares" in value;
-
-    return isInstance;
+export function instanceOfPaResAuthRequest(value: object): value is PaResAuthRequest {
+    if (!('md' in value) || value['md'] === undefined) return false;
+    if (!('pares' in value) || value['pares'] === undefined) return false;
+    return true;
 }
 
 export function PaResAuthRequestFromJSON(json: any): PaResAuthRequest {
@@ -56,7 +54,7 @@ export function PaResAuthRequestFromJSON(json: any): PaResAuthRequest {
 }
 
 export function PaResAuthRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaResAuthRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,16 +65,13 @@ export function PaResAuthRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
 }
 
 export function PaResAuthRequestToJSON(value?: PaResAuthRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'md': value.md,
-        'pares': value.pares,
+        'md': value['md'],
+        'pares': value['pares'],
     };
 }
 

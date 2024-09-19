@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,11 +42,9 @@ export interface RetrieveRequest {
 /**
  * Check if a given object implements the RetrieveRequest interface.
  */
-export function instanceOfRetrieveRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfRetrieveRequest(value: object): value is RetrieveRequest {
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function RetrieveRequestFromJSON(json: any): RetrieveRequest {
@@ -54,29 +52,26 @@ export function RetrieveRequestFromJSON(json: any): RetrieveRequest {
 }
 
 export function RetrieveRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RetrieveRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'merchantid': json['merchantid'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'transno': !exists(json, 'transno') ? undefined : json['transno'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'transno': json['transno'] == null ? undefined : json['transno'],
     };
 }
 
 export function RetrieveRequestToJSON(value?: RetrieveRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'merchantid': value.merchantid,
-        'identifier': value.identifier,
-        'transno': value.transno,
+        'merchantid': value['merchantid'],
+        'identifier': value['identifier'],
+        'transno': value['transno'],
     };
 }
 

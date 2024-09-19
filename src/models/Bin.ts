@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -78,10 +78,8 @@ export interface Bin {
 /**
  * Check if a given object implements the Bin interface.
  */
-export function instanceOfBin(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfBin(value: object): value is Bin {
+    return true;
 }
 
 export function BinFromJSON(json: any): Bin {
@@ -89,41 +87,38 @@ export function BinFromJSON(json: any): Bin {
 }
 
 export function BinFromJSONTyped(json: any, ignoreDiscriminator: boolean): Bin {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'binCommercial': !exists(json, 'bin_commercial') ? undefined : json['bin_commercial'],
-        'binCorporate': !exists(json, 'bin_corporate') ? undefined : json['bin_corporate'],
-        'binCountryIssued': !exists(json, 'bin_country_issued') ? undefined : json['bin_country_issued'],
-        'binCredit': !exists(json, 'bin_credit') ? undefined : json['bin_credit'],
-        'binCurrency': !exists(json, 'bin_currency') ? undefined : json['bin_currency'],
-        'binDebit': !exists(json, 'bin_debit') ? undefined : json['bin_debit'],
-        'binDescription': !exists(json, 'bin_description') ? undefined : json['bin_description'],
-        'binEu': !exists(json, 'bin_eu') ? undefined : json['bin_eu'],
-        'scheme': !exists(json, 'scheme') ? undefined : json['scheme'],
+        'binCommercial': json['bin_commercial'] == null ? undefined : json['bin_commercial'],
+        'binCorporate': json['bin_corporate'] == null ? undefined : json['bin_corporate'],
+        'binCountryIssued': json['bin_country_issued'] == null ? undefined : json['bin_country_issued'],
+        'binCredit': json['bin_credit'] == null ? undefined : json['bin_credit'],
+        'binCurrency': json['bin_currency'] == null ? undefined : json['bin_currency'],
+        'binDebit': json['bin_debit'] == null ? undefined : json['bin_debit'],
+        'binDescription': json['bin_description'] == null ? undefined : json['bin_description'],
+        'binEu': json['bin_eu'] == null ? undefined : json['bin_eu'],
+        'scheme': json['scheme'] == null ? undefined : json['scheme'],
     };
 }
 
 export function BinToJSON(value?: Bin | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'bin_commercial': value.binCommercial,
-        'bin_corporate': value.binCorporate,
-        'bin_country_issued': value.binCountryIssued,
-        'bin_credit': value.binCredit,
-        'bin_currency': value.binCurrency,
-        'bin_debit': value.binDebit,
-        'bin_description': value.binDescription,
-        'bin_eu': value.binEu,
-        'scheme': value.scheme,
+        'bin_commercial': value['binCommercial'],
+        'bin_corporate': value['binCorporate'],
+        'bin_country_issued': value['binCountryIssued'],
+        'bin_credit': value['binCredit'],
+        'bin_currency': value['binCurrency'],
+        'bin_debit': value['binDebit'],
+        'bin_description': value['binDescription'],
+        'bin_eu': value['binEu'],
+        'scheme': value['scheme'],
     };
 }
 

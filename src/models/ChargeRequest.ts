@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ThreeDSecure } from './ThreeDSecure';
 import {
     ThreeDSecureFromJSON,
@@ -271,14 +271,12 @@ export interface ChargeRequest {
 /**
  * Check if a given object implements the ChargeRequest interface.
  */
-export function instanceOfChargeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "identifier" in value;
-    isInstance = isInstance && "merchantid" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfChargeRequest(value: object): value is ChargeRequest {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function ChargeRequestFromJSON(json: any): ChargeRequest {
@@ -286,7 +284,7 @@ export function ChargeRequestFromJSON(json: any): ChargeRequest {
 }
 
 export function ChargeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ChargeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -295,46 +293,43 @@ export function ChargeRequestFromJSONTyped(json: any, ignoreDiscriminator: boole
         'identifier': json['identifier'],
         'merchantid': json['merchantid'],
         'token': json['token'],
-        'avsPostcodePolicy': !exists(json, 'avs_postcode_policy') ? undefined : json['avs_postcode_policy'],
-        'cardholderAgreement': !exists(json, 'cardholder_agreement') ? undefined : json['cardholder_agreement'],
-        'csc': !exists(json, 'csc') ? undefined : json['csc'],
-        'cscPolicy': !exists(json, 'csc_policy') ? undefined : json['csc_policy'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'duplicatePolicy': !exists(json, 'duplicate_policy') ? undefined : json['duplicate_policy'],
-        'initiation': !exists(json, 'initiation') ? undefined : json['initiation'],
-        'matchAvsa': !exists(json, 'match_avsa') ? undefined : json['match_avsa'],
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
-        'threedsecure': !exists(json, 'threedsecure') ? undefined : ThreeDSecureFromJSON(json['threedsecure']),
-        'transInfo': !exists(json, 'trans_info') ? undefined : json['trans_info'],
-        'transType': !exists(json, 'trans_type') ? undefined : json['trans_type'],
+        'avsPostcodePolicy': json['avs_postcode_policy'] == null ? undefined : json['avs_postcode_policy'],
+        'cardholderAgreement': json['cardholder_agreement'] == null ? undefined : json['cardholder_agreement'],
+        'csc': json['csc'] == null ? undefined : json['csc'],
+        'cscPolicy': json['csc_policy'] == null ? undefined : json['csc_policy'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'duplicatePolicy': json['duplicate_policy'] == null ? undefined : json['duplicate_policy'],
+        'initiation': json['initiation'] == null ? undefined : json['initiation'],
+        'matchAvsa': json['match_avsa'] == null ? undefined : json['match_avsa'],
+        'tag': json['tag'] == null ? undefined : json['tag'],
+        'threedsecure': json['threedsecure'] == null ? undefined : ThreeDSecureFromJSON(json['threedsecure']),
+        'transInfo': json['trans_info'] == null ? undefined : json['trans_info'],
+        'transType': json['trans_type'] == null ? undefined : json['trans_type'],
     };
 }
 
 export function ChargeRequestToJSON(value?: ChargeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'identifier': value.identifier,
-        'merchantid': value.merchantid,
-        'token': value.token,
-        'avs_postcode_policy': value.avsPostcodePolicy,
-        'cardholder_agreement': value.cardholderAgreement,
-        'csc': value.csc,
-        'csc_policy': value.cscPolicy,
-        'currency': value.currency,
-        'duplicate_policy': value.duplicatePolicy,
-        'initiation': value.initiation,
-        'match_avsa': value.matchAvsa,
-        'tag': value.tag,
-        'threedsecure': ThreeDSecureToJSON(value.threedsecure),
-        'trans_info': value.transInfo,
-        'trans_type': value.transType,
+        'amount': value['amount'],
+        'identifier': value['identifier'],
+        'merchantid': value['merchantid'],
+        'token': value['token'],
+        'avs_postcode_policy': value['avsPostcodePolicy'],
+        'cardholder_agreement': value['cardholderAgreement'],
+        'csc': value['csc'],
+        'csc_policy': value['cscPolicy'],
+        'currency': value['currency'],
+        'duplicate_policy': value['duplicatePolicy'],
+        'initiation': value['initiation'],
+        'match_avsa': value['matchAvsa'],
+        'tag': value['tag'],
+        'threedsecure': ThreeDSecureToJSON(value['threedsecure']),
+        'trans_info': value['transInfo'],
+        'trans_type': value['transType'],
     };
 }
 

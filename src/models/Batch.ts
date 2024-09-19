@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -51,12 +51,10 @@ export interface Batch {
 /**
  * Check if a given object implements the Batch interface.
  */
-export function instanceOfBatch(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batchDate" in value;
-    isInstance = isInstance && "batchStatus" in value;
-
-    return isInstance;
+export function instanceOfBatch(value: object): value is Batch {
+    if (!('batchDate' in value) || value['batchDate'] === undefined) return false;
+    if (!('batchStatus' in value) || value['batchStatus'] === undefined) return false;
+    return true;
 }
 
 export function BatchFromJSON(json: any): Batch {
@@ -64,29 +62,26 @@ export function BatchFromJSON(json: any): Batch {
 }
 
 export function BatchFromJSONTyped(json: any, ignoreDiscriminator: boolean): Batch {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'batchDate': (new Date(json['batch_date'])),
         'batchStatus': json['batch_status'],
-        'batchId': !exists(json, 'batch_id') ? undefined : json['batch_id'],
+        'batchId': json['batch_id'] == null ? undefined : json['batch_id'],
     };
 }
 
 export function BatchToJSON(value?: Batch | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batch_date': (value.batchDate.toISOString().substring(0,10)),
-        'batch_status': value.batchStatus,
-        'batch_id': value.batchId,
+        'batch_date': ((value['batchDate']).toISOString().substring(0,10)),
+        'batch_status': value['batchStatus'],
+        'batch_id': value['batchId'],
     };
 }
 

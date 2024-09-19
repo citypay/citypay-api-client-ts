@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,11 +54,9 @@ export interface PaylinkEmailNotificationPath {
 /**
  * Check if a given object implements the PaylinkEmailNotificationPath interface.
  */
-export function instanceOfPaylinkEmailNotificationPath(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfPaylinkEmailNotificationPath(value: object): value is PaylinkEmailNotificationPath {
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkEmailNotificationPathFromJSON(json: any): PaylinkEmailNotificationPath {
@@ -66,33 +64,30 @@ export function PaylinkEmailNotificationPathFromJSON(json: any): PaylinkEmailNot
 }
 
 export function PaylinkEmailNotificationPathFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkEmailNotificationPath {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'to': json['to'],
-        'bcc': !exists(json, 'bcc') ? undefined : json['bcc'],
-        'cc': !exists(json, 'cc') ? undefined : json['cc'],
-        'replyTo': !exists(json, 'reply_to') ? undefined : json['reply_to'],
-        'template': !exists(json, 'template') ? undefined : json['template'],
+        'bcc': json['bcc'] == null ? undefined : json['bcc'],
+        'cc': json['cc'] == null ? undefined : json['cc'],
+        'replyTo': json['reply_to'] == null ? undefined : json['reply_to'],
+        'template': json['template'] == null ? undefined : json['template'],
     };
 }
 
 export function PaylinkEmailNotificationPathToJSON(value?: PaylinkEmailNotificationPath | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'to': value.to,
-        'bcc': value.bcc,
-        'cc': value.cc,
-        'reply_to': value.replyTo,
-        'template': value.template,
+        'to': value['to'],
+        'bcc': value['bcc'],
+        'cc': value['cc'],
+        'reply_to': value['replyTo'],
+        'template': value['template'],
     };
 }
 

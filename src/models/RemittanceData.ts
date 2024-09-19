@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,10 +60,8 @@ export interface RemittanceData {
 /**
  * Check if a given object implements the RemittanceData interface.
  */
-export function instanceOfRemittanceData(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfRemittanceData(value: object): value is RemittanceData {
+    return true;
 }
 
 export function RemittanceDataFromJSON(json: any): RemittanceData {
@@ -71,35 +69,32 @@ export function RemittanceDataFromJSON(json: any): RemittanceData {
 }
 
 export function RemittanceDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): RemittanceData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dateCreated': !exists(json, 'date_created') ? undefined : (new Date(json['date_created'])),
-        'netAmount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
-        'refundAmount': !exists(json, 'refund_amount') ? undefined : json['refund_amount'],
-        'refundCount': !exists(json, 'refund_count') ? undefined : json['refund_count'],
-        'salesAmount': !exists(json, 'sales_amount') ? undefined : json['sales_amount'],
-        'salesCount': !exists(json, 'sales_count') ? undefined : json['sales_count'],
+        'dateCreated': json['date_created'] == null ? undefined : (new Date(json['date_created'])),
+        'netAmount': json['net_amount'] == null ? undefined : json['net_amount'],
+        'refundAmount': json['refund_amount'] == null ? undefined : json['refund_amount'],
+        'refundCount': json['refund_count'] == null ? undefined : json['refund_count'],
+        'salesAmount': json['sales_amount'] == null ? undefined : json['sales_amount'],
+        'salesCount': json['sales_count'] == null ? undefined : json['sales_count'],
     };
 }
 
 export function RemittanceDataToJSON(value?: RemittanceData | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'date_created': value.dateCreated === undefined ? undefined : (value.dateCreated.toISOString()),
-        'net_amount': value.netAmount,
-        'refund_amount': value.refundAmount,
-        'refund_count': value.refundCount,
-        'sales_amount': value.salesAmount,
-        'sales_count': value.salesCount,
+        'date_created': value['dateCreated'] == null ? undefined : ((value['dateCreated']).toISOString()),
+        'net_amount': value['netAmount'],
+        'refund_amount': value['refundAmount'],
+        'refund_count': value['refundCount'],
+        'sales_amount': value['salesAmount'],
+        'sales_count': value['salesCount'],
     };
 }
 

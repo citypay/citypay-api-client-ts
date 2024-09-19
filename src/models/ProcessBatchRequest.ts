@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BatchTransaction } from './BatchTransaction';
 import {
     BatchTransactionFromJSON,
@@ -58,13 +58,11 @@ export interface ProcessBatchRequest {
 /**
  * Check if a given object implements the ProcessBatchRequest interface.
  */
-export function instanceOfProcessBatchRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batchDate" in value;
-    isInstance = isInstance && "batchId" in value;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
+export function instanceOfProcessBatchRequest(value: object): value is ProcessBatchRequest {
+    if (!('batchDate' in value) || value['batchDate'] === undefined) return false;
+    if (!('batchId' in value) || value['batchId'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
 }
 
 export function ProcessBatchRequestFromJSON(json: any): ProcessBatchRequest {
@@ -72,7 +70,7 @@ export function ProcessBatchRequestFromJSON(json: any): ProcessBatchRequest {
 }
 
 export function ProcessBatchRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProcessBatchRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,23 +78,20 @@ export function ProcessBatchRequestFromJSONTyped(json: any, ignoreDiscriminator:
         'batchDate': (new Date(json['batch_date'])),
         'batchId': json['batch_id'],
         'transactions': ((json['transactions'] as Array<any>).map(BatchTransactionFromJSON)),
-        'clientAccountId': !exists(json, 'client_account_id') ? undefined : json['client_account_id'],
+        'clientAccountId': json['client_account_id'] == null ? undefined : json['client_account_id'],
     };
 }
 
 export function ProcessBatchRequestToJSON(value?: ProcessBatchRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batch_date': (value.batchDate.toISOString().substring(0,10)),
-        'batch_id': value.batchId,
-        'transactions': ((value.transactions as Array<any>).map(BatchTransactionToJSON)),
-        'client_account_id': value.clientAccountId,
+        'batch_date': ((value['batchDate']).toISOString().substring(0,10)),
+        'batch_id': value['batchId'],
+        'transactions': ((value['transactions'] as Array<any>).map(BatchTransactionToJSON)),
+        'client_account_id': value['clientAccountId'],
     };
 }
 

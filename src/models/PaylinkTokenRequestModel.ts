@@ -12,25 +12,25 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PaylinkCardHolder } from './PaylinkCardHolder';
-import {
-    PaylinkCardHolderFromJSON,
-    PaylinkCardHolderFromJSONTyped,
-    PaylinkCardHolderToJSON,
-} from './PaylinkCardHolder';
-import type { PaylinkCart } from './PaylinkCart';
-import {
-    PaylinkCartFromJSON,
-    PaylinkCartFromJSONTyped,
-    PaylinkCartToJSON,
-} from './PaylinkCart';
+import { mapValues } from '../runtime';
 import type { PaylinkConfig } from './PaylinkConfig';
 import {
     PaylinkConfigFromJSON,
     PaylinkConfigFromJSONTyped,
     PaylinkConfigToJSON,
 } from './PaylinkConfig';
+import type { PaylinkCart } from './PaylinkCart';
+import {
+    PaylinkCartFromJSON,
+    PaylinkCartFromJSONTyped,
+    PaylinkCartToJSON,
+} from './PaylinkCart';
+import type { PaylinkCardHolder } from './PaylinkCardHolder';
+import {
+    PaylinkCardHolderFromJSON,
+    PaylinkCardHolderFromJSONTyped,
+    PaylinkCardHolderToJSON,
+} from './PaylinkCardHolder';
 
 /**
  * 
@@ -124,13 +124,11 @@ export interface PaylinkTokenRequestModel {
 /**
  * Check if a given object implements the PaylinkTokenRequestModel interface.
  */
-export function instanceOfPaylinkTokenRequestModel(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "identifier" in value;
-    isInstance = isInstance && "merchantid" in value;
-
-    return isInstance;
+export function instanceOfPaylinkTokenRequestModel(value: object): value is PaylinkTokenRequestModel {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkTokenRequestModelFromJSON(json: any): PaylinkTokenRequestModel {
@@ -138,7 +136,7 @@ export function PaylinkTokenRequestModelFromJSON(json: any): PaylinkTokenRequest
 }
 
 export function PaylinkTokenRequestModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkTokenRequestModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -146,41 +144,38 @@ export function PaylinkTokenRequestModelFromJSONTyped(json: any, ignoreDiscrimin
         'amount': json['amount'],
         'identifier': json['identifier'],
         'merchantid': json['merchantid'],
-        'accountno': !exists(json, 'accountno') ? undefined : json['accountno'],
-        'cardholder': !exists(json, 'cardholder') ? undefined : PaylinkCardHolderFromJSON(json['cardholder']),
-        'cart': !exists(json, 'cart') ? undefined : PaylinkCartFromJSON(json['cart']),
-        'clientVersion': !exists(json, 'client_version') ? undefined : json['client_version'],
-        'config': !exists(json, 'config') ? undefined : PaylinkConfigFromJSON(json['config']),
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'email': !exists(json, 'email') ? undefined : json['email'],
-        'recurring': !exists(json, 'recurring') ? undefined : json['recurring'],
-        'subscriptionId': !exists(json, 'subscription_id') ? undefined : json['subscription_id'],
-        'txType': !exists(json, 'tx_type') ? undefined : json['tx_type'],
+        'accountno': json['accountno'] == null ? undefined : json['accountno'],
+        'cardholder': json['cardholder'] == null ? undefined : PaylinkCardHolderFromJSON(json['cardholder']),
+        'cart': json['cart'] == null ? undefined : PaylinkCartFromJSON(json['cart']),
+        'clientVersion': json['client_version'] == null ? undefined : json['client_version'],
+        'config': json['config'] == null ? undefined : PaylinkConfigFromJSON(json['config']),
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'recurring': json['recurring'] == null ? undefined : json['recurring'],
+        'subscriptionId': json['subscription_id'] == null ? undefined : json['subscription_id'],
+        'txType': json['tx_type'] == null ? undefined : json['tx_type'],
     };
 }
 
 export function PaylinkTokenRequestModelToJSON(value?: PaylinkTokenRequestModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'identifier': value.identifier,
-        'merchantid': value.merchantid,
-        'accountno': value.accountno,
-        'cardholder': PaylinkCardHolderToJSON(value.cardholder),
-        'cart': PaylinkCartToJSON(value.cart),
-        'client_version': value.clientVersion,
-        'config': PaylinkConfigToJSON(value.config),
-        'currency': value.currency,
-        'email': value.email,
-        'recurring': value.recurring,
-        'subscription_id': value.subscriptionId,
-        'tx_type': value.txType,
+        'amount': value['amount'],
+        'identifier': value['identifier'],
+        'merchantid': value['merchantid'],
+        'accountno': value['accountno'],
+        'cardholder': PaylinkCardHolderToJSON(value['cardholder']),
+        'cart': PaylinkCartToJSON(value['cart']),
+        'client_version': value['clientVersion'],
+        'config': PaylinkConfigToJSON(value['config']),
+        'currency': value['currency'],
+        'email': value['email'],
+        'recurring': value['recurring'],
+        'subscription_id': value['subscriptionId'],
+        'tx_type': value['txType'],
     };
 }
 

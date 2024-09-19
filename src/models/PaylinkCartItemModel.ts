@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -72,10 +72,8 @@ export interface PaylinkCartItemModel {
 /**
  * Check if a given object implements the PaylinkCartItemModel interface.
  */
-export function instanceOfPaylinkCartItemModel(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkCartItemModel(value: object): value is PaylinkCartItemModel {
+    return true;
 }
 
 export function PaylinkCartItemModelFromJSON(json: any): PaylinkCartItemModel {
@@ -83,39 +81,36 @@ export function PaylinkCartItemModelFromJSON(json: any): PaylinkCartItemModel {
 }
 
 export function PaylinkCartItemModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkCartItemModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'brand': !exists(json, 'brand') ? undefined : json['brand'],
-        'category': !exists(json, 'category') ? undefined : json['category'],
-        'count': !exists(json, 'count') ? undefined : json['count'],
-        'label': !exists(json, 'label') ? undefined : json['label'],
-        'max': !exists(json, 'max') ? undefined : json['max'],
-        'sku': !exists(json, 'sku') ? undefined : json['sku'],
-        'variant': !exists(json, 'variant') ? undefined : json['variant'],
+        'amount': json['amount'] == null ? undefined : json['amount'],
+        'brand': json['brand'] == null ? undefined : json['brand'],
+        'category': json['category'] == null ? undefined : json['category'],
+        'count': json['count'] == null ? undefined : json['count'],
+        'label': json['label'] == null ? undefined : json['label'],
+        'max': json['max'] == null ? undefined : json['max'],
+        'sku': json['sku'] == null ? undefined : json['sku'],
+        'variant': json['variant'] == null ? undefined : json['variant'],
     };
 }
 
 export function PaylinkCartItemModelToJSON(value?: PaylinkCartItemModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'brand': value.brand,
-        'category': value.category,
-        'count': value.count,
-        'label': value.label,
-        'max': value.max,
-        'sku': value.sku,
-        'variant': value.variant,
+        'amount': value['amount'],
+        'brand': value['brand'],
+        'category': value['category'],
+        'count': value['count'],
+        'label': value['label'],
+        'max': value['max'],
+        'sku': value['sku'],
+        'variant': value['variant'],
     };
 }
 

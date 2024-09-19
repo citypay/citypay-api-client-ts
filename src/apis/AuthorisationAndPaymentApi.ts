@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * CityPay Payment API
- *  Welcome to the CityPay API, a robust HTTP API payment solution designed for seamless server-to-server  transactional processing. Our API facilitates a wide array of payment operations, catering to diverse business needs.  Whether you\'re integrating Internet payments, handling Mail Order/Telephone Order (MOTO) transactions, managing  Subscriptions with Recurring and Continuous Authority payments, or navigating the complexities of 3-D Secure  authentication, our API is equipped to support your requirements. Additionally, we offer functionalities for  Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids, and Completion processing, alongside the capability  for tokenised payments.  ## Compliance and Security Overview <aside class=\"notice\">   Ensuring the security of payment transactions and compliance with industry standards is paramount. Our API is    designed with stringent security measures and compliance protocols to safeguard sensitive information and meet    the rigorous requirements of Visa, MasterCard, and the PCI Security Standards Council. </aside>  ### Key Compliance and Security Measures  * **TLS Encryption**: All data transmissions must utilise TLS version 1.2 or higher, employing [strong cryptography](#enabled-tls-ciphers). Our infrastructure strictly enforces this requirement to maintain the integrity and confidentiality of data in transit. We conduct regular scans and assessments of our TLS endpoints to identify and mitigate vulnerabilities. * **Data Storage Prohibitions**: Storing sensitive cardholder data (CHD), such as the card security code (CSC) or primary account number (PAN), is strictly prohibited. Our API is designed to minimize your exposure to sensitive data, thereby reducing your compliance burden. * **Data Masking**: For consumer protection and compliance, full card numbers must not be displayed on receipts or any customer-facing materials. Our API automatically masks PANs, displaying only the last four digits to facilitate safe receipt generation. * **Network Scans**: If your application is web-based, regular scans of your hosting environment are mandatory to identify and rectify potential vulnerabilities. This proactive measure is crucial for maintaining a secure and compliant online presence. * **PCI Compliance**: Adherence to PCI DSS standards is not optional; it\'s a requirement for operating securely and legally in the payments ecosystem. For detailed information on compliance requirements and resources, please visit the PCI Security Standards Council website [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/). * **Request Validation**: Our API includes mechanisms to verify the legitimacy of each request, ensuring it pertains to a valid account and originates from a trusted source. We leverage remote IP address verification alongside sophisticated application firewall technologies to thwart a wide array of common security threats.  ## Getting Started Before integrating with the CityPay API, ensure your application and development practices align with the outlined compliance and security measures. This preparatory step is crucial for a smooth integration process and the long-term success of your payment processing operations.  For further details on API endpoints, request/response formats, and code examples, proceed to the subsequent sections of our documentation. Our aim is to provide you with all the necessary tools and information to integrate our payment processing capabilities seamlessly into your application.  Thank you for choosing CityPay API. We look forward to supporting your payment processing needs with our secure, compliant, and versatile API solution.
+ *  Welcome to the CityPay API, a robust HTTP API payment solution designed for seamless server-to-server  transactional processing. Our API facilitates a wide array of payment operations, catering to diverse business needs.  Whether you\'re integrating Internet payments, handling Mail Order/Telephone Order (MOTO) transactions, managing  Subscriptions with Recurring and Continuous Authority payments, or navigating the complexities of 3-D Secure  authentication, our API is equipped to support your requirements. Additionally, we offer functionalities for  Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids, and Completion processing, alongside the capability  for tokenised payments.  ## Compliance and Security Overview <aside class=\"notice\">   Ensuring the security of payment transactions and compliance with industry standards is paramount. Our API is    designed with stringent security measures and compliance protocols to safeguard sensitive information and meet    the rigorous requirements of Visa, MasterCard, and the PCI Security Standards Council. </aside>  ### Key Compliance and Security Measures  * **TLS Encryption**: All data transmissions must utilise TLS version 1.2 or higher, employing [strong cryptography](#enabled-tls-ciphers). Our infrastructure strictly enforces this requirement to maintain the integrity and confidentiality of data in transit. We conduct regular scans and assessments of our TLS endpoints to identify and mitigate vulnerabilities. * **Data Storage Prohibitions**: Storing sensitive cardholder data (CHD), such as the card security code (CSC) or primary account number (PAN), is strictly prohibited. Our API is designed to minimize your exposure to sensitive data, thereby reducing your compliance burden. * **Data Masking**: For consumer protection and compliance, full card numbers must not be displayed on receipts or any customer-facing materials. Our API automatically masks PANs, displaying only the last four digits to facilitate safe receipt generation. * **Network Scans**: If your application is web-based, regular scans of your hosting environment are mandatory to identify and rectify potential vulnerabilities. This proactive measure is crucial for maintaining a secure and compliant online presence. * **PCI Compliance**: Adherence to PCI DSS standards is not optional; it\'s a requirement for operating securely and legally in the payments ecosystem. For detailed information on compliance requirements and resources, please visit the PCI Security Standards Council website [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/). * **Request Validation**: Our API includes mechanisms to verify the legitimacy of each request, ensuring it pertains to a valid account and originates from a trusted source. We leverage remote IP address verification alongside sophisticated application firewall technologies to thwart a wide array of common security threats.  ## Getting Started Before integrating with the CityPay API, ensure your application and development practices align with the outlined compliance and security measures. This preparatory step is crucial for a smooth integration process and the long-term success of your payment processing operations.  For further details on API endpoints, request/response formats, and code examples, proceed to the subsequent sections of our documentation. Our aim is to provide you with all the necessary tools and information to integrate our payment processing capabilities seamlessly into your application.  Thank you for choosing CityPay API. We look forward to supporting your payment processing needs with our secure, compliant, and versatile API solution. 
  *
  * The version of the OpenAPI document: 6.6.40
  * Contact: support@citypay.com
@@ -64,44 +64,44 @@ import {
     VoidRequestToJSON,
 } from '../models/index';
 
-export interface AuthorisationAndPaymentApiAuthorisationRequest {
+export interface AuthorisationAndPaymentApiAuthorisationRequestRequest {
     auth_request: AuthRequest;
 }
 
-export interface AuthorisationAndPaymentApiBinRangeLookupRequest {
+export interface AuthorisationAndPaymentApiBinRangeLookupRequestRequest {
     bin_lookup: BinLookup;
 }
 
-export interface AuthorisationAndPaymentApiCResRequest {
+export interface AuthorisationAndPaymentApiCResRequestRequest {
     c_res_auth_request: CResAuthRequest;
 }
 
-export interface AuthorisationAndPaymentApiCaptureRequest {
+export interface AuthorisationAndPaymentApiCaptureRequestRequest {
     capture_request: CaptureRequest;
 }
 
-export interface AuthorisationAndPaymentApiCreatePaymentIntent {
+export interface AuthorisationAndPaymentApiCreatePaymentIntentRequest {
     payment_intent: PaymentIntent;
 }
 
-export interface AuthorisationAndPaymentApiPaResRequest {
+export interface AuthorisationAndPaymentApiPaResRequestRequest {
     pa_res_auth_request: PaResAuthRequest;
 }
 
-export interface AuthorisationAndPaymentApiRefundRequest {
+export interface AuthorisationAndPaymentApiRefundRequestRequest {
     refund_request: RefundRequest;
 }
 
-export interface AuthorisationAndPaymentApiRetrievalRequest {
+export interface AuthorisationAndPaymentApiRetrievalRequestRequest {
     retrieve_request: RetrieveRequest;
 }
 
-export interface AuthorisationAndPaymentApiVoidRequest {
+export interface AuthorisationAndPaymentApiVoidRequestRequest {
     void_request: VoidRequest;
 }
 
 /**
- *
+ * 
  */
 export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
 
@@ -109,9 +109,12 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
      * Performs a request for authorisation for a card payment request.
      * Authorisation
      */
-    async authorisationRequestRaw(requestParameters: AuthorisationAndPaymentApiAuthorisationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Decision>> {
-        if (requestParameters.auth_request === null || requestParameters.auth_request === undefined) {
-            throw new runtime.RequiredError('auth_request','Required parameter requestParameters.auth_request was null or undefined when calling authorisationRequest.');
+    async authorisationRequestRaw(requestParameters: AuthorisationAndPaymentApiAuthorisationRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Decision>> {
+        if (requestParameters['auth_request'] == null) {
+            throw new runtime.RequiredError(
+                'auth_request',
+                'Required parameter "auth_request" was null or undefined when calling authorisationRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -121,7 +124,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -129,7 +132,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: AuthRequestToJSON(requestParameters.auth_request),
+            body: AuthRequestToJSON(requestParameters['auth_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DecisionFromJSON(jsonValue));
@@ -139,18 +142,21 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
      * Performs a request for authorisation for a card payment request.
      * Authorisation
      */
-    async authorisationRequest(requestParameters: AuthorisationAndPaymentApiAuthorisationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Decision> {
+    async authorisationRequest(requestParameters: AuthorisationAndPaymentApiAuthorisationRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Decision> {
         const response = await this.authorisationRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number\'s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it\'s country of origin 3. it\'s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result.
+     * A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number\'s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it\'s country of origin 3. it\'s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
      * Bin Lookup
      */
-    async binRangeLookupRequestRaw(requestParameters: AuthorisationAndPaymentApiBinRangeLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Bin>> {
-        if (requestParameters.bin_lookup === null || requestParameters.bin_lookup === undefined) {
-            throw new runtime.RequiredError('bin_lookup','Required parameter requestParameters.bin_lookup was null or undefined when calling binRangeLookupRequest.');
+    async binRangeLookupRequestRaw(requestParameters: AuthorisationAndPaymentApiBinRangeLookupRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Bin>> {
+        if (requestParameters['bin_lookup'] == null) {
+            throw new runtime.RequiredError(
+                'bin_lookup',
+                'Required parameter "bin_lookup" was null or undefined when calling binRangeLookupRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -160,7 +166,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -168,28 +174,31 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: BinLookupToJSON(requestParameters.bin_lookup),
+            body: BinLookupToJSON(requestParameters['bin_lookup']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => BinFromJSON(jsonValue));
     }
 
     /**
-     * A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number\'s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it\'s country of origin 3. it\'s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result.
+     * A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number\'s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it\'s country of origin 3. it\'s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
      * Bin Lookup
      */
-    async binRangeLookupRequest(requestParameters: AuthorisationAndPaymentApiBinRangeLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Bin> {
+    async binRangeLookupRequest(requestParameters: AuthorisationAndPaymentApiBinRangeLookupRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Bin> {
         const response = await this.binRangeLookupRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * The CRes request performs authorisation processing once a challenge request has been completed with an Authentication Server (ACS). This challenge response contains confirmation that will allow the API systems to return an authorisation response based on the result. Our systems will  know out of band via an `RReq` call by the ACS to notify us if the liability shift has been issued.  Any call to the CRes operation will require a previous authorisation request and cannot be called  on its own without a previous [request challenge](#requestchallenged) being obtained.
+     * The CRes request performs authorisation processing once a challenge request has been completed with an Authentication Server (ACS). This challenge response contains confirmation that will allow the API systems to return an authorisation response based on the result. Our systems will  know out of band via an `RReq` call by the ACS to notify us if the liability shift has been issued.  Any call to the CRes operation will require a previous authorisation request and cannot be called  on its own without a previous [request challenge](#requestchallenged) being obtained. 
      * CRes
      */
-    async cResRequestRaw(requestParameters: AuthorisationAndPaymentApiCResRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.c_res_auth_request === null || requestParameters.c_res_auth_request === undefined) {
-            throw new runtime.RequiredError('c_res_auth_request','Required parameter requestParameters.c_res_auth_request was null or undefined when calling cResRequest.');
+    async cResRequestRaw(requestParameters: AuthorisationAndPaymentApiCResRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['c_res_auth_request'] == null) {
+            throw new runtime.RequiredError(
+                'c_res_auth_request',
+                'Required parameter "c_res_auth_request" was null or undefined when calling cResRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -199,37 +208,39 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
-        const bodyCres = CResAuthRequestToJSON(requestParameters.c_res_auth_request);
         const response = await this.request({
             path: `/v6/cres`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body:bodyCres,
+            body: CResAuthRequestToJSON(requestParameters['c_res_auth_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthResponseFromJSON(jsonValue));
     }
 
     /**
-     * The CRes request performs authorisation processing once a challenge request has been completed with an Authentication Server (ACS). This challenge response contains confirmation that will allow the API systems to return an authorisation response based on the result. Our systems will  know out of band via an `RReq` call by the ACS to notify us if the liability shift has been issued.  Any call to the CRes operation will require a previous authorisation request and cannot be called  on its own without a previous [request challenge](#requestchallenged) being obtained.
+     * The CRes request performs authorisation processing once a challenge request has been completed with an Authentication Server (ACS). This challenge response contains confirmation that will allow the API systems to return an authorisation response based on the result. Our systems will  know out of band via an `RReq` call by the ACS to notify us if the liability shift has been issued.  Any call to the CRes operation will require a previous authorisation request and cannot be called  on its own without a previous [request challenge](#requestchallenged) being obtained. 
      * CRes
      */
-    async cResRequest(requestParameters: AuthorisationAndPaymentApiCResRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async cResRequest(requestParameters: AuthorisationAndPaymentApiCResRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.cResRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * _The capture process only applies to transactions which have been pre-authorised only._   The capture process will ensure that a transaction will now settle. It is expected that a capture call will be provided within 3 days or a maximum of 7 days.  A capture request is provided to confirm that you wish the transaction to be settled. This request can contain a final amount for the transaction which is different to the original authorisation amount. This may be useful in a delayed system process such as waiting for stock to be ordered, confirmed, or services provided before the final cost is known.  When a transaction is completed, a new authorisation code may be created and a new confirmation can be sent online to the acquiring bank.  Once the transaction has been processed. A standard [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction. On a successful completion process, the transaction will be available for the settlement and completed at the end of the day.
+     * _The capture process only applies to transactions which have been pre-authorised only._   The capture process will ensure that a transaction will now settle. It is expected that a capture call will be provided within 3 days or a maximum of 7 days.  A capture request is provided to confirm that you wish the transaction to be settled. This request can contain a final amount for the transaction which is different to the original authorisation amount. This may be useful in a delayed system process such as waiting for stock to be ordered, confirmed, or services provided before the final cost is known.  When a transaction is completed, a new authorisation code may be created and a new confirmation can be sent online to the acquiring bank.  Once the transaction has been processed. A standard [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction. On a successful completion process, the transaction will be available for the settlement and completed at the end of the day. 
      * Capture
      */
-    async captureRequestRaw(requestParameters: AuthorisationAndPaymentApiCaptureRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.capture_request === null || requestParameters.capture_request === undefined) {
-            throw new runtime.RequiredError('capture_request','Required parameter requestParameters.capture_request was null or undefined when calling captureRequest.');
+    async captureRequestRaw(requestParameters: AuthorisationAndPaymentApiCaptureRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['capture_request'] == null) {
+            throw new runtime.RequiredError(
+                'capture_request',
+                'Required parameter "capture_request" was null or undefined when calling captureRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -239,7 +250,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -247,28 +258,31 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CaptureRequestToJSON(requestParameters.capture_request),
+            body: CaptureRequestToJSON(requestParameters['capture_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
     }
 
     /**
-     * _The capture process only applies to transactions which have been pre-authorised only._   The capture process will ensure that a transaction will now settle. It is expected that a capture call will be provided within 3 days or a maximum of 7 days.  A capture request is provided to confirm that you wish the transaction to be settled. This request can contain a final amount for the transaction which is different to the original authorisation amount. This may be useful in a delayed system process such as waiting for stock to be ordered, confirmed, or services provided before the final cost is known.  When a transaction is completed, a new authorisation code may be created and a new confirmation can be sent online to the acquiring bank.  Once the transaction has been processed. A standard [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction. On a successful completion process, the transaction will be available for the settlement and completed at the end of the day.
+     * _The capture process only applies to transactions which have been pre-authorised only._   The capture process will ensure that a transaction will now settle. It is expected that a capture call will be provided within 3 days or a maximum of 7 days.  A capture request is provided to confirm that you wish the transaction to be settled. This request can contain a final amount for the transaction which is different to the original authorisation amount. This may be useful in a delayed system process such as waiting for stock to be ordered, confirmed, or services provided before the final cost is known.  When a transaction is completed, a new authorisation code may be created and a new confirmation can be sent online to the acquiring bank.  Once the transaction has been processed. A standard [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction. On a successful completion process, the transaction will be available for the settlement and completed at the end of the day. 
      * Capture
      */
-    async captureRequest(requestParameters: AuthorisationAndPaymentApiCaptureRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async captureRequest(requestParameters: AuthorisationAndPaymentApiCaptureRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.captureRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * This endpoint initiates the creation of a payment intent, which is a precursor to processing a payment. A payment intent captures the details of a prospective payment transaction, including the payment amount, currency, and associated billing and shipping information.
+     * This endpoint initiates the creation of a payment intent, which is a precursor to processing a payment. A payment intent captures the details of a prospective payment transaction, including the payment amount, currency, and associated billing and shipping information. 
      * Create a Payment Intent
      */
-    async createPaymentIntentRaw(requestParameters: AuthorisationAndPaymentApiCreatePaymentIntent, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaymentIntentReference>> {
-        if (requestParameters.payment_intent === null || requestParameters.payment_intent === undefined) {
-            throw new runtime.RequiredError('payment_intent','Required parameter requestParameters.payment_intent was null or undefined when calling createPaymentIntent.');
+    async createPaymentIntentRaw(requestParameters: AuthorisationAndPaymentApiCreatePaymentIntentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaymentIntentReference>> {
+        if (requestParameters['payment_intent'] == null) {
+            throw new runtime.RequiredError(
+                'payment_intent',
+                'Required parameter "payment_intent" was null or undefined when calling createPaymentIntent().'
+            );
         }
 
         const queryParameters: any = {};
@@ -278,7 +292,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -286,28 +300,31 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaymentIntentToJSON(requestParameters.payment_intent),
+            body: PaymentIntentToJSON(requestParameters['payment_intent']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PaymentIntentReferenceFromJSON(jsonValue));
     }
 
     /**
-     * This endpoint initiates the creation of a payment intent, which is a precursor to processing a payment. A payment intent captures the details of a prospective payment transaction, including the payment amount, currency, and associated billing and shipping information.
+     * This endpoint initiates the creation of a payment intent, which is a precursor to processing a payment. A payment intent captures the details of a prospective payment transaction, including the payment amount, currency, and associated billing and shipping information. 
      * Create a Payment Intent
      */
-    async createPaymentIntent(requestParameters: AuthorisationAndPaymentApiCreatePaymentIntent, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaymentIntentReference> {
+    async createPaymentIntent(requestParameters: AuthorisationAndPaymentApiCreatePaymentIntentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaymentIntentReference> {
         const response = await this.createPaymentIntentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * The Payer Authentication Response (PaRes) is an operation after the result of authentication   being performed. The request uses an encoded packet of authentication data to  notify us of the completion of the liability shift. Once this value has been unpacked and its signature is checked, our systems will proceed to authorisation processing.    Any call to the PaRes operation will require a previous authorisation request and cannot be called  on its own without a previous [authentication required](#authenticationrequired)  being obtained.
+     * The Payer Authentication Response (PaRes) is an operation after the result of authentication   being performed. The request uses an encoded packet of authentication data to  notify us of the completion of the liability shift. Once this value has been unpacked and its signature is checked, our systems will proceed to authorisation processing.    Any call to the PaRes operation will require a previous authorisation request and cannot be called  on its own without a previous [authentication required](#authenticationrequired)  being obtained. 
      * PaRes
      */
-    async paResRequestRaw(requestParameters: AuthorisationAndPaymentApiPaResRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.pa_res_auth_request === null || requestParameters.pa_res_auth_request === undefined) {
-            throw new runtime.RequiredError('pa_res_auth_request','Required parameter requestParameters.pa_res_auth_request was null or undefined when calling paResRequest.');
+    async paResRequestRaw(requestParameters: AuthorisationAndPaymentApiPaResRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['pa_res_auth_request'] == null) {
+            throw new runtime.RequiredError(
+                'pa_res_auth_request',
+                'Required parameter "pa_res_auth_request" was null or undefined when calling paResRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -317,7 +334,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -325,28 +342,31 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PaResAuthRequestToJSON(requestParameters.pa_res_auth_request),
+            body: PaResAuthRequestToJSON(requestParameters['pa_res_auth_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthResponseFromJSON(jsonValue));
     }
 
     /**
-     * The Payer Authentication Response (PaRes) is an operation after the result of authentication   being performed. The request uses an encoded packet of authentication data to  notify us of the completion of the liability shift. Once this value has been unpacked and its signature is checked, our systems will proceed to authorisation processing.    Any call to the PaRes operation will require a previous authorisation request and cannot be called  on its own without a previous [authentication required](#authenticationrequired)  being obtained.
+     * The Payer Authentication Response (PaRes) is an operation after the result of authentication   being performed. The request uses an encoded packet of authentication data to  notify us of the completion of the liability shift. Once this value has been unpacked and its signature is checked, our systems will proceed to authorisation processing.    Any call to the PaRes operation will require a previous authorisation request and cannot be called  on its own without a previous [authentication required](#authenticationrequired)  being obtained. 
      * PaRes
      */
-    async paResRequest(requestParameters: AuthorisationAndPaymentApiPaResRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async paResRequest(requestParameters: AuthorisationAndPaymentApiPaResRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.paResRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * A refund request which allows for the refunding of a previous transaction up  and to the amount of the original sale. A refund will be performed against the  original card used to process the transaction.
+     * A refund request which allows for the refunding of a previous transaction up  and to the amount of the original sale. A refund will be performed against the  original card used to process the transaction. 
      * Refund
      */
-    async refundRequestRaw(requestParameters: AuthorisationAndPaymentApiRefundRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.refund_request === null || requestParameters.refund_request === undefined) {
-            throw new runtime.RequiredError('refund_request','Required parameter requestParameters.refund_request was null or undefined when calling refundRequest.');
+    async refundRequestRaw(requestParameters: AuthorisationAndPaymentApiRefundRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['refund_request'] == null) {
+            throw new runtime.RequiredError(
+                'refund_request',
+                'Required parameter "refund_request" was null or undefined when calling refundRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -356,7 +376,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -364,28 +384,31 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RefundRequestToJSON(requestParameters.refund_request),
+            body: RefundRequestToJSON(requestParameters['refund_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthResponseFromJSON(jsonValue));
     }
 
     /**
-     * A refund request which allows for the refunding of a previous transaction up  and to the amount of the original sale. A refund will be performed against the  original card used to process the transaction.
+     * A refund request which allows for the refunding of a previous transaction up  and to the amount of the original sale. A refund will be performed against the  original card used to process the transaction. 
      * Refund
      */
-    async refundRequest(requestParameters: AuthorisationAndPaymentApiRefundRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async refundRequest(requestParameters: AuthorisationAndPaymentApiRefundRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.refundRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * A retrieval request which allows an integration to obtain the result of a transaction processed in the last 90 days. The request allows for retrieval based on the identifier or transaction  number.   The process may return multiple results in particular where a transaction was processed multiple times against the same identifier. This can happen if errors were first received. The API therefore returns up to the first 5 transactions in the latest date time order.  It is not intended for this operation to be a replacement for reporting and only allows for base transaction information to be returned.
+     * A retrieval request which allows an integration to obtain the result of a transaction processed in the last 90 days. The request allows for retrieval based on the identifier or transaction  number.   The process may return multiple results in particular where a transaction was processed multiple times against the same identifier. This can happen if errors were first received. The API therefore returns up to the first 5 transactions in the latest date time order.  It is not intended for this operation to be a replacement for reporting and only allows for base transaction information to be returned. 
      * Retrieval
      */
-    async retrievalRequestRaw(requestParameters: AuthorisationAndPaymentApiRetrievalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthReferences>> {
-        if (requestParameters.retrieve_request === null || requestParameters.retrieve_request === undefined) {
-            throw new runtime.RequiredError('retrieve_request','Required parameter requestParameters.retrieve_request was null or undefined when calling retrievalRequest.');
+    async retrievalRequestRaw(requestParameters: AuthorisationAndPaymentApiRetrievalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthReferences>> {
+        if (requestParameters['retrieve_request'] == null) {
+            throw new runtime.RequiredError(
+                'retrieve_request',
+                'Required parameter "retrieve_request" was null or undefined when calling retrievalRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -395,7 +418,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -403,28 +426,31 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RetrieveRequestToJSON(requestParameters.retrieve_request),
+            body: RetrieveRequestToJSON(requestParameters['retrieve_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthReferencesFromJSON(jsonValue));
     }
 
     /**
-     * A retrieval request which allows an integration to obtain the result of a transaction processed in the last 90 days. The request allows for retrieval based on the identifier or transaction  number.   The process may return multiple results in particular where a transaction was processed multiple times against the same identifier. This can happen if errors were first received. The API therefore returns up to the first 5 transactions in the latest date time order.  It is not intended for this operation to be a replacement for reporting and only allows for base transaction information to be returned.
+     * A retrieval request which allows an integration to obtain the result of a transaction processed in the last 90 days. The request allows for retrieval based on the identifier or transaction  number.   The process may return multiple results in particular where a transaction was processed multiple times against the same identifier. This can happen if errors were first received. The API therefore returns up to the first 5 transactions in the latest date time order.  It is not intended for this operation to be a replacement for reporting and only allows for base transaction information to be returned. 
      * Retrieval
      */
-    async retrievalRequest(requestParameters: AuthorisationAndPaymentApiRetrievalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthReferences> {
+    async retrievalRequest(requestParameters: AuthorisationAndPaymentApiRetrievalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthReferences> {
         const response = await this.retrievalRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * _The void process generally applies to transactions which have been pre-authorised only however voids can occur  on the same day if performed before batching and settlement._   The void process will ensure that a transaction will now settle. It is expected that a void call will be  provided on the same day before batching and settlement or within 3 days or within a maximum of 7 days.  Once the transaction has been processed as a void, an [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction.
+     * _The void process generally applies to transactions which have been pre-authorised only however voids can occur  on the same day if performed before batching and settlement._   The void process will ensure that a transaction will now settle. It is expected that a void call will be  provided on the same day before batching and settlement or within 3 days or within a maximum of 7 days.  Once the transaction has been processed as a void, an [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction. 
      * Void
      */
-    async voidRequestRaw(requestParameters: AuthorisationAndPaymentApiVoidRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.void_request === null || requestParameters.void_request === undefined) {
-            throw new runtime.RequiredError('void_request','Required parameter requestParameters.void_request was null or undefined when calling voidRequest.');
+    async voidRequestRaw(requestParameters: AuthorisationAndPaymentApiVoidRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['void_request'] == null) {
+            throw new runtime.RequiredError(
+                'void_request',
+                'Required parameter "void_request" was null or undefined when calling voidRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -434,7 +460,7 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -442,17 +468,17 @@ export class AuthorisationAndPaymentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: VoidRequestToJSON(requestParameters.void_request),
+            body: VoidRequestToJSON(requestParameters['void_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
     }
 
     /**
-     * _The void process generally applies to transactions which have been pre-authorised only however voids can occur  on the same day if performed before batching and settlement._   The void process will ensure that a transaction will now settle. It is expected that a void call will be  provided on the same day before batching and settlement or within 3 days or within a maximum of 7 days.  Once the transaction has been processed as a void, an [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction.
+     * _The void process generally applies to transactions which have been pre-authorised only however voids can occur  on the same day if performed before batching and settlement._   The void process will ensure that a transaction will now settle. It is expected that a void call will be  provided on the same day before batching and settlement or within 3 days or within a maximum of 7 days.  Once the transaction has been processed as a void, an [`Acknowledgement`](#acknowledgement) will be returned, outlining the result of the transaction. 
      * Void
      */
-    async voidRequest(requestParameters: AuthorisationAndPaymentApiVoidRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async voidRequest(requestParameters: AuthorisationAndPaymentApiVoidRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.voidRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

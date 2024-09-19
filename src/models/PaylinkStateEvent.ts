@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,10 +42,8 @@ export interface PaylinkStateEvent {
 /**
  * Check if a given object implements the PaylinkStateEvent interface.
  */
-export function instanceOfPaylinkStateEvent(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkStateEvent(value: object): value is PaylinkStateEvent {
+    return true;
 }
 
 export function PaylinkStateEventFromJSON(json: any): PaylinkStateEvent {
@@ -53,29 +51,26 @@ export function PaylinkStateEventFromJSON(json: any): PaylinkStateEvent {
 }
 
 export function PaylinkStateEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkStateEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'datetime': !exists(json, 'datetime') ? undefined : (new Date(json['datetime'])),
-        'message': !exists(json, 'message') ? undefined : json['message'],
-        'state': !exists(json, 'state') ? undefined : json['state'],
+        'datetime': json['datetime'] == null ? undefined : (new Date(json['datetime'])),
+        'message': json['message'] == null ? undefined : json['message'],
+        'state': json['state'] == null ? undefined : json['state'],
     };
 }
 
 export function PaylinkStateEventToJSON(value?: PaylinkStateEvent | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'datetime': value.datetime === undefined ? undefined : (value.datetime.toISOString()),
-        'message': value.message,
-        'state': value.state,
+        'datetime': value['datetime'] == null ? undefined : ((value['datetime']).toISOString()),
+        'message': value['message'],
+        'state': value['state'],
     };
 }
 

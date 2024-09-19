@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -108,10 +108,8 @@ export interface AuthReference {
 /**
  * Check if a given object implements the AuthReference interface.
  */
-export function instanceOfAuthReference(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfAuthReference(value: object): value is AuthReference {
+    return true;
 }
 
 export function AuthReferenceFromJSON(json: any): AuthReference {
@@ -119,51 +117,48 @@ export function AuthReferenceFromJSON(json: any): AuthReference {
 }
 
 export function AuthReferenceFromJSONTyped(json: any, ignoreDiscriminator: boolean): AuthReference {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'amountValue': !exists(json, 'amount_value') ? undefined : json['amount_value'],
-        'atrn': !exists(json, 'atrn') ? undefined : json['atrn'],
-        'authcode': !exists(json, 'authcode') ? undefined : json['authcode'],
-        'batchno': !exists(json, 'batchno') ? undefined : json['batchno'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'datetime': !exists(json, 'datetime') ? undefined : (new Date(json['datetime'])),
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'maskedpan': !exists(json, 'maskedpan') ? undefined : json['maskedpan'],
-        'merchantid': !exists(json, 'merchantid') ? undefined : json['merchantid'],
-        'result': !exists(json, 'result') ? undefined : json['result'],
-        'transStatus': !exists(json, 'trans_status') ? undefined : json['trans_status'],
-        'transType': !exists(json, 'trans_type') ? undefined : json['trans_type'],
-        'transno': !exists(json, 'transno') ? undefined : json['transno'],
+        'amount': json['amount'] == null ? undefined : json['amount'],
+        'amountValue': json['amount_value'] == null ? undefined : json['amount_value'],
+        'atrn': json['atrn'] == null ? undefined : json['atrn'],
+        'authcode': json['authcode'] == null ? undefined : json['authcode'],
+        'batchno': json['batchno'] == null ? undefined : json['batchno'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'datetime': json['datetime'] == null ? undefined : (new Date(json['datetime'])),
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'maskedpan': json['maskedpan'] == null ? undefined : json['maskedpan'],
+        'merchantid': json['merchantid'] == null ? undefined : json['merchantid'],
+        'result': json['result'] == null ? undefined : json['result'],
+        'transStatus': json['trans_status'] == null ? undefined : json['trans_status'],
+        'transType': json['trans_type'] == null ? undefined : json['trans_type'],
+        'transno': json['transno'] == null ? undefined : json['transno'],
     };
 }
 
 export function AuthReferenceToJSON(value?: AuthReference | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'amount_value': value.amountValue,
-        'atrn': value.atrn,
-        'authcode': value.authcode,
-        'batchno': value.batchno,
-        'currency': value.currency,
-        'datetime': value.datetime === undefined ? undefined : (value.datetime.toISOString()),
-        'identifier': value.identifier,
-        'maskedpan': value.maskedpan,
-        'merchantid': value.merchantid,
-        'result': value.result,
-        'trans_status': value.transStatus,
-        'trans_type': value.transType,
-        'transno': value.transno,
+        'amount': value['amount'],
+        'amount_value': value['amountValue'],
+        'atrn': value['atrn'],
+        'authcode': value['authcode'],
+        'batchno': value['batchno'],
+        'currency': value['currency'],
+        'datetime': value['datetime'] == null ? undefined : ((value['datetime']).toISOString()),
+        'identifier': value['identifier'],
+        'maskedpan': value['maskedpan'],
+        'merchantid': value['merchantid'],
+        'result': value['result'],
+        'trans_status': value['transStatus'],
+        'trans_type': value['transType'],
+        'transno': value['transno'],
     };
 }
 

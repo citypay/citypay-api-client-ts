@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -32,10 +32,8 @@ export interface CResAuthRequest {
 /**
  * Check if a given object implements the CResAuthRequest interface.
  */
-export function instanceOfCResAuthRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCResAuthRequest(value: object): value is CResAuthRequest {
+    return true;
 }
 
 export function CResAuthRequestFromJSON(json: any): CResAuthRequest {
@@ -43,25 +41,22 @@ export function CResAuthRequestFromJSON(json: any): CResAuthRequest {
 }
 
 export function CResAuthRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CResAuthRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'cres': !exists(json, 'cres') ? undefined : json['cres'],
+        'cres': json['cres'] == null ? undefined : json['cres'],
     };
 }
 
 export function CResAuthRequestToJSON(value?: CResAuthRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'cres': value.cres,
+        'cres': value['cres'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface BinLookup {
 /**
  * Check if a given object implements the BinLookup interface.
  */
-export function instanceOfBinLookup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "bin" in value;
-
-    return isInstance;
+export function instanceOfBinLookup(value: object): value is BinLookup {
+    if (!('bin' in value) || value['bin'] === undefined) return false;
+    return true;
 }
 
 export function BinLookupFromJSON(json: any): BinLookup {
@@ -42,7 +40,7 @@ export function BinLookupFromJSON(json: any): BinLookup {
 }
 
 export function BinLookupFromJSONTyped(json: any, ignoreDiscriminator: boolean): BinLookup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -52,15 +50,12 @@ export function BinLookupFromJSONTyped(json: any, ignoreDiscriminator: boolean):
 }
 
 export function BinLookupToJSON(value?: BinLookup | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'bin': value.bin,
+        'bin': value['bin'],
     };
 }
 

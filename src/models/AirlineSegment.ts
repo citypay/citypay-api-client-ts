@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -81,15 +81,13 @@ export interface AirlineSegment {
 /**
  * Check if a given object implements the AirlineSegment interface.
  */
-export function instanceOfAirlineSegment(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "arrivalLocationCode" in value;
-    isInstance = isInstance && "carrierCode" in value;
-    isInstance = isInstance && "classServiceCode" in value;
-    isInstance = isInstance && "departureDate" in value;
-    isInstance = isInstance && "flightNumber" in value;
-
-    return isInstance;
+export function instanceOfAirlineSegment(value: object): value is AirlineSegment {
+    if (!('arrivalLocationCode' in value) || value['arrivalLocationCode'] === undefined) return false;
+    if (!('carrierCode' in value) || value['carrierCode'] === undefined) return false;
+    if (!('classServiceCode' in value) || value['classServiceCode'] === undefined) return false;
+    if (!('departureDate' in value) || value['departureDate'] === undefined) return false;
+    if (!('flightNumber' in value) || value['flightNumber'] === undefined) return false;
+    return true;
 }
 
 export function AirlineSegmentFromJSON(json: any): AirlineSegment {
@@ -97,7 +95,7 @@ export function AirlineSegmentFromJSON(json: any): AirlineSegment {
 }
 
 export function AirlineSegmentFromJSONTyped(json: any, ignoreDiscriminator: boolean): AirlineSegment {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -107,29 +105,26 @@ export function AirlineSegmentFromJSONTyped(json: any, ignoreDiscriminator: bool
         'classServiceCode': json['class_service_code'],
         'departureDate': (new Date(json['departure_date'])),
         'flightNumber': json['flight_number'],
-        'departureLocationCode': !exists(json, 'departure_location_code') ? undefined : json['departure_location_code'],
-        'segmentFare': !exists(json, 'segment_fare') ? undefined : json['segment_fare'],
-        'stopOverIndicator': !exists(json, 'stop_over_indicator') ? undefined : json['stop_over_indicator'],
+        'departureLocationCode': json['departure_location_code'] == null ? undefined : json['departure_location_code'],
+        'segmentFare': json['segment_fare'] == null ? undefined : json['segment_fare'],
+        'stopOverIndicator': json['stop_over_indicator'] == null ? undefined : json['stop_over_indicator'],
     };
 }
 
 export function AirlineSegmentToJSON(value?: AirlineSegment | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'arrival_location_code': value.arrivalLocationCode,
-        'carrier_code': value.carrierCode,
-        'class_service_code': value.classServiceCode,
-        'departure_date': (value.departureDate.toISOString().substring(0,10)),
-        'flight_number': value.flightNumber,
-        'departure_location_code': value.departureLocationCode,
-        'segment_fare': value.segmentFare,
-        'stop_over_indicator': value.stopOverIndicator,
+        'arrival_location_code': value['arrivalLocationCode'],
+        'carrier_code': value['carrierCode'],
+        'class_service_code': value['classServiceCode'],
+        'departure_date': ((value['departureDate']).toISOString().substring(0,10)),
+        'flight_number': value['flightNumber'],
+        'departure_location_code': value['departureLocationCode'],
+        'segment_fare': value['segmentFare'],
+        'stop_over_indicator': value['stopOverIndicator'],
     };
 }
 

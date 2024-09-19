@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,10 +30,8 @@ export interface AccountStatus {
 /**
  * Check if a given object implements the AccountStatus interface.
  */
-export function instanceOfAccountStatus(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfAccountStatus(value: object): value is AccountStatus {
+    return true;
 }
 
 export function AccountStatusFromJSON(json: any): AccountStatus {
@@ -41,25 +39,22 @@ export function AccountStatusFromJSON(json: any): AccountStatus {
 }
 
 export function AccountStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountStatus {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'status': !exists(json, 'status') ? undefined : json['status'],
+        'status': json['status'] == null ? undefined : json['status'],
     };
 }
 
 export function AccountStatusToJSON(value?: AccountStatus | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'status': value.status,
+        'status': value['status'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MerchantBatchResponse } from './MerchantBatchResponse';
 import {
     MerchantBatchResponseFromJSON,
@@ -121,12 +121,10 @@ export interface RemittedClientData {
 /**
  * Check if a given object implements the RemittedClientData interface.
  */
-export function instanceOfRemittedClientData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batches" in value;
-    isInstance = isInstance && "remittances" in value;
-
-    return isInstance;
+export function instanceOfRemittedClientData(value: object): value is RemittedClientData {
+    if (!('batches' in value) || value['batches'] === undefined) return false;
+    if (!('remittances' in value) || value['remittances'] === undefined) return false;
+    return true;
 }
 
 export function RemittedClientDataFromJSON(json: any): RemittedClientData {
@@ -134,51 +132,48 @@ export function RemittedClientDataFromJSON(json: any): RemittedClientData {
 }
 
 export function RemittedClientDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): RemittedClientData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'batches': ((json['batches'] as Array<any>).map(MerchantBatchResponseFromJSON)),
         'remittances': ((json['remittances'] as Array<any>).map(RemittanceDataFromJSON)),
-        'clientid': !exists(json, 'clientid') ? undefined : json['clientid'],
-        'date': !exists(json, 'date') ? undefined : (new Date(json['date'])),
-        'dateCreated': !exists(json, 'date_created') ? undefined : (new Date(json['date_created'])),
-        'netAmount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
-        'processedAmount': !exists(json, 'processed_amount') ? undefined : json['processed_amount'],
-        'processedCount': !exists(json, 'processed_count') ? undefined : json['processed_count'],
-        'refundAmount': !exists(json, 'refund_amount') ? undefined : json['refund_amount'],
-        'refundCount': !exists(json, 'refund_count') ? undefined : json['refund_count'],
-        'salesAmount': !exists(json, 'sales_amount') ? undefined : json['sales_amount'],
-        'salesCount': !exists(json, 'sales_count') ? undefined : json['sales_count'],
-        'settlementImplementation': !exists(json, 'settlement_implementation') ? undefined : json['settlement_implementation'],
-        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
+        'clientid': json['clientid'] == null ? undefined : json['clientid'],
+        'date': json['date'] == null ? undefined : (new Date(json['date'])),
+        'dateCreated': json['date_created'] == null ? undefined : (new Date(json['date_created'])),
+        'netAmount': json['net_amount'] == null ? undefined : json['net_amount'],
+        'processedAmount': json['processed_amount'] == null ? undefined : json['processed_amount'],
+        'processedCount': json['processed_count'] == null ? undefined : json['processed_count'],
+        'refundAmount': json['refund_amount'] == null ? undefined : json['refund_amount'],
+        'refundCount': json['refund_count'] == null ? undefined : json['refund_count'],
+        'salesAmount': json['sales_amount'] == null ? undefined : json['sales_amount'],
+        'salesCount': json['sales_count'] == null ? undefined : json['sales_count'],
+        'settlementImplementation': json['settlement_implementation'] == null ? undefined : json['settlement_implementation'],
+        'uuid': json['uuid'] == null ? undefined : json['uuid'],
     };
 }
 
 export function RemittedClientDataToJSON(value?: RemittedClientData | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batches': ((value.batches as Array<any>).map(MerchantBatchResponseToJSON)),
-        'remittances': ((value.remittances as Array<any>).map(RemittanceDataToJSON)),
-        'clientid': value.clientid,
-        'date': value.date === undefined ? undefined : (value.date.toISOString().substring(0,10)),
-        'date_created': value.dateCreated === undefined ? undefined : (value.dateCreated.toISOString()),
-        'net_amount': value.netAmount,
-        'processed_amount': value.processedAmount,
-        'processed_count': value.processedCount,
-        'refund_amount': value.refundAmount,
-        'refund_count': value.refundCount,
-        'sales_amount': value.salesAmount,
-        'sales_count': value.salesCount,
-        'settlement_implementation': value.settlementImplementation,
-        'uuid': value.uuid,
+        'batches': ((value['batches'] as Array<any>).map(MerchantBatchResponseToJSON)),
+        'remittances': ((value['remittances'] as Array<any>).map(RemittanceDataToJSON)),
+        'clientid': value['clientid'],
+        'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),
+        'date_created': value['dateCreated'] == null ? undefined : ((value['dateCreated']).toISOString()),
+        'net_amount': value['netAmount'],
+        'processed_amount': value['processedAmount'],
+        'processed_count': value['processedCount'],
+        'refund_amount': value['refundAmount'],
+        'refund_count': value['refundCount'],
+        'sales_amount': value['salesAmount'],
+        'sales_count': value['salesCount'],
+        'settlement_implementation': value['settlementImplementation'],
+        'uuid': value['uuid'],
     };
 }
 

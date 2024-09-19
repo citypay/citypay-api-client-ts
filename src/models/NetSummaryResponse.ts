@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -72,10 +72,8 @@ export interface NetSummaryResponse {
 /**
  * Check if a given object implements the NetSummaryResponse interface.
  */
-export function instanceOfNetSummaryResponse(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfNetSummaryResponse(value: object): value is NetSummaryResponse {
+    return true;
 }
 
 export function NetSummaryResponseFromJSON(json: any): NetSummaryResponse {
@@ -83,39 +81,36 @@ export function NetSummaryResponseFromJSON(json: any): NetSummaryResponse {
 }
 
 export function NetSummaryResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): NetSummaryResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'creditItemsAmount': !exists(json, 'credit_items_amount') ? undefined : json['credit_items_amount'],
-        'creditItemsCount': !exists(json, 'credit_items_count') ? undefined : json['credit_items_count'],
-        'creditItemsValue': !exists(json, 'credit_items_value') ? undefined : json['credit_items_value'],
-        'debitItemsAmount': !exists(json, 'debit_items_amount') ? undefined : json['debit_items_amount'],
-        'debitItemsCount': !exists(json, 'debit_items_count') ? undefined : json['debit_items_count'],
-        'debitItemsValue': !exists(json, 'debit_items_value') ? undefined : json['debit_items_value'],
-        'netAmount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
-        'totalCount': !exists(json, 'total_count') ? undefined : json['total_count'],
+        'creditItemsAmount': json['credit_items_amount'] == null ? undefined : json['credit_items_amount'],
+        'creditItemsCount': json['credit_items_count'] == null ? undefined : json['credit_items_count'],
+        'creditItemsValue': json['credit_items_value'] == null ? undefined : json['credit_items_value'],
+        'debitItemsAmount': json['debit_items_amount'] == null ? undefined : json['debit_items_amount'],
+        'debitItemsCount': json['debit_items_count'] == null ? undefined : json['debit_items_count'],
+        'debitItemsValue': json['debit_items_value'] == null ? undefined : json['debit_items_value'],
+        'netAmount': json['net_amount'] == null ? undefined : json['net_amount'],
+        'totalCount': json['total_count'] == null ? undefined : json['total_count'],
     };
 }
 
 export function NetSummaryResponseToJSON(value?: NetSummaryResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'credit_items_amount': value.creditItemsAmount,
-        'credit_items_count': value.creditItemsCount,
-        'credit_items_value': value.creditItemsValue,
-        'debit_items_amount': value.debitItemsAmount,
-        'debit_items_count': value.debitItemsCount,
-        'debit_items_value': value.debitItemsValue,
-        'net_amount': value.netAmount,
-        'total_count': value.totalCount,
+        'credit_items_amount': value['creditItemsAmount'],
+        'credit_items_count': value['creditItemsCount'],
+        'credit_items_value': value['creditItemsValue'],
+        'debit_items_amount': value['debitItemsAmount'],
+        'debit_items_count': value['debitItemsCount'],
+        'debit_items_value': value['debitItemsValue'],
+        'net_amount': value['netAmount'],
+        'total_count': value['totalCount'],
     };
 }
 

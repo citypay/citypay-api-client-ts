@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PaylinkAddress } from './PaylinkAddress';
 import {
     PaylinkAddressFromJSON,
@@ -91,10 +91,8 @@ export interface PaylinkCardHolder {
 /**
  * Check if a given object implements the PaylinkCardHolder interface.
  */
-export function instanceOfPaylinkCardHolder(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkCardHolder(value: object): value is PaylinkCardHolder {
+    return true;
 }
 
 export function PaylinkCardHolderFromJSON(json: any): PaylinkCardHolder {
@@ -102,43 +100,40 @@ export function PaylinkCardHolderFromJSON(json: any): PaylinkCardHolder {
 }
 
 export function PaylinkCardHolderFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkCardHolder {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'acceptHeaders': !exists(json, 'accept_headers') ? undefined : json['accept_headers'],
-        'address': !exists(json, 'address') ? undefined : PaylinkAddressFromJSON(json['address']),
-        'company': !exists(json, 'company') ? undefined : json['company'],
-        'email': !exists(json, 'email') ? undefined : json['email'],
-        'firstname': !exists(json, 'firstname') ? undefined : json['firstname'],
-        'lastname': !exists(json, 'lastname') ? undefined : json['lastname'],
-        'mobileNo': !exists(json, 'mobile_no') ? undefined : json['mobile_no'],
-        'remoteAddr': !exists(json, 'remote_addr') ? undefined : json['remote_addr'],
-        'title': !exists(json, 'title') ? undefined : json['title'],
-        'userAgent': !exists(json, 'user_agent') ? undefined : json['user_agent'],
+        'acceptHeaders': json['accept_headers'] == null ? undefined : json['accept_headers'],
+        'address': json['address'] == null ? undefined : PaylinkAddressFromJSON(json['address']),
+        'company': json['company'] == null ? undefined : json['company'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'firstname': json['firstname'] == null ? undefined : json['firstname'],
+        'lastname': json['lastname'] == null ? undefined : json['lastname'],
+        'mobileNo': json['mobile_no'] == null ? undefined : json['mobile_no'],
+        'remoteAddr': json['remote_addr'] == null ? undefined : json['remote_addr'],
+        'title': json['title'] == null ? undefined : json['title'],
+        'userAgent': json['user_agent'] == null ? undefined : json['user_agent'],
     };
 }
 
 export function PaylinkCardHolderToJSON(value?: PaylinkCardHolder | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'accept_headers': value.acceptHeaders,
-        'address': PaylinkAddressToJSON(value.address),
-        'company': value.company,
-        'email': value.email,
-        'firstname': value.firstname,
-        'lastname': value.lastname,
-        'mobile_no': value.mobileNo,
-        'remote_addr': value.remoteAddr,
-        'title': value.title,
-        'user_agent': value.userAgent,
+        'accept_headers': value['acceptHeaders'],
+        'address': PaylinkAddressToJSON(value['address']),
+        'company': value['company'],
+        'email': value['email'],
+        'firstname': value['firstname'],
+        'lastname': value['lastname'],
+        'mobile_no': value['mobileNo'],
+        'remote_addr': value['remoteAddr'],
+        'title': value['title'],
+        'user_agent': value['userAgent'],
     };
 }
 

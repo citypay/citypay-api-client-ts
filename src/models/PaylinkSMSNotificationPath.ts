@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,11 +36,9 @@ export interface PaylinkSMSNotificationPath {
 /**
  * Check if a given object implements the PaylinkSMSNotificationPath interface.
  */
-export function instanceOfPaylinkSMSNotificationPath(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfPaylinkSMSNotificationPath(value: object): value is PaylinkSMSNotificationPath {
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkSMSNotificationPathFromJSON(json: any): PaylinkSMSNotificationPath {
@@ -48,27 +46,24 @@ export function PaylinkSMSNotificationPathFromJSON(json: any): PaylinkSMSNotific
 }
 
 export function PaylinkSMSNotificationPathFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkSMSNotificationPath {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'to': json['to'],
-        'template': !exists(json, 'template') ? undefined : json['template'],
+        'template': json['template'] == null ? undefined : json['template'],
     };
 }
 
 export function PaylinkSMSNotificationPathToJSON(value?: PaylinkSMSNotificationPath | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'to': value.to,
-        'template': value.template,
+        'to': value['to'],
+        'template': value['template'],
     };
 }
 
