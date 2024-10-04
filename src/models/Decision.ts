@@ -12,19 +12,19 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AuthResponse } from './AuthResponse';
-import {
-    AuthResponseFromJSON,
-    AuthResponseFromJSONTyped,
-    AuthResponseToJSON,
-} from './AuthResponse';
+import { mapValues } from '../runtime';
 import type { RequestChallenged } from './RequestChallenged';
 import {
     RequestChallengedFromJSON,
     RequestChallengedFromJSONTyped,
     RequestChallengedToJSON,
 } from './RequestChallenged';
+import type { AuthResponse } from './AuthResponse';
+import {
+    AuthResponseFromJSON,
+    AuthResponseFromJSONTyped,
+    AuthResponseToJSON,
+} from './AuthResponse';
 
 /**
  * 
@@ -49,10 +49,8 @@ export interface Decision {
 /**
  * Check if a given object implements the Decision interface.
  */
-export function instanceOfDecision(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfDecision(value: object): value is Decision {
+    return true;
 }
 
 export function DecisionFromJSON(json: any): Decision {
@@ -60,27 +58,24 @@ export function DecisionFromJSON(json: any): Decision {
 }
 
 export function DecisionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Decision {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'authResponse': !exists(json, 'AuthResponse') ? undefined : AuthResponseFromJSON(json['AuthResponse']),
-        'requestChallenged': !exists(json, 'RequestChallenged') ? undefined : RequestChallengedFromJSON(json['RequestChallenged']),
+        'authResponse': json['AuthResponse'] == null ? undefined : AuthResponseFromJSON(json['AuthResponse']),
+        'requestChallenged': json['RequestChallenged'] == null ? undefined : RequestChallengedFromJSON(json['RequestChallenged']),
     };
 }
 
 export function DecisionToJSON(value?: Decision | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'AuthResponse': AuthResponseToJSON(value.authResponse),
-        'RequestChallenged': RequestChallengedToJSON(value.requestChallenged),
+        'AuthResponse': AuthResponseToJSON(value['authResponse']),
+        'RequestChallenged': RequestChallengedToJSON(value['requestChallenged']),
     };
 }
 

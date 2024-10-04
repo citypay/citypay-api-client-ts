@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,11 +36,9 @@ export interface BatchReportRequest {
 /**
  * Check if a given object implements the BatchReportRequest interface.
  */
-export function instanceOfBatchReportRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batchId" in value;
-
-    return isInstance;
+export function instanceOfBatchReportRequest(value: object): value is BatchReportRequest {
+    if (!('batchId' in value) || value['batchId'] === undefined) return false;
+    return true;
 }
 
 export function BatchReportRequestFromJSON(json: any): BatchReportRequest {
@@ -48,27 +46,24 @@ export function BatchReportRequestFromJSON(json: any): BatchReportRequest {
 }
 
 export function BatchReportRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchReportRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'batchId': json['batch_id'],
-        'clientAccountId': !exists(json, 'client_account_id') ? undefined : json['client_account_id'],
+        'clientAccountId': json['client_account_id'] == null ? undefined : json['client_account_id'],
     };
 }
 
 export function BatchReportRequestToJSON(value?: BatchReportRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batch_id': value.batchId,
-        'client_account_id': value.clientAccountId,
+        'batch_id': value['batchId'],
+        'client_account_id': value['clientAccountId'],
     };
 }
 

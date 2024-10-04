@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface AclCheckRequest {
 /**
  * Check if a given object implements the AclCheckRequest interface.
  */
-export function instanceOfAclCheckRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "ip" in value;
-
-    return isInstance;
+export function instanceOfAclCheckRequest(value: object): value is AclCheckRequest {
+    if (!('ip' in value) || value['ip'] === undefined) return false;
+    return true;
 }
 
 export function AclCheckRequestFromJSON(json: any): AclCheckRequest {
@@ -42,7 +40,7 @@ export function AclCheckRequestFromJSON(json: any): AclCheckRequest {
 }
 
 export function AclCheckRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AclCheckRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -52,15 +50,12 @@ export function AclCheckRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
 }
 
 export function AclCheckRequestToJSON(value?: AclCheckRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'ip': value.ip,
+        'ip': value['ip'],
     };
 }
 

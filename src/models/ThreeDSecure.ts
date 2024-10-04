@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -145,10 +145,8 @@ export interface ThreeDSecure {
 /**
  * Check if a given object implements the ThreeDSecure interface.
  */
-export function instanceOfThreeDSecure(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfThreeDSecure(value: object): value is ThreeDSecure {
+    return true;
 }
 
 export function ThreeDSecureFromJSON(json: any): ThreeDSecure {
@@ -156,49 +154,46 @@ export function ThreeDSecureFromJSON(json: any): ThreeDSecure {
 }
 
 export function ThreeDSecureFromJSONTyped(json: any, ignoreDiscriminator: boolean): ThreeDSecure {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'acceptHeaders': !exists(json, 'accept_headers') ? undefined : json['accept_headers'],
-        'browserColorDepth': !exists(json, 'browserColorDepth') ? undefined : json['browserColorDepth'],
-        'browserIP': !exists(json, 'browserIP') ? undefined : json['browserIP'],
-        'browserJavaEnabled': !exists(json, 'browserJavaEnabled') ? undefined : json['browserJavaEnabled'],
-        'browserLanguage': !exists(json, 'browserLanguage') ? undefined : json['browserLanguage'],
-        'browserScreenHeight': !exists(json, 'browserScreenHeight') ? undefined : json['browserScreenHeight'],
-        'browserScreenWidth': !exists(json, 'browserScreenWidth') ? undefined : json['browserScreenWidth'],
-        'browserTZ': !exists(json, 'browserTZ') ? undefined : json['browserTZ'],
-        'cpBx': !exists(json, 'cp_bx') ? undefined : json['cp_bx'],
-        'downgrade1': !exists(json, 'downgrade1') ? undefined : json['downgrade1'],
-        'merchantTermurl': !exists(json, 'merchant_termurl') ? undefined : json['merchant_termurl'],
-        'tdsPolicy': !exists(json, 'tds_policy') ? undefined : json['tds_policy'],
-        'userAgent': !exists(json, 'user_agent') ? undefined : json['user_agent'],
+        'acceptHeaders': json['accept_headers'] == null ? undefined : json['accept_headers'],
+        'browserColorDepth': json['browserColorDepth'] == null ? undefined : json['browserColorDepth'],
+        'browserIP': json['browserIP'] == null ? undefined : json['browserIP'],
+        'browserJavaEnabled': json['browserJavaEnabled'] == null ? undefined : json['browserJavaEnabled'],
+        'browserLanguage': json['browserLanguage'] == null ? undefined : json['browserLanguage'],
+        'browserScreenHeight': json['browserScreenHeight'] == null ? undefined : json['browserScreenHeight'],
+        'browserScreenWidth': json['browserScreenWidth'] == null ? undefined : json['browserScreenWidth'],
+        'browserTZ': json['browserTZ'] == null ? undefined : json['browserTZ'],
+        'cpBx': json['cp_bx'] == null ? undefined : json['cp_bx'],
+        'downgrade1': json['downgrade1'] == null ? undefined : json['downgrade1'],
+        'merchantTermurl': json['merchant_termurl'] == null ? undefined : json['merchant_termurl'],
+        'tdsPolicy': json['tds_policy'] == null ? undefined : json['tds_policy'],
+        'userAgent': json['user_agent'] == null ? undefined : json['user_agent'],
     };
 }
 
 export function ThreeDSecureToJSON(value?: ThreeDSecure | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'accept_headers': value.acceptHeaders,
-        'browserColorDepth': value.browserColorDepth,
-        'browserIP': value.browserIP,
-        'browserJavaEnabled': value.browserJavaEnabled,
-        'browserLanguage': value.browserLanguage,
-        'browserScreenHeight': value.browserScreenHeight,
-        'browserScreenWidth': value.browserScreenWidth,
-        'browserTZ': value.browserTZ,
-        'cp_bx': value.cpBx,
-        'downgrade1': value.downgrade1,
-        'merchant_termurl': value.merchantTermurl,
-        'tds_policy': value.tdsPolicy,
-        'user_agent': value.userAgent,
+        'accept_headers': value['acceptHeaders'],
+        'browserColorDepth': value['browserColorDepth'],
+        'browserIP': value['browserIP'],
+        'browserJavaEnabled': value['browserJavaEnabled'],
+        'browserLanguage': value['browserLanguage'],
+        'browserScreenHeight': value['browserScreenHeight'],
+        'browserScreenWidth': value['browserScreenWidth'],
+        'browserTZ': value['browserTZ'],
+        'cp_bx': value['cpBx'],
+        'downgrade1': value['downgrade1'],
+        'merchant_termurl': value['merchantTermurl'],
+        'tds_policy': value['tdsPolicy'],
+        'user_agent': value['userAgent'],
     };
 }
 

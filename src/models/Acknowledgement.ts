@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,10 +48,8 @@ export interface Acknowledgement {
 /**
  * Check if a given object implements the Acknowledgement interface.
  */
-export function instanceOfAcknowledgement(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfAcknowledgement(value: object): value is Acknowledgement {
+    return true;
 }
 
 export function AcknowledgementFromJSON(json: any): Acknowledgement {
@@ -59,31 +57,28 @@ export function AcknowledgementFromJSON(json: any): Acknowledgement {
 }
 
 export function AcknowledgementFromJSONTyped(json: any, ignoreDiscriminator: boolean): Acknowledgement {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'code': !exists(json, 'code') ? undefined : json['code'],
-        'context': !exists(json, 'context') ? undefined : json['context'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'code': json['code'] == null ? undefined : json['code'],
+        'context': json['context'] == null ? undefined : json['context'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 
 export function AcknowledgementToJSON(value?: Acknowledgement | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'code': value.code,
-        'context': value.context,
-        'identifier': value.identifier,
-        'message': value.message,
+        'code': value['code'],
+        'context': value['context'],
+        'identifier': value['identifier'],
+        'message': value['message'],
     };
 }
 

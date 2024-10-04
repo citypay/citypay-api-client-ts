@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AuthReference } from './AuthReference';
 import {
     AuthReferenceFromJSON,
@@ -37,10 +37,8 @@ export interface AuthReferences {
 /**
  * Check if a given object implements the AuthReferences interface.
  */
-export function instanceOfAuthReferences(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfAuthReferences(value: object): value is AuthReferences {
+    return true;
 }
 
 export function AuthReferencesFromJSON(json: any): AuthReferences {
@@ -48,25 +46,22 @@ export function AuthReferencesFromJSON(json: any): AuthReferences {
 }
 
 export function AuthReferencesFromJSONTyped(json: any, ignoreDiscriminator: boolean): AuthReferences {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'auths': !exists(json, 'auths') ? undefined : ((json['auths'] as Array<any>).map(AuthReferenceFromJSON)),
+        'auths': json['auths'] == null ? undefined : ((json['auths'] as Array<any>).map(AuthReferenceFromJSON)),
     };
 }
 
 export function AuthReferencesToJSON(value?: AuthReferences | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'auths': value.auths === undefined ? undefined : ((value.auths as Array<any>).map(AuthReferenceToJSON)),
+        'auths': value['auths'] == null ? undefined : ((value['auths'] as Array<any>).map(AuthReferenceToJSON)),
     };
 }
 

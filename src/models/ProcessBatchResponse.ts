@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,11 +36,9 @@ export interface ProcessBatchResponse {
 /**
  * Check if a given object implements the ProcessBatchResponse interface.
  */
-export function instanceOfProcessBatchResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "valid" in value;
-
-    return isInstance;
+export function instanceOfProcessBatchResponse(value: object): value is ProcessBatchResponse {
+    if (!('valid' in value) || value['valid'] === undefined) return false;
+    return true;
 }
 
 export function ProcessBatchResponseFromJSON(json: any): ProcessBatchResponse {
@@ -48,27 +46,24 @@ export function ProcessBatchResponseFromJSON(json: any): ProcessBatchResponse {
 }
 
 export function ProcessBatchResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProcessBatchResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'valid': json['valid'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 
 export function ProcessBatchResponseToJSON(value?: ProcessBatchResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'valid': value.valid,
-        'message': value.message,
+        'valid': value['valid'],
+        'message': value['message'],
     };
 }
 

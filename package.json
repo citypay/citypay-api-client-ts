@@ -1,6 +1,6 @@
 {
   "name": "citypay-api-ts-client",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenAPI client for citypay-api-ts-client",
   "author": "OpenAPI-Generator",
   "repository": {
@@ -15,14 +15,14 @@
     "test": "jest --testPathPatterns=./test/**/*.spec.ts"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/mocha": "^10.0.6",
+    "@types/jest": "^29.5.13",
+    "@types/mocha": "^10.0.8",
     "dotenv": "^16.4.5",
     "jest": "^29.7.0",
-    "mocha": "^10.4.0",
-    "ts-jest": "^29.1.4",
+    "mocha": "^10.7.3",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^4.9.5"
+    "typescript": "^5.6.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

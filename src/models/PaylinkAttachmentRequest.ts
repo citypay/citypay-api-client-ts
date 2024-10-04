@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,12 +54,10 @@ export interface PaylinkAttachmentRequest {
 /**
  * Check if a given object implements the PaylinkAttachmentRequest interface.
  */
-export function instanceOfPaylinkAttachmentRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "filename" in value;
-    isInstance = isInstance && "mimeType" in value;
-
-    return isInstance;
+export function instanceOfPaylinkAttachmentRequest(value: object): value is PaylinkAttachmentRequest {
+    if (!('filename' in value) || value['filename'] === undefined) return false;
+    if (!('mimeType' in value) || value['mimeType'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkAttachmentRequestFromJSON(json: any): PaylinkAttachmentRequest {
@@ -67,33 +65,30 @@ export function PaylinkAttachmentRequestFromJSON(json: any): PaylinkAttachmentRe
 }
 
 export function PaylinkAttachmentRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkAttachmentRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'filename': json['filename'],
         'mimeType': json['mime_type'],
-        'data': !exists(json, 'data') ? undefined : json['data'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'retention': !exists(json, 'retention') ? undefined : json['retention'],
+        'data': json['data'] == null ? undefined : json['data'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'retention': json['retention'] == null ? undefined : json['retention'],
     };
 }
 
 export function PaylinkAttachmentRequestToJSON(value?: PaylinkAttachmentRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'filename': value.filename,
-        'mime_type': value.mimeType,
-        'data': value.data,
-        'name': value.name,
-        'retention': value.retention,
+        'filename': value['filename'],
+        'mime_type': value['mimeType'],
+        'data': value['data'],
+        'name': value['name'],
+        'retention': value['retention'],
     };
 }
 

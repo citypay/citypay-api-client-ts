@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ContactDetails } from './ContactDetails';
 import {
     ContactDetailsFromJSON,
@@ -46,11 +46,9 @@ export interface AccountCreate {
 /**
  * Check if a given object implements the AccountCreate interface.
  */
-export function instanceOfAccountCreate(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accountId" in value;
-
-    return isInstance;
+export function instanceOfAccountCreate(value: object): value is AccountCreate {
+    if (!('accountId' in value) || value['accountId'] === undefined) return false;
+    return true;
 }
 
 export function AccountCreateFromJSON(json: any): AccountCreate {
@@ -58,27 +56,24 @@ export function AccountCreateFromJSON(json: any): AccountCreate {
 }
 
 export function AccountCreateFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountCreate {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'accountId': json['account_id'],
-        'contact': !exists(json, 'contact') ? undefined : ContactDetailsFromJSON(json['contact']),
+        'contact': json['contact'] == null ? undefined : ContactDetailsFromJSON(json['contact']),
     };
 }
 
 export function AccountCreateToJSON(value?: AccountCreate | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'account_id': value.accountId,
-        'contact': ContactDetailsToJSON(value.contact),
+        'account_id': value['accountId'],
+        'contact': ContactDetailsToJSON(value['contact']),
     };
 }
 

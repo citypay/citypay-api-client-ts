@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,10 +54,8 @@ export interface Merchant {
 /**
  * Check if a given object implements the Merchant interface.
  */
-export function instanceOfMerchant(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfMerchant(value: object): value is Merchant {
+    return true;
 }
 
 export function MerchantFromJSON(json: any): Merchant {
@@ -65,33 +63,30 @@ export function MerchantFromJSON(json: any): Merchant {
 }
 
 export function MerchantFromJSONTyped(json: any, ignoreDiscriminator: boolean): Merchant {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'merchantid': !exists(json, 'merchantid') ? undefined : json['merchantid'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'status': !exists(json, 'status') ? undefined : json['status'],
-        'statusLabel': !exists(json, 'status_label') ? undefined : json['status_label'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'merchantid': json['merchantid'] == null ? undefined : json['merchantid'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'status': json['status'] == null ? undefined : json['status'],
+        'statusLabel': json['status_label'] == null ? undefined : json['status_label'],
     };
 }
 
 export function MerchantToJSON(value?: Merchant | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'currency': value.currency,
-        'merchantid': value.merchantid,
-        'name': value.name,
-        'status': value.status,
-        'status_label': value.statusLabel,
+        'currency': value['currency'],
+        'merchantid': value['merchantid'],
+        'name': value['name'],
+        'status': value['status'],
+        'status_label': value['statusLabel'],
     };
 }
 

@@ -12,31 +12,31 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PaylinkAttachmentRequest } from './PaylinkAttachmentRequest';
-import {
-    PaylinkAttachmentRequestFromJSON,
-    PaylinkAttachmentRequestFromJSONTyped,
-    PaylinkAttachmentRequestToJSON,
-} from './PaylinkAttachmentRequest';
+import { mapValues } from '../runtime';
 import type { PaylinkEmailNotificationPath } from './PaylinkEmailNotificationPath';
 import {
     PaylinkEmailNotificationPathFromJSON,
     PaylinkEmailNotificationPathFromJSONTyped,
     PaylinkEmailNotificationPathToJSON,
 } from './PaylinkEmailNotificationPath';
-import type { PaylinkSMSNotificationPath } from './PaylinkSMSNotificationPath';
+import type { PaylinkAttachmentRequest } from './PaylinkAttachmentRequest';
 import {
-    PaylinkSMSNotificationPathFromJSON,
-    PaylinkSMSNotificationPathFromJSONTyped,
-    PaylinkSMSNotificationPathToJSON,
-} from './PaylinkSMSNotificationPath';
+    PaylinkAttachmentRequestFromJSON,
+    PaylinkAttachmentRequestFromJSONTyped,
+    PaylinkAttachmentRequestToJSON,
+} from './PaylinkAttachmentRequest';
 import type { PaylinkTokenRequestModel } from './PaylinkTokenRequestModel';
 import {
     PaylinkTokenRequestModelFromJSON,
     PaylinkTokenRequestModelFromJSONTyped,
     PaylinkTokenRequestModelToJSON,
 } from './PaylinkTokenRequestModel';
+import type { PaylinkSMSNotificationPath } from './PaylinkSMSNotificationPath';
+import {
+    PaylinkSMSNotificationPathFromJSON,
+    PaylinkSMSNotificationPathFromJSONTyped,
+    PaylinkSMSNotificationPathToJSON,
+} from './PaylinkSMSNotificationPath';
 
 /**
  * 
@@ -101,11 +101,9 @@ export interface PaylinkBillPaymentTokenRequest {
 /**
  * Check if a given object implements the PaylinkBillPaymentTokenRequest interface.
  */
-export function instanceOfPaylinkBillPaymentTokenRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "request" in value;
-
-    return isInstance;
+export function instanceOfPaylinkBillPaymentTokenRequest(value: object): value is PaylinkBillPaymentTokenRequest {
+    if (!('request' in value) || value['request'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkBillPaymentTokenRequestFromJSON(json: any): PaylinkBillPaymentTokenRequest {
@@ -113,39 +111,36 @@ export function PaylinkBillPaymentTokenRequestFromJSON(json: any): PaylinkBillPa
 }
 
 export function PaylinkBillPaymentTokenRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkBillPaymentTokenRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'request': PaylinkTokenRequestModelFromJSON(json['request']),
-        'addressee': !exists(json, 'addressee') ? undefined : json['addressee'],
-        'attachments': !exists(json, 'attachments') ? undefined : ((json['attachments'] as Array<any>).map(PaylinkAttachmentRequestFromJSON)),
-        'descriptor': !exists(json, 'descriptor') ? undefined : json['descriptor'],
-        'due': !exists(json, 'due') ? undefined : (new Date(json['due'])),
-        'emailNotificationPath': !exists(json, 'email_notification_path') ? undefined : PaylinkEmailNotificationPathFromJSON(json['email_notification_path']),
-        'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'smsNotificationPath': !exists(json, 'sms_notification_path') ? undefined : PaylinkSMSNotificationPathFromJSON(json['sms_notification_path']),
+        'addressee': json['addressee'] == null ? undefined : json['addressee'],
+        'attachments': json['attachments'] == null ? undefined : ((json['attachments'] as Array<any>).map(PaylinkAttachmentRequestFromJSON)),
+        'descriptor': json['descriptor'] == null ? undefined : json['descriptor'],
+        'due': json['due'] == null ? undefined : (new Date(json['due'])),
+        'emailNotificationPath': json['email_notification_path'] == null ? undefined : PaylinkEmailNotificationPathFromJSON(json['email_notification_path']),
+        'memo': json['memo'] == null ? undefined : json['memo'],
+        'smsNotificationPath': json['sms_notification_path'] == null ? undefined : PaylinkSMSNotificationPathFromJSON(json['sms_notification_path']),
     };
 }
 
 export function PaylinkBillPaymentTokenRequestToJSON(value?: PaylinkBillPaymentTokenRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'request': PaylinkTokenRequestModelToJSON(value.request),
-        'addressee': value.addressee,
-        'attachments': value.attachments === undefined ? undefined : ((value.attachments as Array<any>).map(PaylinkAttachmentRequestToJSON)),
-        'descriptor': value.descriptor,
-        'due': value.due === undefined ? undefined : (value.due.toISOString().substring(0,10)),
-        'email_notification_path': PaylinkEmailNotificationPathToJSON(value.emailNotificationPath),
-        'memo': value.memo,
-        'sms_notification_path': PaylinkSMSNotificationPathToJSON(value.smsNotificationPath),
+        'request': PaylinkTokenRequestModelToJSON(value['request']),
+        'addressee': value['addressee'],
+        'attachments': value['attachments'] == null ? undefined : ((value['attachments'] as Array<any>).map(PaylinkAttachmentRequestToJSON)),
+        'descriptor': value['descriptor'],
+        'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
+        'email_notification_path': PaylinkEmailNotificationPathToJSON(value['emailNotificationPath']),
+        'memo': value['memo'],
+        'sms_notification_path': PaylinkSMSNotificationPathToJSON(value['smsNotificationPath']),
     };
 }
 

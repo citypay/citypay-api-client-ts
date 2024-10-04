@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -38,10 +38,8 @@ export interface PaylinkResendNotificationRequest {
 /**
  * Check if a given object implements the PaylinkResendNotificationRequest interface.
  */
-export function instanceOfPaylinkResendNotificationRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkResendNotificationRequest(value: object): value is PaylinkResendNotificationRequest {
+    return true;
 }
 
 export function PaylinkResendNotificationRequestFromJSON(json: any): PaylinkResendNotificationRequest {
@@ -49,27 +47,24 @@ export function PaylinkResendNotificationRequestFromJSON(json: any): PaylinkRese
 }
 
 export function PaylinkResendNotificationRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkResendNotificationRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'email': !exists(json, 'email') ? undefined : json['email'],
-        'sms': !exists(json, 'sms') ? undefined : json['sms'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'sms': json['sms'] == null ? undefined : json['sms'],
     };
 }
 
 export function PaylinkResendNotificationRequestToJSON(value?: PaylinkResendNotificationRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'email': value.email,
-        'sms': value.sms,
+        'email': value['email'],
+        'sms': value['sms'],
     };
 }
 

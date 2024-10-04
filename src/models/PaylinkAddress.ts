@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -66,10 +66,8 @@ export interface PaylinkAddress {
 /**
  * Check if a given object implements the PaylinkAddress interface.
  */
-export function instanceOfPaylinkAddress(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkAddress(value: object): value is PaylinkAddress {
+    return true;
 }
 
 export function PaylinkAddressFromJSON(json: any): PaylinkAddress {
@@ -77,37 +75,34 @@ export function PaylinkAddressFromJSON(json: any): PaylinkAddress {
 }
 
 export function PaylinkAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'address1': !exists(json, 'address1') ? undefined : json['address1'],
-        'address2': !exists(json, 'address2') ? undefined : json['address2'],
-        'address3': !exists(json, 'address3') ? undefined : json['address3'],
-        'area': !exists(json, 'area') ? undefined : json['area'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
-        'label': !exists(json, 'label') ? undefined : json['label'],
-        'postcode': !exists(json, 'postcode') ? undefined : json['postcode'],
+        'address1': json['address1'] == null ? undefined : json['address1'],
+        'address2': json['address2'] == null ? undefined : json['address2'],
+        'address3': json['address3'] == null ? undefined : json['address3'],
+        'area': json['area'] == null ? undefined : json['area'],
+        'country': json['country'] == null ? undefined : json['country'],
+        'label': json['label'] == null ? undefined : json['label'],
+        'postcode': json['postcode'] == null ? undefined : json['postcode'],
     };
 }
 
 export function PaylinkAddressToJSON(value?: PaylinkAddress | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'address1': value.address1,
-        'address2': value.address2,
-        'address3': value.address3,
-        'area': value.area,
-        'country': value.country,
-        'label': value.label,
-        'postcode': value.postcode,
+        'address1': value['address1'],
+        'address2': value['address2'],
+        'address3': value['address3'],
+        'area': value['area'],
+        'country': value['country'],
+        'label': value['label'],
+        'postcode': value['postcode'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,10 +60,8 @@ export interface RemittanceReportRequest {
 /**
  * Check if a given object implements the RemittanceReportRequest interface.
  */
-export function instanceOfRemittanceReportRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfRemittanceReportRequest(value: object): value is RemittanceReportRequest {
+    return true;
 }
 
 export function RemittanceReportRequestFromJSON(json: any): RemittanceReportRequest {
@@ -71,35 +69,32 @@ export function RemittanceReportRequestFromJSON(json: any): RemittanceReportRequ
 }
 
 export function RemittanceReportRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RemittanceReportRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dateFrom': !exists(json, 'date_from') ? undefined : (new Date(json['date_from'])),
-        'dateUntil': !exists(json, 'date_until') ? undefined : (new Date(json['date_until'])),
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'merchantId': !exists(json, 'merchant_id') ? undefined : json['merchant_id'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
-        'orderBy': !exists(json, 'orderBy') ? undefined : json['orderBy'],
+        'dateFrom': json['date_from'] == null ? undefined : (new Date(json['date_from'])),
+        'dateUntil': json['date_until'] == null ? undefined : (new Date(json['date_until'])),
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'merchantId': json['merchant_id'] == null ? undefined : json['merchant_id'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
+        'orderBy': json['orderBy'] == null ? undefined : json['orderBy'],
     };
 }
 
 export function RemittanceReportRequestToJSON(value?: RemittanceReportRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'date_from': value.dateFrom === undefined ? undefined : (value.dateFrom.toISOString().substring(0,10)),
-        'date_until': value.dateUntil === undefined ? undefined : (value.dateUntil.toISOString().substring(0,10)),
-        'maxResults': value.maxResults,
-        'merchant_id': value.merchantId,
-        'nextToken': value.nextToken,
-        'orderBy': value.orderBy,
+        'date_from': value['dateFrom'] == null ? undefined : ((value['dateFrom']).toISOString().substring(0,10)),
+        'date_until': value['dateUntil'] == null ? undefined : ((value['dateUntil']).toISOString().substring(0,10)),
+        'maxResults': value['maxResults'],
+        'merchant_id': value['merchantId'],
+        'nextToken': value['nextToken'],
+        'orderBy': value['orderBy'],
     };
 }
 

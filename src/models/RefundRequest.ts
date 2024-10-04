@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -73,14 +73,12 @@ export interface RefundRequest {
 /**
  * Check if a given object implements the RefundRequest interface.
  */
-export function instanceOfRefundRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "identifier" in value;
-    isInstance = isInstance && "merchantid" in value;
-    isInstance = isInstance && "refundRef" in value;
-
-    return isInstance;
+export function instanceOfRefundRequest(value: object): value is RefundRequest {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    if (!('refundRef' in value) || value['refundRef'] === undefined) return false;
+    return true;
 }
 
 export function RefundRequestFromJSON(json: any): RefundRequest {
@@ -88,7 +86,7 @@ export function RefundRequestFromJSON(json: any): RefundRequest {
 }
 
 export function RefundRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RefundRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -97,24 +95,21 @@ export function RefundRequestFromJSONTyped(json: any, ignoreDiscriminator: boole
         'identifier': json['identifier'],
         'merchantid': json['merchantid'],
         'refundRef': json['refund_ref'],
-        'transInfo': !exists(json, 'trans_info') ? undefined : json['trans_info'],
+        'transInfo': json['trans_info'] == null ? undefined : json['trans_info'],
     };
 }
 
 export function RefundRequestToJSON(value?: RefundRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'identifier': value.identifier,
-        'merchantid': value.merchantid,
-        'refund_ref': value.refundRef,
-        'trans_info': value.transInfo,
+        'amount': value['amount'],
+        'identifier': value['identifier'],
+        'merchantid': value['merchantid'],
+        'refund_ref': value['refundRef'],
+        'trans_info': value['transInfo'],
     };
 }
 

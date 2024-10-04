@@ -31,27 +31,27 @@ import {
     TokenisationResponseModelToJSON,
 } from '../models/index';
 
-export interface DirectPostApiDirectCResAuthRequest {
+export interface DirectPostApiDirectCResAuthRequestRequest {
     uuid: string;
     cres?: string;
     three_ds_session_data?: string;
 }
 
-export interface DirectPostApiDirectCResTokeniseRequest {
+export interface DirectPostApiDirectCResTokeniseRequestRequest {
     uuid: string;
     cres?: string;
     three_ds_session_data?: string;
 }
 
-export interface DirectPostApiDirectPostAuthRequest {
+export interface DirectPostApiDirectPostAuthRequestRequest {
     direct_post_request: DirectPostRequest;
 }
 
-export interface DirectPostApiDirectPostTokeniseRequest {
+export interface DirectPostApiDirectPostTokeniseRequestRequest {
     direct_post_request: DirectPostRequest;
 }
 
-export interface DirectPostApiTokenRequest {
+export interface DirectPostApiTokenRequestRequest {
     direct_token_auth_request: DirectTokenAuthRequest;
 }
 
@@ -64,9 +64,12 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to post from an ACS during a ThreeDSecure direct flow process. The endpoint requires a valid `threeDSSessionData` value which defines the unique transaction through its workflow. This endpoint may be used by merchants wishing to perform a `Direct Post` integration who wish to handle the challenge flow themselves. 
      * Handles a CRes response from ACS, returning back the result of authorisation
      */
-    async directCResAuthRequestRaw(requestParameters: DirectPostApiDirectCResAuthRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
-            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling directCResAuthRequest.');
+    async directCResAuthRequestRaw(requestParameters: DirectPostApiDirectCResAuthRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['uuid'] == null) {
+            throw new runtime.RequiredError(
+                'uuid',
+                'Required parameter "uuid" was null or undefined when calling directCResAuthRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -87,16 +90,16 @@ export class DirectPostApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.cres !== undefined) {
-            formParams.append('cres', requestParameters.cres as any);
+        if (requestParameters['cres'] != null) {
+            formParams.append('cres', requestParameters['cres'] as any);
         }
 
-        if (requestParameters.three_ds_session_data !== undefined) {
-            formParams.append('threeDSSessionData', requestParameters.three_ds_session_data as any);
+        if (requestParameters['three_ds_session_data'] != null) {
+            formParams.append('threeDSSessionData', requestParameters['three_ds_session_data'] as any);
         }
 
         const response = await this.request({
-            path: `/direct/cres/auth/{uuid}`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            path: `/direct/cres/auth/{uuid}`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters['uuid']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -110,7 +113,7 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to post from an ACS during a ThreeDSecure direct flow process. The endpoint requires a valid `threeDSSessionData` value which defines the unique transaction through its workflow. This endpoint may be used by merchants wishing to perform a `Direct Post` integration who wish to handle the challenge flow themselves. 
      * Handles a CRes response from ACS, returning back the result of authorisation
      */
-    async directCResAuthRequest(requestParameters: DirectPostApiDirectCResAuthRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async directCResAuthRequest(requestParameters: DirectPostApiDirectCResAuthRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.directCResAuthRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -119,9 +122,12 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to post from an ACS during a ThreeDSecure direct flow process. The endpoint requires a valid `threeDSSessionData` value which defines the unique transaction through its workflow. This endpoint may be used by merchants wishing to perform a `Direct Post` integration who wish to handle the challenge flow themselves. 
      * Handles a CRes response from ACS, returning back a token for future authorisation
      */
-    async directCResTokeniseRequestRaw(requestParameters: DirectPostApiDirectCResTokeniseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TokenisationResponseModel>> {
-        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
-            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling directCResTokeniseRequest.');
+    async directCResTokeniseRequestRaw(requestParameters: DirectPostApiDirectCResTokeniseRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TokenisationResponseModel>> {
+        if (requestParameters['uuid'] == null) {
+            throw new runtime.RequiredError(
+                'uuid',
+                'Required parameter "uuid" was null or undefined when calling directCResTokeniseRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -142,16 +148,16 @@ export class DirectPostApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.cres !== undefined) {
-            formParams.append('cres', requestParameters.cres as any);
+        if (requestParameters['cres'] != null) {
+            formParams.append('cres', requestParameters['cres'] as any);
         }
 
-        if (requestParameters.three_ds_session_data !== undefined) {
-            formParams.append('threeDSSessionData', requestParameters.three_ds_session_data as any);
+        if (requestParameters['three_ds_session_data'] != null) {
+            formParams.append('threeDSSessionData', requestParameters['three_ds_session_data'] as any);
         }
 
         const response = await this.request({
-            path: `/direct/cres/tokenise/{uuid}`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            path: `/direct/cres/tokenise/{uuid}`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters['uuid']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -165,7 +171,7 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to post from an ACS during a ThreeDSecure direct flow process. The endpoint requires a valid `threeDSSessionData` value which defines the unique transaction through its workflow. This endpoint may be used by merchants wishing to perform a `Direct Post` integration who wish to handle the challenge flow themselves. 
      * Handles a CRes response from ACS, returning back a token for future authorisation
      */
-    async directCResTokeniseRequest(requestParameters: DirectPostApiDirectCResTokeniseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TokenisationResponseModel> {
+    async directCResTokeniseRequest(requestParameters: DirectPostApiDirectCResTokeniseRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TokenisationResponseModel> {
         const response = await this.directCResTokeniseRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -174,9 +180,12 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to initiate a direct post request transaction flow. 
      * Direct Post Auth Request
      */
-    async directPostAuthRequestRaw(requestParameters: DirectPostApiDirectPostAuthRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.direct_post_request === null || requestParameters.direct_post_request === undefined) {
-            throw new runtime.RequiredError('direct_post_request','Required parameter requestParameters.direct_post_request was null or undefined when calling directPostAuthRequest.');
+    async directPostAuthRequestRaw(requestParameters: DirectPostApiDirectPostAuthRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['direct_post_request'] == null) {
+            throw new runtime.RequiredError(
+                'direct_post_request',
+                'Required parameter "direct_post_request" was null or undefined when calling directPostAuthRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -186,11 +195,11 @@ export class DirectPostApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            queryParameters["cp-domain-key"] = this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
+            queryParameters["cp-domain-key"] = await this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
         }
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -198,7 +207,7 @@ export class DirectPostApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DirectPostRequestToJSON(requestParameters.direct_post_request),
+            body: DirectPostRequestToJSON(requestParameters['direct_post_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthResponseFromJSON(jsonValue));
@@ -208,7 +217,7 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to initiate a direct post request transaction flow. 
      * Direct Post Auth Request
      */
-    async directPostAuthRequest(requestParameters: DirectPostApiDirectPostAuthRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async directPostAuthRequest(requestParameters: DirectPostApiDirectPostAuthRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.directPostAuthRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -217,9 +226,12 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to initiate a direct post request transaction flow. 
      * Direct Post Tokenise Request
      */
-    async directPostTokeniseRequestRaw(requestParameters: DirectPostApiDirectPostTokeniseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.direct_post_request === null || requestParameters.direct_post_request === undefined) {
-            throw new runtime.RequiredError('direct_post_request','Required parameter requestParameters.direct_post_request was null or undefined when calling directPostTokeniseRequest.');
+    async directPostTokeniseRequestRaw(requestParameters: DirectPostApiDirectPostTokeniseRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['direct_post_request'] == null) {
+            throw new runtime.RequiredError(
+                'direct_post_request',
+                'Required parameter "direct_post_request" was null or undefined when calling directPostTokeniseRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -229,11 +241,11 @@ export class DirectPostApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            queryParameters["cp-domain-key"] = this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
+            queryParameters["cp-domain-key"] = await this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
         }
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -241,7 +253,7 @@ export class DirectPostApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DirectPostRequestToJSON(requestParameters.direct_post_request),
+            body: DirectPostRequestToJSON(requestParameters['direct_post_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthResponseFromJSON(jsonValue));
@@ -251,7 +263,7 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Used to initiate a direct post request transaction flow. 
      * Direct Post Tokenise Request
      */
-    async directPostTokeniseRequest(requestParameters: DirectPostApiDirectPostTokeniseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async directPostTokeniseRequest(requestParameters: DirectPostApiDirectPostTokeniseRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.directPostTokeniseRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -260,9 +272,12 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Perform a request for authorisation for a previously generated token. This flow will return an authorisation response stating that the transaction was approved or declined. 
      * Direct Post Token Request
      */
-    async tokenRequestRaw(requestParameters: DirectPostApiTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
-        if (requestParameters.direct_token_auth_request === null || requestParameters.direct_token_auth_request === undefined) {
-            throw new runtime.RequiredError('direct_token_auth_request','Required parameter requestParameters.direct_token_auth_request was null or undefined when calling tokenRequest.');
+    async tokenRequestRaw(requestParameters: DirectPostApiTokenRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthResponse>> {
+        if (requestParameters['direct_token_auth_request'] == null) {
+            throw new runtime.RequiredError(
+                'direct_token_auth_request',
+                'Required parameter "direct_token_auth_request" was null or undefined when calling tokenRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -272,11 +287,11 @@ export class DirectPostApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            queryParameters["cp-domain-key"] = this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
+            queryParameters["cp-domain-key"] = await this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
         }
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -284,7 +299,7 @@ export class DirectPostApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DirectTokenAuthRequestToJSON(requestParameters.direct_token_auth_request),
+            body: DirectTokenAuthRequestToJSON(requestParameters['direct_token_auth_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AuthResponseFromJSON(jsonValue));
@@ -294,7 +309,7 @@ export class DirectPostApi extends runtime.BaseAPI {
      * Perform a request for authorisation for a previously generated token. This flow will return an authorisation response stating that the transaction was approved or declined. 
      * Direct Post Token Request
      */
-    async tokenRequest(requestParameters: DirectPostApiTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
+    async tokenRequest(requestParameters: DirectPostApiTokenRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthResponse> {
         const response = await this.tokenRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

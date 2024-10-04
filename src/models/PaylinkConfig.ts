@@ -12,31 +12,31 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PaylinkCustomParam } from './PaylinkCustomParam';
-import {
-    PaylinkCustomParamFromJSON,
-    PaylinkCustomParamFromJSONTyped,
-    PaylinkCustomParamToJSON,
-} from './PaylinkCustomParam';
+import { mapValues } from '../runtime';
 import type { PaylinkFieldGuardModel } from './PaylinkFieldGuardModel';
 import {
     PaylinkFieldGuardModelFromJSON,
     PaylinkFieldGuardModelFromJSONTyped,
     PaylinkFieldGuardModelToJSON,
 } from './PaylinkFieldGuardModel';
-import type { PaylinkPartPayments } from './PaylinkPartPayments';
-import {
-    PaylinkPartPaymentsFromJSON,
-    PaylinkPartPaymentsFromJSONTyped,
-    PaylinkPartPaymentsToJSON,
-} from './PaylinkPartPayments';
 import type { PaylinkUI } from './PaylinkUI';
 import {
     PaylinkUIFromJSON,
     PaylinkUIFromJSONTyped,
     PaylinkUIToJSON,
 } from './PaylinkUI';
+import type { PaylinkPartPayments } from './PaylinkPartPayments';
+import {
+    PaylinkPartPaymentsFromJSON,
+    PaylinkPartPaymentsFromJSONTyped,
+    PaylinkPartPaymentsToJSON,
+} from './PaylinkPartPayments';
+import type { PaylinkCustomParam } from './PaylinkCustomParam';
+import {
+    PaylinkCustomParamFromJSON,
+    PaylinkCustomParamFromJSONTyped,
+    PaylinkCustomParamToJSON,
+} from './PaylinkCustomParam';
 
 /**
  * 
@@ -193,10 +193,8 @@ export interface PaylinkConfig {
 /**
  * Check if a given object implements the PaylinkConfig interface.
  */
-export function instanceOfPaylinkConfig(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkConfig(value: object): value is PaylinkConfig {
+    return true;
 }
 
 export function PaylinkConfigFromJSON(json: any): PaylinkConfig {
@@ -204,67 +202,64 @@ export function PaylinkConfigFromJSON(json: any): PaylinkConfig {
 }
 
 export function PaylinkConfigFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkConfig {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'acsMode': !exists(json, 'acs_mode') ? undefined : json['acs_mode'],
-        'customParams': !exists(json, 'custom_params') ? undefined : ((json['custom_params'] as Array<any>).map(PaylinkCustomParamFromJSON)),
-        'descriptor': !exists(json, 'descriptor') ? undefined : json['descriptor'],
-        'expireIn': !exists(json, 'expire_in') ? undefined : json['expire_in'],
-        'fieldGuard': !exists(json, 'field_guard') ? undefined : ((json['field_guard'] as Array<any>).map(PaylinkFieldGuardModelFromJSON)),
-        'lockParams': !exists(json, 'lock_params') ? undefined : json['lock_params'],
-        'merchLogo': !exists(json, 'merch_logo') ? undefined : json['merch_logo'],
-        'merchTerms': !exists(json, 'merch_terms') ? undefined : json['merch_terms'],
-        'options': !exists(json, 'options') ? undefined : json['options'],
-        'partPayments': !exists(json, 'part_payments') ? undefined : PaylinkPartPaymentsFromJSON(json['part_payments']),
-        'passThroughData': !exists(json, 'pass_through_data') ? undefined : json['pass_through_data'],
-        'passThroughHeaders': !exists(json, 'pass_through_headers') ? undefined : json['pass_through_headers'],
-        'postback': !exists(json, 'postback') ? undefined : json['postback'],
-        'postbackPassword': !exists(json, 'postback_password') ? undefined : json['postback_password'],
-        'postbackPolicy': !exists(json, 'postback_policy') ? undefined : json['postback_policy'],
-        'postbackUsername': !exists(json, 'postback_username') ? undefined : json['postback_username'],
-        'redirectDelay': !exists(json, 'redirect_delay') ? undefined : json['redirect_delay'],
-        'redirectFailure': !exists(json, 'redirect_failure') ? undefined : json['redirect_failure'],
-        'redirectSuccess': !exists(json, 'redirect_success') ? undefined : json['redirect_success'],
-        'renderer': !exists(json, 'renderer') ? undefined : json['renderer'],
-        'returnParams': !exists(json, 'return_params') ? undefined : json['return_params'],
-        'ui': !exists(json, 'ui') ? undefined : PaylinkUIFromJSON(json['ui']),
+        'acsMode': json['acs_mode'] == null ? undefined : json['acs_mode'],
+        'customParams': json['custom_params'] == null ? undefined : ((json['custom_params'] as Array<any>).map(PaylinkCustomParamFromJSON)),
+        'descriptor': json['descriptor'] == null ? undefined : json['descriptor'],
+        'expireIn': json['expire_in'] == null ? undefined : json['expire_in'],
+        'fieldGuard': json['field_guard'] == null ? undefined : ((json['field_guard'] as Array<any>).map(PaylinkFieldGuardModelFromJSON)),
+        'lockParams': json['lock_params'] == null ? undefined : json['lock_params'],
+        'merchLogo': json['merch_logo'] == null ? undefined : json['merch_logo'],
+        'merchTerms': json['merch_terms'] == null ? undefined : json['merch_terms'],
+        'options': json['options'] == null ? undefined : json['options'],
+        'partPayments': json['part_payments'] == null ? undefined : PaylinkPartPaymentsFromJSON(json['part_payments']),
+        'passThroughData': json['pass_through_data'] == null ? undefined : json['pass_through_data'],
+        'passThroughHeaders': json['pass_through_headers'] == null ? undefined : json['pass_through_headers'],
+        'postback': json['postback'] == null ? undefined : json['postback'],
+        'postbackPassword': json['postback_password'] == null ? undefined : json['postback_password'],
+        'postbackPolicy': json['postback_policy'] == null ? undefined : json['postback_policy'],
+        'postbackUsername': json['postback_username'] == null ? undefined : json['postback_username'],
+        'redirectDelay': json['redirect_delay'] == null ? undefined : json['redirect_delay'],
+        'redirectFailure': json['redirect_failure'] == null ? undefined : json['redirect_failure'],
+        'redirectSuccess': json['redirect_success'] == null ? undefined : json['redirect_success'],
+        'renderer': json['renderer'] == null ? undefined : json['renderer'],
+        'returnParams': json['return_params'] == null ? undefined : json['return_params'],
+        'ui': json['ui'] == null ? undefined : PaylinkUIFromJSON(json['ui']),
     };
 }
 
 export function PaylinkConfigToJSON(value?: PaylinkConfig | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'acs_mode': value.acsMode,
-        'custom_params': value.customParams === undefined ? undefined : ((value.customParams as Array<any>).map(PaylinkCustomParamToJSON)),
-        'descriptor': value.descriptor,
-        'expire_in': value.expireIn,
-        'field_guard': value.fieldGuard === undefined ? undefined : ((value.fieldGuard as Array<any>).map(PaylinkFieldGuardModelToJSON)),
-        'lock_params': value.lockParams,
-        'merch_logo': value.merchLogo,
-        'merch_terms': value.merchTerms,
-        'options': value.options,
-        'part_payments': PaylinkPartPaymentsToJSON(value.partPayments),
-        'pass_through_data': value.passThroughData,
-        'pass_through_headers': value.passThroughHeaders,
-        'postback': value.postback,
-        'postback_password': value.postbackPassword,
-        'postback_policy': value.postbackPolicy,
-        'postback_username': value.postbackUsername,
-        'redirect_delay': value.redirectDelay,
-        'redirect_failure': value.redirectFailure,
-        'redirect_success': value.redirectSuccess,
-        'renderer': value.renderer,
-        'return_params': value.returnParams,
-        'ui': PaylinkUIToJSON(value.ui),
+        'acs_mode': value['acsMode'],
+        'custom_params': value['customParams'] == null ? undefined : ((value['customParams'] as Array<any>).map(PaylinkCustomParamToJSON)),
+        'descriptor': value['descriptor'],
+        'expire_in': value['expireIn'],
+        'field_guard': value['fieldGuard'] == null ? undefined : ((value['fieldGuard'] as Array<any>).map(PaylinkFieldGuardModelToJSON)),
+        'lock_params': value['lockParams'],
+        'merch_logo': value['merchLogo'],
+        'merch_terms': value['merchTerms'],
+        'options': value['options'],
+        'part_payments': PaylinkPartPaymentsToJSON(value['partPayments']),
+        'pass_through_data': value['passThroughData'],
+        'pass_through_headers': value['passThroughHeaders'],
+        'postback': value['postback'],
+        'postback_password': value['postbackPassword'],
+        'postback_policy': value['postbackPolicy'],
+        'postback_username': value['postbackUsername'],
+        'redirect_delay': value['redirectDelay'],
+        'redirect_failure': value['redirectFailure'],
+        'redirect_success': value['redirectSuccess'],
+        'renderer': value['renderer'],
+        'return_params': value['returnParams'],
+        'ui': PaylinkUIToJSON(value['ui']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,10 +60,8 @@ export interface PaylinkPartPayments {
 /**
  * Check if a given object implements the PaylinkPartPayments interface.
  */
-export function instanceOfPaylinkPartPayments(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkPartPayments(value: object): value is PaylinkPartPayments {
+    return true;
 }
 
 export function PaylinkPartPaymentsFromJSON(json: any): PaylinkPartPayments {
@@ -71,35 +69,32 @@ export function PaylinkPartPaymentsFromJSON(json: any): PaylinkPartPayments {
 }
 
 export function PaylinkPartPaymentsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkPartPayments {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
-        'floor': !exists(json, 'floor') ? undefined : json['floor'],
-        'max': !exists(json, 'max') ? undefined : json['max'],
-        'maxRate': !exists(json, 'max_rate') ? undefined : json['max_rate'],
-        'min': !exists(json, 'min') ? undefined : json['min'],
-        'minRate': !exists(json, 'min_rate') ? undefined : json['min_rate'],
+        'enabled': json['enabled'] == null ? undefined : json['enabled'],
+        'floor': json['floor'] == null ? undefined : json['floor'],
+        'max': json['max'] == null ? undefined : json['max'],
+        'maxRate': json['max_rate'] == null ? undefined : json['max_rate'],
+        'min': json['min'] == null ? undefined : json['min'],
+        'minRate': json['min_rate'] == null ? undefined : json['min_rate'],
     };
 }
 
 export function PaylinkPartPaymentsToJSON(value?: PaylinkPartPayments | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'enabled': value.enabled,
-        'floor': value.floor,
-        'max': value.max,
-        'max_rate': value.maxRate,
-        'min': value.min,
-        'min_rate': value.minRate,
+        'enabled': value['enabled'],
+        'floor': value['floor'],
+        'max': value['max'],
+        'max_rate': value['maxRate'],
+        'min': value['min'],
+        'min_rate': value['minRate'],
     };
 }
 

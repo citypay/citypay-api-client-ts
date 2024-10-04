@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,10 +54,8 @@ export interface EventDataModel {
 /**
  * Check if a given object implements the EventDataModel interface.
  */
-export function instanceOfEventDataModel(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfEventDataModel(value: object): value is EventDataModel {
+    return true;
 }
 
 export function EventDataModelFromJSON(json: any): EventDataModel {
@@ -65,33 +63,30 @@ export function EventDataModelFromJSON(json: any): EventDataModel {
 }
 
 export function EventDataModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): EventDataModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'eventEndDate': !exists(json, 'event_end_date') ? undefined : (new Date(json['event_end_date'])),
-        'eventId': !exists(json, 'event_id') ? undefined : json['event_id'],
-        'eventOrganiserId': !exists(json, 'event_organiser_id') ? undefined : json['event_organiser_id'],
-        'eventStartDate': !exists(json, 'event_start_date') ? undefined : (new Date(json['event_start_date'])),
-        'paymentType': !exists(json, 'payment_type') ? undefined : json['payment_type'],
+        'eventEndDate': json['event_end_date'] == null ? undefined : (new Date(json['event_end_date'])),
+        'eventId': json['event_id'] == null ? undefined : json['event_id'],
+        'eventOrganiserId': json['event_organiser_id'] == null ? undefined : json['event_organiser_id'],
+        'eventStartDate': json['event_start_date'] == null ? undefined : (new Date(json['event_start_date'])),
+        'paymentType': json['payment_type'] == null ? undefined : json['payment_type'],
     };
 }
 
 export function EventDataModelToJSON(value?: EventDataModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'event_end_date': value.eventEndDate === undefined ? undefined : (value.eventEndDate.toISOString().substring(0,10)),
-        'event_id': value.eventId,
-        'event_organiser_id': value.eventOrganiserId,
-        'event_start_date': value.eventStartDate === undefined ? undefined : (value.eventStartDate.toISOString().substring(0,10)),
-        'payment_type': value.paymentType,
+        'event_end_date': value['eventEndDate'] == null ? undefined : ((value['eventEndDate']).toISOString().substring(0,10)),
+        'event_id': value['eventId'],
+        'event_organiser_id': value['eventOrganiserId'],
+        'event_start_date': value['eventStartDate'] == null ? undefined : ((value['eventStartDate']).toISOString().substring(0,10)),
+        'payment_type': value['paymentType'],
     };
 }
 

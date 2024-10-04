@@ -43,23 +43,23 @@ import {
     PingToJSON,
 } from '../models/index';
 
-export interface OperationalFunctionsApiAclCheckRequest {
+export interface OperationalFunctionsApiAclCheckRequestRequest {
     acl_check_request: AclCheckRequest;
 }
 
-export interface OperationalFunctionsApiDomainKeyCheckRequest {
+export interface OperationalFunctionsApiDomainKeyCheckRequestRequest {
     domain_key_check_request: DomainKeyCheckRequest;
 }
 
-export interface OperationalFunctionsApiDomainKeyGenRequest {
+export interface OperationalFunctionsApiDomainKeyGenRequestRequest {
     domain_key_request: DomainKeyRequest;
 }
 
-export interface OperationalFunctionsApiListMerchantsRequest {
+export interface OperationalFunctionsApiListMerchantsRequestRequest {
     clientid: string;
 }
 
-export interface OperationalFunctionsApiPingRequest {
+export interface OperationalFunctionsApiPingRequestRequest {
     ping: Ping;
 }
 
@@ -72,9 +72,12 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
      * ACL Check Request
      */
-    async aclCheckRequestRaw(requestParameters: OperationalFunctionsApiAclCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AclCheckResponseModel>> {
-        if (requestParameters.acl_check_request === null || requestParameters.acl_check_request === undefined) {
-            throw new runtime.RequiredError('acl_check_request','Required parameter requestParameters.acl_check_request was null or undefined when calling aclCheckRequest.');
+    async aclCheckRequestRaw(requestParameters: OperationalFunctionsApiAclCheckRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AclCheckResponseModel>> {
+        if (requestParameters['acl_check_request'] == null) {
+            throw new runtime.RequiredError(
+                'acl_check_request',
+                'Required parameter "acl_check_request" was null or undefined when calling aclCheckRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -84,7 +87,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -92,7 +95,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: AclCheckRequestToJSON(requestParameters.acl_check_request),
+            body: AclCheckRequestToJSON(requestParameters['acl_check_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AclCheckResponseModelFromJSON(jsonValue));
@@ -102,7 +105,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
      * ACL Check Request
      */
-    async aclCheckRequest(requestParameters: OperationalFunctionsApiAclCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AclCheckResponseModel> {
+    async aclCheckRequest(requestParameters: OperationalFunctionsApiAclCheckRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AclCheckResponseModel> {
         const response = await this.aclCheckRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -111,9 +114,12 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * Checks the contents of a `domain key`. Can be used for operational processes to ensure that the properties of a  domain key meet their expectations. 
      * Domain Key Check Request
      */
-    async domainKeyCheckRequestRaw(requestParameters: OperationalFunctionsApiDomainKeyCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainKeyResponse>> {
-        if (requestParameters.domain_key_check_request === null || requestParameters.domain_key_check_request === undefined) {
-            throw new runtime.RequiredError('domain_key_check_request','Required parameter requestParameters.domain_key_check_request was null or undefined when calling domainKeyCheckRequest.');
+    async domainKeyCheckRequestRaw(requestParameters: OperationalFunctionsApiDomainKeyCheckRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainKeyResponse>> {
+        if (requestParameters['domain_key_check_request'] == null) {
+            throw new runtime.RequiredError(
+                'domain_key_check_request',
+                'Required parameter "domain_key_check_request" was null or undefined when calling domainKeyCheckRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -123,7 +129,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -131,7 +137,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DomainKeyCheckRequestToJSON(requestParameters.domain_key_check_request),
+            body: DomainKeyCheckRequestToJSON(requestParameters['domain_key_check_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DomainKeyResponseFromJSON(jsonValue));
@@ -141,7 +147,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * Checks the contents of a `domain key`. Can be used for operational processes to ensure that the properties of a  domain key meet their expectations. 
      * Domain Key Check Request
      */
-    async domainKeyCheckRequest(requestParameters: OperationalFunctionsApiDomainKeyCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainKeyResponse> {
+    async domainKeyCheckRequest(requestParameters: OperationalFunctionsApiDomainKeyCheckRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainKeyResponse> {
         const response = await this.domainKeyCheckRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -150,9 +156,12 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * Generates a domain key based on the permissions of the calling `api-key`. Domain keys can be used in _Direct Post_ and `XHR` calls to the API services. 
      * Domain Key Generation Request
      */
-    async domainKeyGenRequestRaw(requestParameters: OperationalFunctionsApiDomainKeyGenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainKeyResponse>> {
-        if (requestParameters.domain_key_request === null || requestParameters.domain_key_request === undefined) {
-            throw new runtime.RequiredError('domain_key_request','Required parameter requestParameters.domain_key_request was null or undefined when calling domainKeyGenRequest.');
+    async domainKeyGenRequestRaw(requestParameters: OperationalFunctionsApiDomainKeyGenRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainKeyResponse>> {
+        if (requestParameters['domain_key_request'] == null) {
+            throw new runtime.RequiredError(
+                'domain_key_request',
+                'Required parameter "domain_key_request" was null or undefined when calling domainKeyGenRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -162,7 +171,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -170,7 +179,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DomainKeyRequestToJSON(requestParameters.domain_key_request),
+            body: DomainKeyRequestToJSON(requestParameters['domain_key_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DomainKeyResponseFromJSON(jsonValue));
@@ -180,7 +189,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * Generates a domain key based on the permissions of the calling `api-key`. Domain keys can be used in _Direct Post_ and `XHR` calls to the API services. 
      * Domain Key Generation Request
      */
-    async domainKeyGenRequest(requestParameters: OperationalFunctionsApiDomainKeyGenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainKeyResponse> {
+    async domainKeyGenRequest(requestParameters: OperationalFunctionsApiDomainKeyGenRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainKeyResponse> {
         const response = await this.domainKeyGenRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -189,9 +198,12 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * An operational request to list current merchants for a client.  ### Sorting  Sorting can be performed by include a query parameter i.e. `/merchants/?sort=merchantid`  Fields that can be sorted are `merchantid` or `name`. 
      * List Merchants Request
      */
-    async listMerchantsRequestRaw(requestParameters: OperationalFunctionsApiListMerchantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListMerchantsResponse>> {
-        if (requestParameters.clientid === null || requestParameters.clientid === undefined) {
-            throw new runtime.RequiredError('clientid','Required parameter requestParameters.clientid was null or undefined when calling listMerchantsRequest.');
+    async listMerchantsRequestRaw(requestParameters: OperationalFunctionsApiListMerchantsRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListMerchantsResponse>> {
+        if (requestParameters['clientid'] == null) {
+            throw new runtime.RequiredError(
+                'clientid',
+                'Required parameter "clientid" was null or undefined when calling listMerchantsRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -199,11 +211,11 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/merchants/{clientid}`.replace(`{${"clientid"}}`, encodeURIComponent(String(requestParameters.clientid))),
+            path: `/v6/merchants/{clientid}`.replace(`{${"clientid"}}`, encodeURIComponent(String(requestParameters['clientid']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -216,7 +228,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * An operational request to list current merchants for a client.  ### Sorting  Sorting can be performed by include a query parameter i.e. `/merchants/?sort=merchantid`  Fields that can be sorted are `merchantid` or `name`. 
      * List Merchants Request
      */
-    async listMerchantsRequest(requestParameters: OperationalFunctionsApiListMerchantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListMerchantsResponse> {
+    async listMerchantsRequest(requestParameters: OperationalFunctionsApiListMerchantsRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListMerchantsResponse> {
         const response = await this.listMerchantsRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -225,9 +237,12 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code `044` to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
      * Ping Request
      */
-    async pingRequestRaw(requestParameters: OperationalFunctionsApiPingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
-        if (requestParameters.ping === null || requestParameters.ping === undefined) {
-            throw new runtime.RequiredError('ping','Required parameter requestParameters.ping was null or undefined when calling pingRequest.');
+    async pingRequestRaw(requestParameters: OperationalFunctionsApiPingRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Acknowledgement>> {
+        if (requestParameters['ping'] == null) {
+            throw new runtime.RequiredError(
+                'ping',
+                'Required parameter "ping" was null or undefined when calling pingRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -237,11 +252,11 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            queryParameters["cp-domain-key"] = this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
+            queryParameters["cp-domain-key"] = await this.configuration.apiKey("cp-domain-key"); // cp-domain-key authentication
         }
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -249,7 +264,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PingToJSON(requestParameters.ping),
+            body: PingToJSON(requestParameters['ping']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgementFromJSON(jsonValue));
@@ -259,7 +274,7 @@ export class OperationalFunctionsApi extends runtime.BaseAPI {
      * A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code `044` to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
      * Ping Request
      */
-    async pingRequest(requestParameters: OperationalFunctionsApiPingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
+    async pingRequest(requestParameters: OperationalFunctionsApiPingRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Acknowledgement> {
         const response = await this.pingRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
