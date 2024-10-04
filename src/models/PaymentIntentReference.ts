@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface PaymentIntentReference {
 /**
  * Check if a given object implements the PaymentIntentReference interface.
  */
-export function instanceOfPaymentIntentReference(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "paymentIntentId" in value;
-
-    return isInstance;
+export function instanceOfPaymentIntentReference(value: object): value is PaymentIntentReference {
+    if (!('paymentIntentId' in value) || value['paymentIntentId'] === undefined) return false;
+    return true;
 }
 
 export function PaymentIntentReferenceFromJSON(json: any): PaymentIntentReference {
@@ -42,7 +40,7 @@ export function PaymentIntentReferenceFromJSON(json: any): PaymentIntentReferenc
 }
 
 export function PaymentIntentReferenceFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaymentIntentReference {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -52,15 +50,12 @@ export function PaymentIntentReferenceFromJSONTyped(json: any, ignoreDiscriminat
 }
 
 export function PaymentIntentReferenceToJSON(value?: PaymentIntentReference | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'payment_intent_id': value.paymentIntentId,
+        'payment_intent_id': value['paymentIntentId'],
     };
 }
 

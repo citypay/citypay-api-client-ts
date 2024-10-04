@@ -43,27 +43,27 @@ import {
     RemittedClientDataToJSON,
 } from '../models/index';
 
-export interface ReportingApiBatchedTransactionReportRequest {
+export interface ReportingApiBatchedTransactionReportRequestRequest {
     merchantid: number;
     batch_no: string;
     batch_transaction_report_request: BatchTransactionReportRequest;
 }
 
-export interface ReportingApiMerchantBatchReportRequest {
+export interface ReportingApiMerchantBatchReportRequestRequest {
     merchant_batch_report_request: MerchantBatchReportRequest;
 }
 
-export interface ReportingApiMerchantBatchRequest {
+export interface ReportingApiMerchantBatchRequestRequest {
     merchantid: number;
     batch_no: string;
 }
 
-export interface ReportingApiRemittanceRangeReport {
+export interface ReportingApiRemittanceRangeReportRequest {
     clientid: string;
     remittance_report_request: RemittanceReportRequest;
 }
 
-export interface ReportingApiRemittanceReportRequest {
+export interface ReportingApiRemittanceReportRequestRequest {
     clientid: string;
     date: string;
 }
@@ -77,17 +77,26 @@ export class ReportingApi extends runtime.BaseAPI {
      * Retrieves transactions available on a given batch.
      * Batch Transaction Report Request
      */
-    async batchedTransactionReportRequestRaw(requestParameters: ReportingApiBatchedTransactionReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BatchTransactionReportResponse>> {
-        if (requestParameters.merchantid === null || requestParameters.merchantid === undefined) {
-            throw new runtime.RequiredError('merchantid','Required parameter requestParameters.merchantid was null or undefined when calling batchedTransactionReportRequest.');
+    async batchedTransactionReportRequestRaw(requestParameters: ReportingApiBatchedTransactionReportRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BatchTransactionReportResponse>> {
+        if (requestParameters['merchantid'] == null) {
+            throw new runtime.RequiredError(
+                'merchantid',
+                'Required parameter "merchantid" was null or undefined when calling batchedTransactionReportRequest().'
+            );
         }
 
-        if (requestParameters.batch_no === null || requestParameters.batch_no === undefined) {
-            throw new runtime.RequiredError('batch_no','Required parameter requestParameters.batch_no was null or undefined when calling batchedTransactionReportRequest.');
+        if (requestParameters['batch_no'] == null) {
+            throw new runtime.RequiredError(
+                'batch_no',
+                'Required parameter "batch_no" was null or undefined when calling batchedTransactionReportRequest().'
+            );
         }
 
-        if (requestParameters.batch_transaction_report_request === null || requestParameters.batch_transaction_report_request === undefined) {
-            throw new runtime.RequiredError('batch_transaction_report_request','Required parameter requestParameters.batch_transaction_report_request was null or undefined when calling batchedTransactionReportRequest.');
+        if (requestParameters['batch_transaction_report_request'] == null) {
+            throw new runtime.RequiredError(
+                'batch_transaction_report_request',
+                'Required parameter "batch_transaction_report_request" was null or undefined when calling batchedTransactionReportRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -97,15 +106,15 @@ export class ReportingApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/merchant-batch/{merchantid}/{batch_no}/transactions`.replace(`{${"merchantid"}}`, encodeURIComponent(String(requestParameters.merchantid))).replace(`{${"batch_no"}}`, encodeURIComponent(String(requestParameters.batch_no))),
+            path: `/v6/merchant-batch/{merchantid}/{batch_no}/transactions`.replace(`{${"merchantid"}}`, encodeURIComponent(String(requestParameters['merchantid']))).replace(`{${"batch_no"}}`, encodeURIComponent(String(requestParameters['batch_no']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: BatchTransactionReportRequestToJSON(requestParameters.batch_transaction_report_request),
+            body: BatchTransactionReportRequestToJSON(requestParameters['batch_transaction_report_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => BatchTransactionReportResponseFromJSON(jsonValue));
@@ -115,7 +124,7 @@ export class ReportingApi extends runtime.BaseAPI {
      * Retrieves transactions available on a given batch.
      * Batch Transaction Report Request
      */
-    async batchedTransactionReportRequest(requestParameters: ReportingApiBatchedTransactionReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BatchTransactionReportResponse> {
+    async batchedTransactionReportRequest(requestParameters: ReportingApiBatchedTransactionReportRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BatchTransactionReportResponse> {
         const response = await this.batchedTransactionReportRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -124,9 +133,12 @@ export class ReportingApi extends runtime.BaseAPI {
      * Retrieves a report of merchant batches within a specified date range.  Batches, which aggregate daily processing activities, are typically generated at `00:00` each day.  These batches play a crucial role in the settlement of funds by summarising daily transactions. 
      * Merchant Batch Report Request
      */
-    async merchantBatchReportRequestRaw(requestParameters: ReportingApiMerchantBatchReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerchantBatchReportResponse>> {
-        if (requestParameters.merchant_batch_report_request === null || requestParameters.merchant_batch_report_request === undefined) {
-            throw new runtime.RequiredError('merchant_batch_report_request','Required parameter requestParameters.merchant_batch_report_request was null or undefined when calling merchantBatchReportRequest.');
+    async merchantBatchReportRequestRaw(requestParameters: ReportingApiMerchantBatchReportRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerchantBatchReportResponse>> {
+        if (requestParameters['merchant_batch_report_request'] == null) {
+            throw new runtime.RequiredError(
+                'merchant_batch_report_request',
+                'Required parameter "merchant_batch_report_request" was null or undefined when calling merchantBatchReportRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -136,7 +148,7 @@ export class ReportingApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -144,7 +156,7 @@ export class ReportingApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: MerchantBatchReportRequestToJSON(requestParameters.merchant_batch_report_request),
+            body: MerchantBatchReportRequestToJSON(requestParameters['merchant_batch_report_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => MerchantBatchReportResponseFromJSON(jsonValue));
@@ -154,7 +166,7 @@ export class ReportingApi extends runtime.BaseAPI {
      * Retrieves a report of merchant batches within a specified date range.  Batches, which aggregate daily processing activities, are typically generated at `00:00` each day.  These batches play a crucial role in the settlement of funds by summarising daily transactions. 
      * Merchant Batch Report Request
      */
-    async merchantBatchReportRequest(requestParameters: ReportingApiMerchantBatchReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerchantBatchReportResponse> {
+    async merchantBatchReportRequest(requestParameters: ReportingApiMerchantBatchReportRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerchantBatchReportResponse> {
         const response = await this.merchantBatchReportRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -163,13 +175,19 @@ export class ReportingApi extends runtime.BaseAPI {
      * Retrieves a report of merchant a merchant batch for a specified batch number.
      * Merchant Batch Request
      */
-    async merchantBatchRequestRaw(requestParameters: ReportingApiMerchantBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerchantBatchResponse>> {
-        if (requestParameters.merchantid === null || requestParameters.merchantid === undefined) {
-            throw new runtime.RequiredError('merchantid','Required parameter requestParameters.merchantid was null or undefined when calling merchantBatchRequest.');
+    async merchantBatchRequestRaw(requestParameters: ReportingApiMerchantBatchRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerchantBatchResponse>> {
+        if (requestParameters['merchantid'] == null) {
+            throw new runtime.RequiredError(
+                'merchantid',
+                'Required parameter "merchantid" was null or undefined when calling merchantBatchRequest().'
+            );
         }
 
-        if (requestParameters.batch_no === null || requestParameters.batch_no === undefined) {
-            throw new runtime.RequiredError('batch_no','Required parameter requestParameters.batch_no was null or undefined when calling merchantBatchRequest.');
+        if (requestParameters['batch_no'] == null) {
+            throw new runtime.RequiredError(
+                'batch_no',
+                'Required parameter "batch_no" was null or undefined when calling merchantBatchRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -177,11 +195,11 @@ export class ReportingApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/merchant-batch/{merchantid}/{batch_no}`.replace(`{${"merchantid"}}`, encodeURIComponent(String(requestParameters.merchantid))).replace(`{${"batch_no"}}`, encodeURIComponent(String(requestParameters.batch_no))),
+            path: `/v6/merchant-batch/{merchantid}/{batch_no}`.replace(`{${"merchantid"}}`, encodeURIComponent(String(requestParameters['merchantid']))).replace(`{${"batch_no"}}`, encodeURIComponent(String(requestParameters['batch_no']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -194,7 +212,7 @@ export class ReportingApi extends runtime.BaseAPI {
      * Retrieves a report of merchant a merchant batch for a specified batch number.
      * Merchant Batch Request
      */
-    async merchantBatchRequest(requestParameters: ReportingApiMerchantBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerchantBatchResponse> {
+    async merchantBatchRequest(requestParameters: ReportingApiMerchantBatchRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerchantBatchResponse> {
         const response = await this.merchantBatchRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -203,13 +221,19 @@ export class ReportingApi extends runtime.BaseAPI {
      * Fetches remittance reports for financial transactions within a specified date range, covering all client-related activities. This report consolidates all batches disbursed to a client, with each remittance summarising the aggregation of batches leading up to settlement. Additionally, the net remittance amount presented in the final settlement will reflect any deductions made by the acquirer. 
      * Remittance Report Request
      */
-    async remittanceRangeReportRaw(requestParameters: ReportingApiRemittanceRangeReport, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemittanceReportResponse>> {
-        if (requestParameters.clientid === null || requestParameters.clientid === undefined) {
-            throw new runtime.RequiredError('clientid','Required parameter requestParameters.clientid was null or undefined when calling remittanceRangeReport.');
+    async remittanceRangeReportRaw(requestParameters: ReportingApiRemittanceRangeReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemittanceReportResponse>> {
+        if (requestParameters['clientid'] == null) {
+            throw new runtime.RequiredError(
+                'clientid',
+                'Required parameter "clientid" was null or undefined when calling remittanceRangeReport().'
+            );
         }
 
-        if (requestParameters.remittance_report_request === null || requestParameters.remittance_report_request === undefined) {
-            throw new runtime.RequiredError('remittance_report_request','Required parameter requestParameters.remittance_report_request was null or undefined when calling remittanceRangeReport.');
+        if (requestParameters['remittance_report_request'] == null) {
+            throw new runtime.RequiredError(
+                'remittance_report_request',
+                'Required parameter "remittance_report_request" was null or undefined when calling remittanceRangeReport().'
+            );
         }
 
         const queryParameters: any = {};
@@ -219,15 +243,15 @@ export class ReportingApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/remittance/report/{clientid}`.replace(`{${"clientid"}}`, encodeURIComponent(String(requestParameters.clientid))),
+            path: `/v6/remittance/report/{clientid}`.replace(`{${"clientid"}}`, encodeURIComponent(String(requestParameters['clientid']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RemittanceReportRequestToJSON(requestParameters.remittance_report_request),
+            body: RemittanceReportRequestToJSON(requestParameters['remittance_report_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => RemittanceReportResponseFromJSON(jsonValue));
@@ -237,7 +261,7 @@ export class ReportingApi extends runtime.BaseAPI {
      * Fetches remittance reports for financial transactions within a specified date range, covering all client-related activities. This report consolidates all batches disbursed to a client, with each remittance summarising the aggregation of batches leading up to settlement. Additionally, the net remittance amount presented in the final settlement will reflect any deductions made by the acquirer. 
      * Remittance Report Request
      */
-    async remittanceRangeReport(requestParameters: ReportingApiRemittanceRangeReport, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RemittanceReportResponse> {
+    async remittanceRangeReport(requestParameters: ReportingApiRemittanceRangeReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RemittanceReportResponse> {
         const response = await this.remittanceRangeReportRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -246,13 +270,19 @@ export class ReportingApi extends runtime.BaseAPI {
      * Fetches remittance reports for financial transactions for a given date,  covering all client-related activities. This report consolidates all batches disbursed to a  client, with each remittance summarising the aggregation of batches leading up to settlement.  Additionally, the net remittance amount presented in the final settlement will reflect any  deductions made by the acquirer.  The process also supports the notion of *today* deferring the date to today\'s date or *latest* reflecting the latest remittance date available. 
      * Remittance Date Report Request
      */
-    async remittanceReportRequestRaw(requestParameters: ReportingApiRemittanceReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemittedClientData>> {
-        if (requestParameters.clientid === null || requestParameters.clientid === undefined) {
-            throw new runtime.RequiredError('clientid','Required parameter requestParameters.clientid was null or undefined when calling remittanceReportRequest.');
+    async remittanceReportRequestRaw(requestParameters: ReportingApiRemittanceReportRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemittedClientData>> {
+        if (requestParameters['clientid'] == null) {
+            throw new runtime.RequiredError(
+                'clientid',
+                'Required parameter "clientid" was null or undefined when calling remittanceReportRequest().'
+            );
         }
 
-        if (requestParameters.date === null || requestParameters.date === undefined) {
-            throw new runtime.RequiredError('date','Required parameter requestParameters.date was null or undefined when calling remittanceReportRequest.');
+        if (requestParameters['date'] == null) {
+            throw new runtime.RequiredError(
+                'date',
+                'Required parameter "date" was null or undefined when calling remittanceReportRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -260,11 +290,11 @@ export class ReportingApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
-            path: `/v6/remittance/report/{clientid}/{date}`.replace(`{${"clientid"}}`, encodeURIComponent(String(requestParameters.clientid))).replace(`{${"date"}}`, encodeURIComponent(String(requestParameters.date))),
+            path: `/v6/remittance/report/{clientid}/{date}`.replace(`{${"clientid"}}`, encodeURIComponent(String(requestParameters['clientid']))).replace(`{${"date"}}`, encodeURIComponent(String(requestParameters['date']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -277,7 +307,7 @@ export class ReportingApi extends runtime.BaseAPI {
      * Fetches remittance reports for financial transactions for a given date,  covering all client-related activities. This report consolidates all batches disbursed to a  client, with each remittance summarising the aggregation of batches leading up to settlement.  Additionally, the net remittance amount presented in the final settlement will reflect any  deductions made by the acquirer.  The process also supports the notion of *today* deferring the date to today\'s date or *latest* reflecting the latest remittance date available. 
      * Remittance Date Report Request
      */
-    async remittanceReportRequest(requestParameters: ReportingApiRemittanceReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RemittedClientData> {
+    async remittanceReportRequest(requestParameters: ReportingApiRemittanceReportRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RemittedClientData> {
         const response = await this.remittanceReportRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

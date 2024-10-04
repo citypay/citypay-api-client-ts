@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PaylinkAttachmentResult } from './PaylinkAttachmentResult';
 import {
     PaylinkAttachmentResultFromJSON,
@@ -121,13 +121,11 @@ export interface PaylinkTokenCreated {
 /**
  * Check if a given object implements the PaylinkTokenCreated interface.
  */
-export function instanceOfPaylinkTokenCreated(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "result" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfPaylinkTokenCreated(value: object): value is PaylinkTokenCreated {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('result' in value) || value['result'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkTokenCreatedFromJSON(json: any): PaylinkTokenCreated {
@@ -135,7 +133,7 @@ export function PaylinkTokenCreatedFromJSON(json: any): PaylinkTokenCreated {
 }
 
 export function PaylinkTokenCreatedFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkTokenCreated {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -143,43 +141,40 @@ export function PaylinkTokenCreatedFromJSONTyped(json: any, ignoreDiscriminator:
         'id': json['id'],
         'result': json['result'],
         'token': json['token'],
-        'attachments': !exists(json, 'attachments') ? undefined : PaylinkAttachmentResultFromJSON(json['attachments']),
-        'bps': !exists(json, 'bps') ? undefined : json['bps'],
-        'dateCreated': !exists(json, 'date_created') ? undefined : (new Date(json['date_created'])),
-        'errors': !exists(json, 'errors') ? undefined : ((json['errors'] as Array<any>).map(PaylinkErrorCodeFromJSON)),
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'mode': !exists(json, 'mode') ? undefined : json['mode'],
-        'qrcode': !exists(json, 'qrcode') ? undefined : json['qrcode'],
-        'serverVersion': !exists(json, 'server_version') ? undefined : json['server_version'],
-        'source': !exists(json, 'source') ? undefined : json['source'],
-        'url': !exists(json, 'url') ? undefined : json['url'],
-        'usc': !exists(json, 'usc') ? undefined : json['usc'],
+        'attachments': json['attachments'] == null ? undefined : PaylinkAttachmentResultFromJSON(json['attachments']),
+        'bps': json['bps'] == null ? undefined : json['bps'],
+        'dateCreated': json['date_created'] == null ? undefined : (new Date(json['date_created'])),
+        'errors': json['errors'] == null ? undefined : ((json['errors'] as Array<any>).map(PaylinkErrorCodeFromJSON)),
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'mode': json['mode'] == null ? undefined : json['mode'],
+        'qrcode': json['qrcode'] == null ? undefined : json['qrcode'],
+        'serverVersion': json['server_version'] == null ? undefined : json['server_version'],
+        'source': json['source'] == null ? undefined : json['source'],
+        'url': json['url'] == null ? undefined : json['url'],
+        'usc': json['usc'] == null ? undefined : json['usc'],
     };
 }
 
 export function PaylinkTokenCreatedToJSON(value?: PaylinkTokenCreated | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'id': value.id,
-        'result': value.result,
-        'token': value.token,
-        'attachments': PaylinkAttachmentResultToJSON(value.attachments),
-        'bps': value.bps,
-        'date_created': value.dateCreated === undefined ? undefined : (value.dateCreated.toISOString()),
-        'errors': value.errors === undefined ? undefined : ((value.errors as Array<any>).map(PaylinkErrorCodeToJSON)),
-        'identifier': value.identifier,
-        'mode': value.mode,
-        'qrcode': value.qrcode,
-        'server_version': value.serverVersion,
-        'source': value.source,
-        'url': value.url,
-        'usc': value.usc,
+        'id': value['id'],
+        'result': value['result'],
+        'token': value['token'],
+        'attachments': PaylinkAttachmentResultToJSON(value['attachments']),
+        'bps': value['bps'],
+        'date_created': value['dateCreated'] == null ? undefined : ((value['dateCreated']).toISOString()),
+        'errors': value['errors'] == null ? undefined : ((value['errors'] as Array<any>).map(PaylinkErrorCodeToJSON)),
+        'identifier': value['identifier'],
+        'mode': value['mode'],
+        'qrcode': value['qrcode'],
+        'server_version': value['serverVersion'],
+        'source': value['source'],
+        'url': value['url'],
+        'usc': value['usc'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -151,10 +151,8 @@ export interface Card {
 /**
  * Check if a given object implements the Card interface.
  */
-export function instanceOfCard(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCard(value: object): value is Card {
+    return true;
 }
 
 export function CardFromJSON(json: any): Card {
@@ -162,63 +160,60 @@ export function CardFromJSON(json: any): Card {
 }
 
 export function CardFromJSONTyped(json: any, ignoreDiscriminator: boolean): Card {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'binCommercial': !exists(json, 'bin_commercial') ? undefined : json['bin_commercial'],
-        'binCorporate': !exists(json, 'bin_corporate') ? undefined : json['bin_corporate'],
-        'binCountryIssued': !exists(json, 'bin_country_issued') ? undefined : json['bin_country_issued'],
-        'binCredit': !exists(json, 'bin_credit') ? undefined : json['bin_credit'],
-        'binCurrency': !exists(json, 'bin_currency') ? undefined : json['bin_currency'],
-        'binDebit': !exists(json, 'bin_debit') ? undefined : json['bin_debit'],
-        'binDescription': !exists(json, 'bin_description') ? undefined : json['bin_description'],
-        'binEu': !exists(json, 'bin_eu') ? undefined : json['bin_eu'],
-        'cardId': !exists(json, 'card_id') ? undefined : json['card_id'],
-        'cardStatus': !exists(json, 'card_status') ? undefined : json['card_status'],
-        'dateCreated': !exists(json, 'date_created') ? undefined : (new Date(json['date_created'])),
-        '_default': !exists(json, 'default') ? undefined : json['default'],
-        'expmonth': !exists(json, 'expmonth') ? undefined : json['expmonth'],
-        'expyear': !exists(json, 'expyear') ? undefined : json['expyear'],
-        'label': !exists(json, 'label') ? undefined : json['label'],
-        'label2': !exists(json, 'label2') ? undefined : json['label2'],
-        'last4digits': !exists(json, 'last4digits') ? undefined : json['last4digits'],
-        'nameOnCard': !exists(json, 'name_on_card') ? undefined : json['name_on_card'],
-        'scheme': !exists(json, 'scheme') ? undefined : json['scheme'],
-        'token': !exists(json, 'token') ? undefined : json['token'],
+        'binCommercial': json['bin_commercial'] == null ? undefined : json['bin_commercial'],
+        'binCorporate': json['bin_corporate'] == null ? undefined : json['bin_corporate'],
+        'binCountryIssued': json['bin_country_issued'] == null ? undefined : json['bin_country_issued'],
+        'binCredit': json['bin_credit'] == null ? undefined : json['bin_credit'],
+        'binCurrency': json['bin_currency'] == null ? undefined : json['bin_currency'],
+        'binDebit': json['bin_debit'] == null ? undefined : json['bin_debit'],
+        'binDescription': json['bin_description'] == null ? undefined : json['bin_description'],
+        'binEu': json['bin_eu'] == null ? undefined : json['bin_eu'],
+        'cardId': json['card_id'] == null ? undefined : json['card_id'],
+        'cardStatus': json['card_status'] == null ? undefined : json['card_status'],
+        'dateCreated': json['date_created'] == null ? undefined : (new Date(json['date_created'])),
+        '_default': json['default'] == null ? undefined : json['default'],
+        'expmonth': json['expmonth'] == null ? undefined : json['expmonth'],
+        'expyear': json['expyear'] == null ? undefined : json['expyear'],
+        'label': json['label'] == null ? undefined : json['label'],
+        'label2': json['label2'] == null ? undefined : json['label2'],
+        'last4digits': json['last4digits'] == null ? undefined : json['last4digits'],
+        'nameOnCard': json['name_on_card'] == null ? undefined : json['name_on_card'],
+        'scheme': json['scheme'] == null ? undefined : json['scheme'],
+        'token': json['token'] == null ? undefined : json['token'],
     };
 }
 
 export function CardToJSON(value?: Card | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'bin_commercial': value.binCommercial,
-        'bin_corporate': value.binCorporate,
-        'bin_country_issued': value.binCountryIssued,
-        'bin_credit': value.binCredit,
-        'bin_currency': value.binCurrency,
-        'bin_debit': value.binDebit,
-        'bin_description': value.binDescription,
-        'bin_eu': value.binEu,
-        'card_id': value.cardId,
-        'card_status': value.cardStatus,
-        'date_created': value.dateCreated === undefined ? undefined : (value.dateCreated.toISOString()),
-        'default': value._default,
-        'expmonth': value.expmonth,
-        'expyear': value.expyear,
-        'label': value.label,
-        'label2': value.label2,
-        'last4digits': value.last4digits,
-        'name_on_card': value.nameOnCard,
-        'scheme': value.scheme,
-        'token': value.token,
+        'bin_commercial': value['binCommercial'],
+        'bin_corporate': value['binCorporate'],
+        'bin_country_issued': value['binCountryIssued'],
+        'bin_credit': value['binCredit'],
+        'bin_currency': value['binCurrency'],
+        'bin_debit': value['binDebit'],
+        'bin_description': value['binDescription'],
+        'bin_eu': value['binEu'],
+        'card_id': value['cardId'],
+        'card_status': value['cardStatus'],
+        'date_created': value['dateCreated'] == null ? undefined : ((value['dateCreated']).toISOString()),
+        'default': value['_default'],
+        'expmonth': value['expmonth'],
+        'expyear': value['expyear'],
+        'label': value['label'],
+        'label2': value['label2'],
+        'last4digits': value['last4digits'],
+        'name_on_card': value['nameOnCard'],
+        'scheme': value['scheme'],
+        'token': value['token'],
     };
 }
 

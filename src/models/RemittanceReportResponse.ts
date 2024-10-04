@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RemittedClientData } from './RemittedClientData';
 import {
     RemittedClientDataFromJSON,
@@ -55,11 +55,9 @@ export interface RemittanceReportResponse {
 /**
  * Check if a given object implements the RemittanceReportResponse interface.
  */
-export function instanceOfRemittanceReportResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfRemittanceReportResponse(value: object): value is RemittanceReportResponse {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function RemittanceReportResponseFromJSON(json: any): RemittanceReportResponse {
@@ -67,31 +65,28 @@ export function RemittanceReportResponseFromJSON(json: any): RemittanceReportRes
 }
 
 export function RemittanceReportResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): RemittanceReportResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'data': ((json['data'] as Array<any>).map(RemittedClientDataFromJSON)),
-        'count': !exists(json, 'count') ? undefined : json['count'],
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
+        'count': json['count'] == null ? undefined : json['count'],
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
     };
 }
 
 export function RemittanceReportResponseToJSON(value?: RemittanceReportResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'data': ((value.data as Array<any>).map(RemittedClientDataToJSON)),
-        'count': value.count,
-        'maxResults': value.maxResults,
-        'nextToken': value.nextToken,
+        'data': ((value['data'] as Array<any>).map(RemittedClientDataToJSON)),
+        'count': value['count'],
+        'maxResults': value['maxResults'],
+        'nextToken': value['nextToken'],
     };
 }
 

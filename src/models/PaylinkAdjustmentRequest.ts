@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,10 +42,8 @@ export interface PaylinkAdjustmentRequest {
 /**
  * Check if a given object implements the PaylinkAdjustmentRequest interface.
  */
-export function instanceOfPaylinkAdjustmentRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkAdjustmentRequest(value: object): value is PaylinkAdjustmentRequest {
+    return true;
 }
 
 export function PaylinkAdjustmentRequestFromJSON(json: any): PaylinkAdjustmentRequest {
@@ -53,29 +51,26 @@ export function PaylinkAdjustmentRequestFromJSON(json: any): PaylinkAdjustmentRe
 }
 
 export function PaylinkAdjustmentRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkAdjustmentRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'amount': json['amount'] == null ? undefined : json['amount'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
 export function PaylinkAdjustmentRequestToJSON(value?: PaylinkAdjustmentRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'identifier': value.identifier,
-        'reason': value.reason,
+        'amount': value['amount'],
+        'identifier': value['identifier'],
+        'reason': value['reason'],
     };
 }
 

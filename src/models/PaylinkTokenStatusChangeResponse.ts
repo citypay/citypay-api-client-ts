@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PaylinkTokenStatus } from './PaylinkTokenStatus';
 import {
     PaylinkTokenStatusFromJSON,
@@ -55,11 +55,9 @@ export interface PaylinkTokenStatusChangeResponse {
 /**
  * Check if a given object implements the PaylinkTokenStatusChangeResponse interface.
  */
-export function instanceOfPaylinkTokenStatusChangeResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "tokens" in value;
-
-    return isInstance;
+export function instanceOfPaylinkTokenStatusChangeResponse(value: object): value is PaylinkTokenStatusChangeResponse {
+    if (!('tokens' in value) || value['tokens'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkTokenStatusChangeResponseFromJSON(json: any): PaylinkTokenStatusChangeResponse {
@@ -67,31 +65,28 @@ export function PaylinkTokenStatusChangeResponseFromJSON(json: any): PaylinkToke
 }
 
 export function PaylinkTokenStatusChangeResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkTokenStatusChangeResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'tokens': ((json['tokens'] as Array<any>).map(PaylinkTokenStatusFromJSON)),
-        'count': !exists(json, 'count') ? undefined : json['count'],
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
+        'count': json['count'] == null ? undefined : json['count'],
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
     };
 }
 
 export function PaylinkTokenStatusChangeResponseToJSON(value?: PaylinkTokenStatusChangeResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'tokens': ((value.tokens as Array<any>).map(PaylinkTokenStatusToJSON)),
-        'count': value.count,
-        'maxResults': value.maxResults,
-        'nextToken': value.nextToken,
+        'tokens': ((value['tokens'] as Array<any>).map(PaylinkTokenStatusToJSON)),
+        'count': value['count'],
+        'maxResults': value['maxResults'],
+        'nextToken': value['nextToken'],
     };
 }
 

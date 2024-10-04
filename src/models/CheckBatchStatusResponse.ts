@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Batch } from './Batch';
 import {
     BatchFromJSON,
@@ -37,10 +37,8 @@ export interface CheckBatchStatusResponse {
 /**
  * Check if a given object implements the CheckBatchStatusResponse interface.
  */
-export function instanceOfCheckBatchStatusResponse(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCheckBatchStatusResponse(value: object): value is CheckBatchStatusResponse {
+    return true;
 }
 
 export function CheckBatchStatusResponseFromJSON(json: any): CheckBatchStatusResponse {
@@ -48,25 +46,22 @@ export function CheckBatchStatusResponseFromJSON(json: any): CheckBatchStatusRes
 }
 
 export function CheckBatchStatusResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CheckBatchStatusResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'batches': !exists(json, 'batches') ? undefined : ((json['batches'] as Array<any>).map(BatchFromJSON)),
+        'batches': json['batches'] == null ? undefined : ((json['batches'] as Array<any>).map(BatchFromJSON)),
     };
 }
 
 export function CheckBatchStatusResponseToJSON(value?: CheckBatchStatusResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batches': value.batches === undefined ? undefined : ((value.batches as Array<any>).map(BatchToJSON)),
+        'batches': value['batches'] == null ? undefined : ((value['batches'] as Array<any>).map(BatchToJSON)),
     };
 }
 

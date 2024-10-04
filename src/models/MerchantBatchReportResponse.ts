@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MerchantBatchResponse } from './MerchantBatchResponse';
 import {
     MerchantBatchResponseFromJSON,
@@ -55,11 +55,9 @@ export interface MerchantBatchReportResponse {
 /**
  * Check if a given object implements the MerchantBatchReportResponse interface.
  */
-export function instanceOfMerchantBatchReportResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batches" in value;
-
-    return isInstance;
+export function instanceOfMerchantBatchReportResponse(value: object): value is MerchantBatchReportResponse {
+    if (!('batches' in value) || value['batches'] === undefined) return false;
+    return true;
 }
 
 export function MerchantBatchReportResponseFromJSON(json: any): MerchantBatchReportResponse {
@@ -67,31 +65,28 @@ export function MerchantBatchReportResponseFromJSON(json: any): MerchantBatchRep
 }
 
 export function MerchantBatchReportResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerchantBatchReportResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'batches': ((json['batches'] as Array<any>).map(MerchantBatchResponseFromJSON)),
-        'count': !exists(json, 'count') ? undefined : json['count'],
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
+        'count': json['count'] == null ? undefined : json['count'],
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
     };
 }
 
 export function MerchantBatchReportResponseToJSON(value?: MerchantBatchReportResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'batches': ((value.batches as Array<any>).map(MerchantBatchResponseToJSON)),
-        'count': value.count,
-        'maxResults': value.maxResults,
-        'nextToken': value.nextToken,
+        'batches': ((value['batches'] as Array<any>).map(MerchantBatchResponseToJSON)),
+        'count': value['count'],
+        'maxResults': value['maxResults'],
+        'nextToken': value['nextToken'],
     };
 }
 

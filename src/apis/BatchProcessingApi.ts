@@ -37,15 +37,15 @@ import {
     ProcessBatchResponseToJSON,
 } from '../models/index';
 
-export interface BatchProcessingApiBatchProcessRequest {
+export interface BatchProcessingApiBatchProcessRequestRequest {
     process_batch_request: ProcessBatchRequest;
 }
 
-export interface BatchProcessingApiBatchRetrieveRequest {
+export interface BatchProcessingApiBatchRetrieveRequestRequest {
     batch_report_request: BatchReportRequest;
 }
 
-export interface BatchProcessingApiCheckBatchStatusRequest {
+export interface BatchProcessingApiCheckBatchStatusRequestRequest {
     check_batch_status: CheckBatchStatus;
 }
 
@@ -58,9 +58,12 @@ export class BatchProcessingApi extends runtime.BaseAPI {
      * A batch process request is used to start the batch process workflow by uploading batch data and initialising a new batch for processing. Once validated the batch will be queued for processing and further updates can be received by a subsequent call to retrieve the batch status. 
      * Batch Process Request
      */
-    async batchProcessRequestRaw(requestParameters: BatchProcessingApiBatchProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessBatchResponse>> {
-        if (requestParameters.process_batch_request === null || requestParameters.process_batch_request === undefined) {
-            throw new runtime.RequiredError('process_batch_request','Required parameter requestParameters.process_batch_request was null or undefined when calling batchProcessRequest.');
+    async batchProcessRequestRaw(requestParameters: BatchProcessingApiBatchProcessRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessBatchResponse>> {
+        if (requestParameters['process_batch_request'] == null) {
+            throw new runtime.RequiredError(
+                'process_batch_request',
+                'Required parameter "process_batch_request" was null or undefined when calling batchProcessRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -70,7 +73,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -78,7 +81,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ProcessBatchRequestToJSON(requestParameters.process_batch_request),
+            body: ProcessBatchRequestToJSON(requestParameters['process_batch_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ProcessBatchResponseFromJSON(jsonValue));
@@ -88,7 +91,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
      * A batch process request is used to start the batch process workflow by uploading batch data and initialising a new batch for processing. Once validated the batch will be queued for processing and further updates can be received by a subsequent call to retrieve the batch status. 
      * Batch Process Request
      */
-    async batchProcessRequest(requestParameters: BatchProcessingApiBatchProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessBatchResponse> {
+    async batchProcessRequest(requestParameters: BatchProcessingApiBatchProcessRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessBatchResponse> {
         const response = await this.batchProcessRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -97,9 +100,12 @@ export class BatchProcessingApi extends runtime.BaseAPI {
      * Obtains a batch and installment (BIS) report for a given batch id.
      * Batch Retrieve Request
      */
-    async batchRetrieveRequestRaw(requestParameters: BatchProcessingApiBatchRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BatchReportResponseModel>> {
-        if (requestParameters.batch_report_request === null || requestParameters.batch_report_request === undefined) {
-            throw new runtime.RequiredError('batch_report_request','Required parameter requestParameters.batch_report_request was null or undefined when calling batchRetrieveRequest.');
+    async batchRetrieveRequestRaw(requestParameters: BatchProcessingApiBatchRetrieveRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BatchReportResponseModel>> {
+        if (requestParameters['batch_report_request'] == null) {
+            throw new runtime.RequiredError(
+                'batch_report_request',
+                'Required parameter "batch_report_request" was null or undefined when calling batchRetrieveRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -109,7 +115,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -117,7 +123,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: BatchReportRequestToJSON(requestParameters.batch_report_request),
+            body: BatchReportRequestToJSON(requestParameters['batch_report_request']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => BatchReportResponseModelFromJSON(jsonValue));
@@ -127,7 +133,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
      * Obtains a batch and installment (BIS) report for a given batch id.
      * Batch Retrieve Request
      */
-    async batchRetrieveRequest(requestParameters: BatchProcessingApiBatchRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BatchReportResponseModel> {
+    async batchRetrieveRequest(requestParameters: BatchProcessingApiBatchRetrieveRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BatchReportResponseModel> {
         const response = await this.batchRetrieveRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -136,9 +142,12 @@ export class BatchProcessingApi extends runtime.BaseAPI {
      * The operation is used to retrieve the status of a batch process.
      * Check Batch Status
      */
-    async checkBatchStatusRequestRaw(requestParameters: BatchProcessingApiCheckBatchStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CheckBatchStatusResponse>> {
-        if (requestParameters.check_batch_status === null || requestParameters.check_batch_status === undefined) {
-            throw new runtime.RequiredError('check_batch_status','Required parameter requestParameters.check_batch_status was null or undefined when calling checkBatchStatusRequest.');
+    async checkBatchStatusRequestRaw(requestParameters: BatchProcessingApiCheckBatchStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CheckBatchStatusResponse>> {
+        if (requestParameters['check_batch_status'] == null) {
+            throw new runtime.RequiredError(
+                'check_batch_status',
+                'Required parameter "check_batch_status" was null or undefined when calling checkBatchStatusRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -148,7 +157,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["cp-api-key"] = this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
+            headerParameters["cp-api-key"] = await this.configuration.apiKey("cp-api-key"); // cp-api-key authentication
         }
 
         const response = await this.request({
@@ -156,7 +165,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CheckBatchStatusToJSON(requestParameters.check_batch_status),
+            body: CheckBatchStatusToJSON(requestParameters['check_batch_status']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CheckBatchStatusResponseFromJSON(jsonValue));
@@ -166,7 +175,7 @@ export class BatchProcessingApi extends runtime.BaseAPI {
      * The operation is used to retrieve the status of a batch process.
      * Check Batch Status
      */
-    async checkBatchStatusRequest(requestParameters: BatchProcessingApiCheckBatchStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CheckBatchStatusResponse> {
+    async checkBatchStatusRequest(requestParameters: BatchProcessingApiCheckBatchStatusRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CheckBatchStatusResponse> {
         const response = await this.checkBatchStatusRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

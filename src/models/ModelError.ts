@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,10 +54,8 @@ export interface ModelError {
 /**
  * Check if a given object implements the ModelError interface.
  */
-export function instanceOfModelError(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfModelError(value: object): value is ModelError {
+    return true;
 }
 
 export function ModelErrorFromJSON(json: any): ModelError {
@@ -65,33 +63,30 @@ export function ModelErrorFromJSON(json: any): ModelError {
 }
 
 export function ModelErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): ModelError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'code': !exists(json, 'code') ? undefined : json['code'],
-        'context': !exists(json, 'context') ? undefined : json['context'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
-        'responseDt': !exists(json, 'response_dt') ? undefined : (new Date(json['response_dt'])),
+        'code': json['code'] == null ? undefined : json['code'],
+        'context': json['context'] == null ? undefined : json['context'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'message': json['message'] == null ? undefined : json['message'],
+        'responseDt': json['response_dt'] == null ? undefined : (new Date(json['response_dt'])),
     };
 }
 
 export function ModelErrorToJSON(value?: ModelError | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'code': value.code,
-        'context': value.context,
-        'identifier': value.identifier,
-        'message': value.message,
-        'response_dt': value.responseDt === undefined ? undefined : (value.responseDt.toISOString()),
+        'code': value['code'],
+        'context': value['context'],
+        'identifier': value['identifier'],
+        'message': value['message'],
+        'response_dt': value['responseDt'] == null ? undefined : ((value['responseDt']).toISOString()),
     };
 }
 

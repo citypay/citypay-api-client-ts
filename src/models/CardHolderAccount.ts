@@ -12,19 +12,19 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Card } from './Card';
-import {
-    CardFromJSON,
-    CardFromJSONTyped,
-    CardToJSON,
-} from './Card';
+import { mapValues } from '../runtime';
 import type { ContactDetails } from './ContactDetails';
 import {
     ContactDetailsFromJSON,
     ContactDetailsFromJSONTyped,
     ContactDetailsToJSON,
 } from './ContactDetails';
+import type { Card } from './Card';
+import {
+    CardFromJSON,
+    CardFromJSONTyped,
+    CardToJSON,
+} from './Card';
 
 /**
  * 
@@ -97,12 +97,10 @@ export interface CardHolderAccount {
 /**
  * Check if a given object implements the CardHolderAccount interface.
  */
-export function instanceOfCardHolderAccount(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accountId" in value;
-    isInstance = isInstance && "contact" in value;
-
-    return isInstance;
+export function instanceOfCardHolderAccount(value: object): value is CardHolderAccount {
+    if (!('accountId' in value) || value['accountId'] === undefined) return false;
+    if (!('contact' in value) || value['contact'] === undefined) return false;
+    return true;
 }
 
 export function CardHolderAccountFromJSON(json: any): CardHolderAccount {
@@ -110,41 +108,38 @@ export function CardHolderAccountFromJSON(json: any): CardHolderAccount {
 }
 
 export function CardHolderAccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): CardHolderAccount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'accountId': json['account_id'],
         'contact': ContactDetailsFromJSON(json['contact']),
-        'cards': !exists(json, 'cards') ? undefined : ((json['cards'] as Array<any>).map(CardFromJSON)),
-        'dateCreated': !exists(json, 'date_created') ? undefined : (new Date(json['date_created'])),
-        'defaultCardId': !exists(json, 'default_card_id') ? undefined : json['default_card_id'],
-        'defaultCardIndex': !exists(json, 'default_card_index') ? undefined : json['default_card_index'],
-        'lastModified': !exists(json, 'last_modified') ? undefined : (new Date(json['last_modified'])),
-        'status': !exists(json, 'status') ? undefined : json['status'],
-        'uniqueId': !exists(json, 'unique_id') ? undefined : json['unique_id'],
+        'cards': json['cards'] == null ? undefined : ((json['cards'] as Array<any>).map(CardFromJSON)),
+        'dateCreated': json['date_created'] == null ? undefined : (new Date(json['date_created'])),
+        'defaultCardId': json['default_card_id'] == null ? undefined : json['default_card_id'],
+        'defaultCardIndex': json['default_card_index'] == null ? undefined : json['default_card_index'],
+        'lastModified': json['last_modified'] == null ? undefined : (new Date(json['last_modified'])),
+        'status': json['status'] == null ? undefined : json['status'],
+        'uniqueId': json['unique_id'] == null ? undefined : json['unique_id'],
     };
 }
 
 export function CardHolderAccountToJSON(value?: CardHolderAccount | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'account_id': value.accountId,
-        'contact': ContactDetailsToJSON(value.contact),
-        'cards': value.cards === undefined ? undefined : ((value.cards as Array<any>).map(CardToJSON)),
-        'date_created': value.dateCreated === undefined ? undefined : (value.dateCreated.toISOString()),
-        'default_card_id': value.defaultCardId,
-        'default_card_index': value.defaultCardIndex,
-        'last_modified': value.lastModified === undefined ? undefined : (value.lastModified.toISOString()),
-        'status': value.status,
-        'unique_id': value.uniqueId,
+        'account_id': value['accountId'],
+        'contact': ContactDetailsToJSON(value['contact']),
+        'cards': value['cards'] == null ? undefined : ((value['cards'] as Array<any>).map(CardToJSON)),
+        'date_created': value['dateCreated'] == null ? undefined : ((value['dateCreated']).toISOString()),
+        'default_card_id': value['defaultCardId'],
+        'default_card_index': value['defaultCardIndex'],
+        'last_modified': value['lastModified'] == null ? undefined : ((value['lastModified']).toISOString()),
+        'status': value['status'],
+        'unique_id': value['uniqueId'],
     };
 }
 

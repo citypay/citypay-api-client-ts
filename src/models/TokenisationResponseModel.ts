@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -111,10 +111,8 @@ export interface TokenisationResponseModel {
 /**
  * Check if a given object implements the TokenisationResponseModel interface.
  */
-export function instanceOfTokenisationResponseModel(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfTokenisationResponseModel(value: object): value is TokenisationResponseModel {
+    return true;
 }
 
 export function TokenisationResponseModelFromJSON(json: any): TokenisationResponseModel {
@@ -122,43 +120,40 @@ export function TokenisationResponseModelFromJSON(json: any): TokenisationRespon
 }
 
 export function TokenisationResponseModelFromJSONTyped(json: any, ignoreDiscriminator: boolean): TokenisationResponseModel {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'authenResult': !exists(json, 'authen_result') ? undefined : json['authen_result'],
-        'binCommercial': !exists(json, 'bin_commercial') ? undefined : json['bin_commercial'],
-        'binDebit': !exists(json, 'bin_debit') ? undefined : json['bin_debit'],
-        'binDescription': !exists(json, 'bin_description') ? undefined : json['bin_description'],
-        'eci': !exists(json, 'eci') ? undefined : json['eci'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'maskedpan': !exists(json, 'maskedpan') ? undefined : json['maskedpan'],
-        'scheme': !exists(json, 'scheme') ? undefined : json['scheme'],
-        'sigId': !exists(json, 'sig_id') ? undefined : json['sig_id'],
-        'token': !exists(json, 'token') ? undefined : json['token'],
+        'authenResult': json['authen_result'] == null ? undefined : json['authen_result'],
+        'binCommercial': json['bin_commercial'] == null ? undefined : json['bin_commercial'],
+        'binDebit': json['bin_debit'] == null ? undefined : json['bin_debit'],
+        'binDescription': json['bin_description'] == null ? undefined : json['bin_description'],
+        'eci': json['eci'] == null ? undefined : json['eci'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'maskedpan': json['maskedpan'] == null ? undefined : json['maskedpan'],
+        'scheme': json['scheme'] == null ? undefined : json['scheme'],
+        'sigId': json['sig_id'] == null ? undefined : json['sig_id'],
+        'token': json['token'] == null ? undefined : json['token'],
     };
 }
 
 export function TokenisationResponseModelToJSON(value?: TokenisationResponseModel | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'authen_result': value.authenResult,
-        'bin_commercial': value.binCommercial,
-        'bin_debit': value.binDebit,
-        'bin_description': value.binDescription,
-        'eci': value.eci,
-        'identifier': value.identifier,
-        'maskedpan': value.maskedpan,
-        'scheme': value.scheme,
-        'sig_id': value.sigId,
-        'token': value.token,
+        'authen_result': value['authenResult'],
+        'bin_commercial': value['binCommercial'],
+        'bin_debit': value['binDebit'],
+        'bin_description': value['binDescription'],
+        'eci': value['eci'],
+        'identifier': value['identifier'],
+        'maskedpan': value['maskedpan'],
+        'scheme': value['scheme'],
+        'sig_id': value['sigId'],
+        'token': value['token'],
     };
 }
 

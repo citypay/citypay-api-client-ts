@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PaylinkStateEvent } from './PaylinkStateEvent';
 import {
     PaylinkStateEventFromJSON,
@@ -199,10 +199,8 @@ export interface PaylinkTokenStatus {
 /**
  * Check if a given object implements the PaylinkTokenStatus interface.
  */
-export function instanceOfPaylinkTokenStatus(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkTokenStatus(value: object): value is PaylinkTokenStatus {
+    return true;
 }
 
 export function PaylinkTokenStatusFromJSON(json: any): PaylinkTokenStatus {
@@ -210,79 +208,76 @@ export function PaylinkTokenStatusFromJSON(json: any): PaylinkTokenStatus {
 }
 
 export function PaylinkTokenStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkTokenStatus {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'amountPaid': !exists(json, 'amount_paid') ? undefined : json['amount_paid'],
-        'authCode': !exists(json, 'auth_code') ? undefined : json['auth_code'],
-        'card': !exists(json, 'card') ? undefined : json['card'],
-        'created': !exists(json, 'created') ? undefined : (new Date(json['created'])),
-        'datetime': !exists(json, 'datetime') ? undefined : (new Date(json['datetime'])),
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'isAttachment': !exists(json, 'is_attachment') ? undefined : json['is_attachment'],
-        'isCancelled': !exists(json, 'is_cancelled') ? undefined : json['is_cancelled'],
-        'isClosed': !exists(json, 'is_closed') ? undefined : json['is_closed'],
-        'isCustomerReceiptEmailSent': !exists(json, 'is_customer_receipt_email_sent') ? undefined : json['is_customer_receipt_email_sent'],
-        'isEmailSent': !exists(json, 'is_email_sent') ? undefined : json['is_email_sent'],
-        'isExpired': !exists(json, 'is_expired') ? undefined : json['is_expired'],
-        'isFormViewed': !exists(json, 'is_form_viewed') ? undefined : json['is_form_viewed'],
-        'isMerchantNotificationEmailSent': !exists(json, 'is_merchant_notification_email_sent') ? undefined : json['is_merchant_notification_email_sent'],
-        'isOpenForPayment': !exists(json, 'is_open_for_payment') ? undefined : json['is_open_for_payment'],
-        'isPaid': !exists(json, 'is_paid') ? undefined : json['is_paid'],
-        'isPaymentAttempted': !exists(json, 'is_payment_attempted') ? undefined : json['is_payment_attempted'],
-        'isPostbackOk': !exists(json, 'is_postback_ok') ? undefined : json['is_postback_ok'],
-        'isRequestChallenged': !exists(json, 'is_request_challenged') ? undefined : json['is_request_challenged'],
-        'isSmsSent': !exists(json, 'is_sms_sent') ? undefined : json['is_sms_sent'],
-        'isValidated': !exists(json, 'is_validated') ? undefined : json['is_validated'],
-        'lastEventDateTime': !exists(json, 'last_event_date_time') ? undefined : (new Date(json['last_event_date_time'])),
-        'lastPaymentResult': !exists(json, 'last_payment_result') ? undefined : json['last_payment_result'],
-        'mid': !exists(json, 'mid') ? undefined : json['mid'],
-        'paymentAttemptsCount': !exists(json, 'payment_attempts_count') ? undefined : json['payment_attempts_count'],
-        'stateHistory': !exists(json, 'state_history') ? undefined : ((json['state_history'] as Array<any>).map(PaylinkStateEventFromJSON)),
-        'token': !exists(json, 'token') ? undefined : json['token'],
-        'transNo': !exists(json, 'trans_no') ? undefined : json['trans_no'],
+        'amountPaid': json['amount_paid'] == null ? undefined : json['amount_paid'],
+        'authCode': json['auth_code'] == null ? undefined : json['auth_code'],
+        'card': json['card'] == null ? undefined : json['card'],
+        'created': json['created'] == null ? undefined : (new Date(json['created'])),
+        'datetime': json['datetime'] == null ? undefined : (new Date(json['datetime'])),
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'isAttachment': json['is_attachment'] == null ? undefined : json['is_attachment'],
+        'isCancelled': json['is_cancelled'] == null ? undefined : json['is_cancelled'],
+        'isClosed': json['is_closed'] == null ? undefined : json['is_closed'],
+        'isCustomerReceiptEmailSent': json['is_customer_receipt_email_sent'] == null ? undefined : json['is_customer_receipt_email_sent'],
+        'isEmailSent': json['is_email_sent'] == null ? undefined : json['is_email_sent'],
+        'isExpired': json['is_expired'] == null ? undefined : json['is_expired'],
+        'isFormViewed': json['is_form_viewed'] == null ? undefined : json['is_form_viewed'],
+        'isMerchantNotificationEmailSent': json['is_merchant_notification_email_sent'] == null ? undefined : json['is_merchant_notification_email_sent'],
+        'isOpenForPayment': json['is_open_for_payment'] == null ? undefined : json['is_open_for_payment'],
+        'isPaid': json['is_paid'] == null ? undefined : json['is_paid'],
+        'isPaymentAttempted': json['is_payment_attempted'] == null ? undefined : json['is_payment_attempted'],
+        'isPostbackOk': json['is_postback_ok'] == null ? undefined : json['is_postback_ok'],
+        'isRequestChallenged': json['is_request_challenged'] == null ? undefined : json['is_request_challenged'],
+        'isSmsSent': json['is_sms_sent'] == null ? undefined : json['is_sms_sent'],
+        'isValidated': json['is_validated'] == null ? undefined : json['is_validated'],
+        'lastEventDateTime': json['last_event_date_time'] == null ? undefined : (new Date(json['last_event_date_time'])),
+        'lastPaymentResult': json['last_payment_result'] == null ? undefined : json['last_payment_result'],
+        'mid': json['mid'] == null ? undefined : json['mid'],
+        'paymentAttemptsCount': json['payment_attempts_count'] == null ? undefined : json['payment_attempts_count'],
+        'stateHistory': json['state_history'] == null ? undefined : ((json['state_history'] as Array<any>).map(PaylinkStateEventFromJSON)),
+        'token': json['token'] == null ? undefined : json['token'],
+        'transNo': json['trans_no'] == null ? undefined : json['trans_no'],
     };
 }
 
 export function PaylinkTokenStatusToJSON(value?: PaylinkTokenStatus | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount_paid': value.amountPaid,
-        'auth_code': value.authCode,
-        'card': value.card,
-        'created': value.created === undefined ? undefined : (value.created.toISOString()),
-        'datetime': value.datetime === undefined ? undefined : (value.datetime.toISOString()),
-        'identifier': value.identifier,
-        'is_attachment': value.isAttachment,
-        'is_cancelled': value.isCancelled,
-        'is_closed': value.isClosed,
-        'is_customer_receipt_email_sent': value.isCustomerReceiptEmailSent,
-        'is_email_sent': value.isEmailSent,
-        'is_expired': value.isExpired,
-        'is_form_viewed': value.isFormViewed,
-        'is_merchant_notification_email_sent': value.isMerchantNotificationEmailSent,
-        'is_open_for_payment': value.isOpenForPayment,
-        'is_paid': value.isPaid,
-        'is_payment_attempted': value.isPaymentAttempted,
-        'is_postback_ok': value.isPostbackOk,
-        'is_request_challenged': value.isRequestChallenged,
-        'is_sms_sent': value.isSmsSent,
-        'is_validated': value.isValidated,
-        'last_event_date_time': value.lastEventDateTime === undefined ? undefined : (value.lastEventDateTime.toISOString()),
-        'last_payment_result': value.lastPaymentResult,
-        'mid': value.mid,
-        'payment_attempts_count': value.paymentAttemptsCount,
-        'state_history': value.stateHistory === undefined ? undefined : ((value.stateHistory as Array<any>).map(PaylinkStateEventToJSON)),
-        'token': value.token,
-        'trans_no': value.transNo,
+        'amount_paid': value['amountPaid'],
+        'auth_code': value['authCode'],
+        'card': value['card'],
+        'created': value['created'] == null ? undefined : ((value['created']).toISOString()),
+        'datetime': value['datetime'] == null ? undefined : ((value['datetime']).toISOString()),
+        'identifier': value['identifier'],
+        'is_attachment': value['isAttachment'],
+        'is_cancelled': value['isCancelled'],
+        'is_closed': value['isClosed'],
+        'is_customer_receipt_email_sent': value['isCustomerReceiptEmailSent'],
+        'is_email_sent': value['isEmailSent'],
+        'is_expired': value['isExpired'],
+        'is_form_viewed': value['isFormViewed'],
+        'is_merchant_notification_email_sent': value['isMerchantNotificationEmailSent'],
+        'is_open_for_payment': value['isOpenForPayment'],
+        'is_paid': value['isPaid'],
+        'is_payment_attempted': value['isPaymentAttempted'],
+        'is_postback_ok': value['isPostbackOk'],
+        'is_request_challenged': value['isRequestChallenged'],
+        'is_sms_sent': value['isSmsSent'],
+        'is_validated': value['isValidated'],
+        'last_event_date_time': value['lastEventDateTime'] == null ? undefined : ((value['lastEventDateTime']).toISOString()),
+        'last_payment_result': value['lastPaymentResult'],
+        'mid': value['mid'],
+        'payment_attempts_count': value['paymentAttemptsCount'],
+        'state_history': value['stateHistory'] == null ? undefined : ((value['stateHistory'] as Array<any>).map(PaylinkStateEventToJSON)),
+        'token': value['token'],
+        'trans_no': value['transNo'],
     };
 }
 

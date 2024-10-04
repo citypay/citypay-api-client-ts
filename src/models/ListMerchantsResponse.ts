@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Merchant } from './Merchant';
 import {
     MerchantFromJSON,
@@ -49,10 +49,8 @@ export interface ListMerchantsResponse {
 /**
  * Check if a given object implements the ListMerchantsResponse interface.
  */
-export function instanceOfListMerchantsResponse(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfListMerchantsResponse(value: object): value is ListMerchantsResponse {
+    return true;
 }
 
 export function ListMerchantsResponseFromJSON(json: any): ListMerchantsResponse {
@@ -60,29 +58,26 @@ export function ListMerchantsResponseFromJSON(json: any): ListMerchantsResponse 
 }
 
 export function ListMerchantsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListMerchantsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'clientName': !exists(json, 'client_name') ? undefined : json['client_name'],
-        'clientid': !exists(json, 'clientid') ? undefined : json['clientid'],
-        'merchants': !exists(json, 'merchants') ? undefined : ((json['merchants'] as Array<any>).map(MerchantFromJSON)),
+        'clientName': json['client_name'] == null ? undefined : json['client_name'],
+        'clientid': json['clientid'] == null ? undefined : json['clientid'],
+        'merchants': json['merchants'] == null ? undefined : ((json['merchants'] as Array<any>).map(MerchantFromJSON)),
     };
 }
 
 export function ListMerchantsResponseToJSON(value?: ListMerchantsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'client_name': value.clientName,
-        'clientid': value.clientid,
-        'merchants': value.merchants === undefined ? undefined : ((value.merchants as Array<any>).map(MerchantToJSON)),
+        'client_name': value['clientName'],
+        'clientid': value['clientid'],
+        'merchants': value['merchants'] == null ? undefined : ((value['merchants'] as Array<any>).map(MerchantToJSON)),
     };
 }
 

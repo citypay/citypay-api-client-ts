@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,10 +42,8 @@ export interface BatchTransactionReportRequest {
 /**
  * Check if a given object implements the BatchTransactionReportRequest interface.
  */
-export function instanceOfBatchTransactionReportRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfBatchTransactionReportRequest(value: object): value is BatchTransactionReportRequest {
+    return true;
 }
 
 export function BatchTransactionReportRequestFromJSON(json: any): BatchTransactionReportRequest {
@@ -53,29 +51,26 @@ export function BatchTransactionReportRequestFromJSON(json: any): BatchTransacti
 }
 
 export function BatchTransactionReportRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchTransactionReportRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxResults': !exists(json, 'maxResults') ? undefined : json['maxResults'],
-        'nextToken': !exists(json, 'nextToken') ? undefined : json['nextToken'],
-        'orderBy': !exists(json, 'orderBy') ? undefined : json['orderBy'],
+        'maxResults': json['maxResults'] == null ? undefined : json['maxResults'],
+        'nextToken': json['nextToken'] == null ? undefined : json['nextToken'],
+        'orderBy': json['orderBy'] == null ? undefined : json['orderBy'],
     };
 }
 
 export function BatchTransactionReportRequestToJSON(value?: BatchTransactionReportRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'maxResults': value.maxResults,
-        'nextToken': value.nextToken,
-        'orderBy': value.orderBy,
+        'maxResults': value['maxResults'],
+        'nextToken': value['nextToken'],
+        'orderBy': value['orderBy'],
     };
 }
 

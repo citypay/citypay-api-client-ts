@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -396,14 +396,12 @@ export interface AuthResponse {
 /**
  * Check if a given object implements the AuthResponse interface.
  */
-export function instanceOfAuthResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "merchantid" in value;
-    isInstance = isInstance && "result" in value;
-    isInstance = isInstance && "resultCode" in value;
-    isInstance = isInstance && "resultMessage" in value;
-
-    return isInstance;
+export function instanceOfAuthResponse(value: object): value is AuthResponse {
+    if (!('merchantid' in value) || value['merchantid'] === undefined) return false;
+    if (!('result' in value) || value['result'] === undefined) return false;
+    if (!('resultCode' in value) || value['resultCode'] === undefined) return false;
+    if (!('resultMessage' in value) || value['resultMessage'] === undefined) return false;
+    return true;
 }
 
 export function AuthResponseFromJSON(json: any): AuthResponse {
@@ -411,7 +409,7 @@ export function AuthResponseFromJSON(json: any): AuthResponse {
 }
 
 export function AuthResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): AuthResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -420,72 +418,69 @@ export function AuthResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'result': json['result'],
         'resultCode': json['result_code'],
         'resultMessage': json['result_message'],
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'atrn': !exists(json, 'atrn') ? undefined : json['atrn'],
-        'atsd': !exists(json, 'atsd') ? undefined : json['atsd'],
-        'authcode': !exists(json, 'authcode') ? undefined : json['authcode'],
-        'authenResult': !exists(json, 'authen_result') ? undefined : json['authen_result'],
-        'authorised': !exists(json, 'authorised') ? undefined : json['authorised'],
-        'avsResult': !exists(json, 'avs_result') ? undefined : json['avs_result'],
-        'binCommercial': !exists(json, 'bin_commercial') ? undefined : json['bin_commercial'],
-        'binDebit': !exists(json, 'bin_debit') ? undefined : json['bin_debit'],
-        'binDescription': !exists(json, 'bin_description') ? undefined : json['bin_description'],
-        'cavv': !exists(json, 'cavv') ? undefined : json['cavv'],
-        'context': !exists(json, 'context') ? undefined : json['context'],
-        'cscResult': !exists(json, 'csc_result') ? undefined : json['csc_result'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'datetime': !exists(json, 'datetime') ? undefined : (new Date(json['datetime'])),
-        'eci': !exists(json, 'eci') ? undefined : json['eci'],
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'live': !exists(json, 'live') ? undefined : json['live'],
-        'maskedpan': !exists(json, 'maskedpan') ? undefined : json['maskedpan'],
-        'scheme': !exists(json, 'scheme') ? undefined : json['scheme'],
-        'schemeId': !exists(json, 'scheme_id') ? undefined : json['scheme_id'],
-        'schemeLogo': !exists(json, 'scheme_logo') ? undefined : json['scheme_logo'],
-        'sha256': !exists(json, 'sha256') ? undefined : json['sha256'],
-        'transStatus': !exists(json, 'trans_status') ? undefined : json['trans_status'],
-        'transno': !exists(json, 'transno') ? undefined : json['transno'],
+        'amount': json['amount'] == null ? undefined : json['amount'],
+        'atrn': json['atrn'] == null ? undefined : json['atrn'],
+        'atsd': json['atsd'] == null ? undefined : json['atsd'],
+        'authcode': json['authcode'] == null ? undefined : json['authcode'],
+        'authenResult': json['authen_result'] == null ? undefined : json['authen_result'],
+        'authorised': json['authorised'] == null ? undefined : json['authorised'],
+        'avsResult': json['avs_result'] == null ? undefined : json['avs_result'],
+        'binCommercial': json['bin_commercial'] == null ? undefined : json['bin_commercial'],
+        'binDebit': json['bin_debit'] == null ? undefined : json['bin_debit'],
+        'binDescription': json['bin_description'] == null ? undefined : json['bin_description'],
+        'cavv': json['cavv'] == null ? undefined : json['cavv'],
+        'context': json['context'] == null ? undefined : json['context'],
+        'cscResult': json['csc_result'] == null ? undefined : json['csc_result'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'datetime': json['datetime'] == null ? undefined : (new Date(json['datetime'])),
+        'eci': json['eci'] == null ? undefined : json['eci'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'live': json['live'] == null ? undefined : json['live'],
+        'maskedpan': json['maskedpan'] == null ? undefined : json['maskedpan'],
+        'scheme': json['scheme'] == null ? undefined : json['scheme'],
+        'schemeId': json['scheme_id'] == null ? undefined : json['scheme_id'],
+        'schemeLogo': json['scheme_logo'] == null ? undefined : json['scheme_logo'],
+        'sha256': json['sha256'] == null ? undefined : json['sha256'],
+        'transStatus': json['trans_status'] == null ? undefined : json['trans_status'],
+        'transno': json['transno'] == null ? undefined : json['transno'],
     };
 }
 
 export function AuthResponseToJSON(value?: AuthResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'merchantid': value.merchantid,
-        'result': value.result,
-        'result_code': value.resultCode,
-        'result_message': value.resultMessage,
-        'amount': value.amount,
-        'atrn': value.atrn,
-        'atsd': value.atsd,
-        'authcode': value.authcode,
-        'authen_result': value.authenResult,
-        'authorised': value.authorised,
-        'avs_result': value.avsResult,
-        'bin_commercial': value.binCommercial,
-        'bin_debit': value.binDebit,
-        'bin_description': value.binDescription,
-        'cavv': value.cavv,
-        'context': value.context,
-        'csc_result': value.cscResult,
-        'currency': value.currency,
-        'datetime': value.datetime === undefined ? undefined : (value.datetime.toISOString()),
-        'eci': value.eci,
-        'identifier': value.identifier,
-        'live': value.live,
-        'maskedpan': value.maskedpan,
-        'scheme': value.scheme,
-        'scheme_id': value.schemeId,
-        'scheme_logo': value.schemeLogo,
-        'sha256': value.sha256,
-        'trans_status': value.transStatus,
-        'transno': value.transno,
+        'merchantid': value['merchantid'],
+        'result': value['result'],
+        'result_code': value['resultCode'],
+        'result_message': value['resultMessage'],
+        'amount': value['amount'],
+        'atrn': value['atrn'],
+        'atsd': value['atsd'],
+        'authcode': value['authcode'],
+        'authen_result': value['authenResult'],
+        'authorised': value['authorised'],
+        'avs_result': value['avsResult'],
+        'bin_commercial': value['binCommercial'],
+        'bin_debit': value['binDebit'],
+        'bin_description': value['binDescription'],
+        'cavv': value['cavv'],
+        'context': value['context'],
+        'csc_result': value['cscResult'],
+        'currency': value['currency'],
+        'datetime': value['datetime'] == null ? undefined : ((value['datetime']).toISOString()),
+        'eci': value['eci'],
+        'identifier': value['identifier'],
+        'live': value['live'],
+        'maskedpan': value['maskedpan'],
+        'scheme': value['scheme'],
+        'scheme_id': value['schemeId'],
+        'scheme_logo': value['schemeLogo'],
+        'sha256': value['sha256'],
+        'trans_status': value['transStatus'],
+        'transno': value['transno'],
     };
 }
 

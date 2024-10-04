@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,13 +54,11 @@ export interface RegisterCard {
 /**
  * Check if a given object implements the RegisterCard interface.
  */
-export function instanceOfRegisterCard(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "cardnumber" in value;
-    isInstance = isInstance && "expmonth" in value;
-    isInstance = isInstance && "expyear" in value;
-
-    return isInstance;
+export function instanceOfRegisterCard(value: object): value is RegisterCard {
+    if (!('cardnumber' in value) || value['cardnumber'] === undefined) return false;
+    if (!('expmonth' in value) || value['expmonth'] === undefined) return false;
+    if (!('expyear' in value) || value['expyear'] === undefined) return false;
+    return true;
 }
 
 export function RegisterCardFromJSON(json: any): RegisterCard {
@@ -68,7 +66,7 @@ export function RegisterCardFromJSON(json: any): RegisterCard {
 }
 
 export function RegisterCardFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterCard {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,25 +74,22 @@ export function RegisterCardFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'cardnumber': json['cardnumber'],
         'expmonth': json['expmonth'],
         'expyear': json['expyear'],
-        '_default': !exists(json, 'default') ? undefined : json['default'],
-        'nameOnCard': !exists(json, 'name_on_card') ? undefined : json['name_on_card'],
+        '_default': json['default'] == null ? undefined : json['default'],
+        'nameOnCard': json['name_on_card'] == null ? undefined : json['name_on_card'],
     };
 }
 
 export function RegisterCardToJSON(value?: RegisterCard | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'cardnumber': value.cardnumber,
-        'expmonth': value.expmonth,
-        'expyear': value.expyear,
-        'default': value._default,
-        'name_on_card': value.nameOnCard,
+        'cardnumber': value['cardnumber'],
+        'expmonth': value['expmonth'],
+        'expyear': value['expyear'],
+        'default': value['_default'],
+        'name_on_card': value['nameOnCard'],
     };
 }
 

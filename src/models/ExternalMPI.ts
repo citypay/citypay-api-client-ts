@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,10 +54,8 @@ export interface ExternalMPI {
 /**
  * Check if a given object implements the ExternalMPI interface.
  */
-export function instanceOfExternalMPI(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfExternalMPI(value: object): value is ExternalMPI {
+    return true;
 }
 
 export function ExternalMPIFromJSON(json: any): ExternalMPI {
@@ -65,33 +63,30 @@ export function ExternalMPIFromJSON(json: any): ExternalMPI {
 }
 
 export function ExternalMPIFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExternalMPI {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'authenResult': !exists(json, 'authen_result') ? undefined : json['authen_result'],
-        'cavv': !exists(json, 'cavv') ? undefined : json['cavv'],
-        'eci': !exists(json, 'eci') ? undefined : json['eci'],
-        'enrolled': !exists(json, 'enrolled') ? undefined : json['enrolled'],
-        'xid': !exists(json, 'xid') ? undefined : json['xid'],
+        'authenResult': json['authen_result'] == null ? undefined : json['authen_result'],
+        'cavv': json['cavv'] == null ? undefined : json['cavv'],
+        'eci': json['eci'] == null ? undefined : json['eci'],
+        'enrolled': json['enrolled'] == null ? undefined : json['enrolled'],
+        'xid': json['xid'] == null ? undefined : json['xid'],
     };
 }
 
 export function ExternalMPIToJSON(value?: ExternalMPI | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'authen_result': value.authenResult,
-        'cavv': value.cavv,
-        'eci': value.eci,
-        'enrolled': value.enrolled,
-        'xid': value.xid,
+        'authen_result': value['authenResult'],
+        'cavv': value['cavv'],
+        'eci': value['eci'],
+        'enrolled': value['enrolled'],
+        'xid': value['xid'],
     };
 }
 

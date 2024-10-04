@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -90,11 +90,9 @@ export interface PaylinkCustomParam {
 /**
  * Check if a given object implements the PaylinkCustomParam interface.
  */
-export function instanceOfPaylinkCustomParam(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfPaylinkCustomParam(value: object): value is PaylinkCustomParam {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkCustomParamFromJSON(json: any): PaylinkCustomParam {
@@ -102,45 +100,42 @@ export function PaylinkCustomParamFromJSON(json: any): PaylinkCustomParam {
 }
 
 export function PaylinkCustomParamFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkCustomParam {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
-        'entryMode': !exists(json, 'entry_mode') ? undefined : json['entry_mode'],
-        'fieldType': !exists(json, 'field_type') ? undefined : json['field_type'],
-        'group': !exists(json, 'group') ? undefined : json['group'],
-        'label': !exists(json, 'label') ? undefined : json['label'],
-        'locked': !exists(json, 'locked') ? undefined : json['locked'],
-        'order': !exists(json, 'order') ? undefined : json['order'],
-        'pattern': !exists(json, 'pattern') ? undefined : json['pattern'],
-        'placeholder': !exists(json, 'placeholder') ? undefined : json['placeholder'],
-        'required': !exists(json, 'required') ? undefined : json['required'],
-        'value': !exists(json, 'value') ? undefined : json['value'],
+        'entryMode': json['entry_mode'] == null ? undefined : json['entry_mode'],
+        'fieldType': json['field_type'] == null ? undefined : json['field_type'],
+        'group': json['group'] == null ? undefined : json['group'],
+        'label': json['label'] == null ? undefined : json['label'],
+        'locked': json['locked'] == null ? undefined : json['locked'],
+        'order': json['order'] == null ? undefined : json['order'],
+        'pattern': json['pattern'] == null ? undefined : json['pattern'],
+        'placeholder': json['placeholder'] == null ? undefined : json['placeholder'],
+        'required': json['required'] == null ? undefined : json['required'],
+        'value': json['value'] == null ? undefined : json['value'],
     };
 }
 
 export function PaylinkCustomParamToJSON(value?: PaylinkCustomParam | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'name': value.name,
-        'entry_mode': value.entryMode,
-        'field_type': value.fieldType,
-        'group': value.group,
-        'label': value.label,
-        'locked': value.locked,
-        'order': value.order,
-        'pattern': value.pattern,
-        'placeholder': value.placeholder,
-        'required': value.required,
-        'value': value.value,
+        'name': value['name'],
+        'entry_mode': value['entryMode'],
+        'field_type': value['fieldType'],
+        'group': value['group'],
+        'label': value['label'],
+        'locked': value['locked'],
+        'order': value['order'],
+        'pattern': value['pattern'],
+        'placeholder': value['placeholder'],
+        'required': value['required'],
+        'value': value['value'],
     };
 }
 

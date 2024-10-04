@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ContactDetails } from './ContactDetails';
 import {
     ContactDetailsFromJSON,
@@ -192,12 +192,10 @@ export interface PaymentIntent {
 /**
  * Check if a given object implements the PaymentIntent interface.
  */
-export function instanceOfPaymentIntent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "identifier" in value;
-
-    return isInstance;
+export function instanceOfPaymentIntent(value: object): value is PaymentIntent {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('identifier' in value) || value['identifier'] === undefined) return false;
+    return true;
 }
 
 export function PaymentIntentFromJSON(json: any): PaymentIntent {
@@ -205,49 +203,46 @@ export function PaymentIntentFromJSON(json: any): PaymentIntent {
 }
 
 export function PaymentIntentFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaymentIntent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'amount': json['amount'],
         'identifier': json['identifier'],
-        'avsPostcodePolicy': !exists(json, 'avs_postcode_policy') ? undefined : json['avs_postcode_policy'],
-        'billTo': !exists(json, 'bill_to') ? undefined : ContactDetailsFromJSON(json['bill_to']),
-        'csc': !exists(json, 'csc') ? undefined : json['csc'],
-        'cscPolicy': !exists(json, 'csc_policy') ? undefined : json['csc_policy'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'duplicatePolicy': !exists(json, 'duplicate_policy') ? undefined : json['duplicate_policy'],
-        'matchAvsa': !exists(json, 'match_avsa') ? undefined : json['match_avsa'],
-        'shipTo': !exists(json, 'ship_to') ? undefined : ContactDetailsFromJSON(json['ship_to']),
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
-        'transInfo': !exists(json, 'trans_info') ? undefined : json['trans_info'],
-        'transType': !exists(json, 'trans_type') ? undefined : json['trans_type'],
+        'avsPostcodePolicy': json['avs_postcode_policy'] == null ? undefined : json['avs_postcode_policy'],
+        'billTo': json['bill_to'] == null ? undefined : ContactDetailsFromJSON(json['bill_to']),
+        'csc': json['csc'] == null ? undefined : json['csc'],
+        'cscPolicy': json['csc_policy'] == null ? undefined : json['csc_policy'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
+        'duplicatePolicy': json['duplicate_policy'] == null ? undefined : json['duplicate_policy'],
+        'matchAvsa': json['match_avsa'] == null ? undefined : json['match_avsa'],
+        'shipTo': json['ship_to'] == null ? undefined : ContactDetailsFromJSON(json['ship_to']),
+        'tag': json['tag'] == null ? undefined : json['tag'],
+        'transInfo': json['trans_info'] == null ? undefined : json['trans_info'],
+        'transType': json['trans_type'] == null ? undefined : json['trans_type'],
     };
 }
 
 export function PaymentIntentToJSON(value?: PaymentIntent | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'amount': value.amount,
-        'identifier': value.identifier,
-        'avs_postcode_policy': value.avsPostcodePolicy,
-        'bill_to': ContactDetailsToJSON(value.billTo),
-        'csc': value.csc,
-        'csc_policy': value.cscPolicy,
-        'currency': value.currency,
-        'duplicate_policy': value.duplicatePolicy,
-        'match_avsa': value.matchAvsa,
-        'ship_to': ContactDetailsToJSON(value.shipTo),
-        'tag': value.tag,
-        'trans_info': value.transInfo,
-        'trans_type': value.transType,
+        'amount': value['amount'],
+        'identifier': value['identifier'],
+        'avs_postcode_policy': value['avsPostcodePolicy'],
+        'bill_to': ContactDetailsToJSON(value['billTo']),
+        'csc': value['csc'],
+        'csc_policy': value['cscPolicy'],
+        'currency': value['currency'],
+        'duplicate_policy': value['duplicatePolicy'],
+        'match_avsa': value['matchAvsa'],
+        'ship_to': ContactDetailsToJSON(value['shipTo']),
+        'tag': value['tag'],
+        'trans_info': value['transInfo'],
+        'trans_type': value['transType'],
     };
 }
 

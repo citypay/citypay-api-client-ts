@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,12 +42,10 @@ export interface PaylinkAttachmentResult {
 /**
  * Check if a given object implements the PaylinkAttachmentResult interface.
  */
-export function instanceOfPaylinkAttachmentResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "result" in value;
-
-    return isInstance;
+export function instanceOfPaylinkAttachmentResult(value: object): value is PaylinkAttachmentResult {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('result' in value) || value['result'] === undefined) return false;
+    return true;
 }
 
 export function PaylinkAttachmentResultFromJSON(json: any): PaylinkAttachmentResult {
@@ -55,29 +53,26 @@ export function PaylinkAttachmentResultFromJSON(json: any): PaylinkAttachmentRes
 }
 
 export function PaylinkAttachmentResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkAttachmentResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
         'result': json['result'],
-        'url': !exists(json, 'url') ? undefined : json['url'],
+        'url': json['url'] == null ? undefined : json['url'],
     };
 }
 
 export function PaylinkAttachmentResultToJSON(value?: PaylinkAttachmentResult | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'name': value.name,
-        'result': value.result,
-        'url': value.url,
+        'name': value['name'],
+        'result': value['result'],
+        'url': value['url'],
     };
 }
 

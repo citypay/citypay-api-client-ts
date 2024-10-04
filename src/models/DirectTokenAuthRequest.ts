@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -53,10 +53,8 @@ export interface DirectTokenAuthRequest {
 /**
  * Check if a given object implements the DirectTokenAuthRequest interface.
  */
-export function instanceOfDirectTokenAuthRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfDirectTokenAuthRequest(value: object): value is DirectTokenAuthRequest {
+    return true;
 }
 
 export function DirectTokenAuthRequestFromJSON(json: any): DirectTokenAuthRequest {
@@ -64,31 +62,28 @@ export function DirectTokenAuthRequestFromJSON(json: any): DirectTokenAuthReques
 }
 
 export function DirectTokenAuthRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectTokenAuthRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'nonce': !exists(json, 'nonce') ? undefined : json['nonce'],
-        'redirectFailure': !exists(json, 'redirect_failure') ? undefined : json['redirect_failure'],
-        'redirectSuccess': !exists(json, 'redirect_success') ? undefined : json['redirect_success'],
-        'token': !exists(json, 'token') ? undefined : json['token'],
+        'nonce': json['nonce'] == null ? undefined : json['nonce'],
+        'redirectFailure': json['redirect_failure'] == null ? undefined : json['redirect_failure'],
+        'redirectSuccess': json['redirect_success'] == null ? undefined : json['redirect_success'],
+        'token': json['token'] == null ? undefined : json['token'],
     };
 }
 
 export function DirectTokenAuthRequestToJSON(value?: DirectTokenAuthRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'nonce': value.nonce,
-        'redirect_failure': value.redirectFailure,
-        'redirect_success': value.redirectSuccess,
-        'token': value.token,
+        'nonce': value['nonce'],
+        'redirect_failure': value['redirectFailure'],
+        'redirect_success': value['redirectSuccess'],
+        'token': value['token'],
     };
 }
 

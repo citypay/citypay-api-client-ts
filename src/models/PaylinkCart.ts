@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PaylinkCartItemModel } from './PaylinkCartItemModel';
 import {
     PaylinkCartItemModelFromJSON,
@@ -82,10 +82,8 @@ export interface PaylinkCart {
 /**
  * Check if a given object implements the PaylinkCart interface.
  */
-export function instanceOfPaylinkCart(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPaylinkCart(value: object): value is PaylinkCart {
+    return true;
 }
 
 export function PaylinkCartFromJSON(json: any): PaylinkCart {
@@ -93,37 +91,34 @@ export function PaylinkCartFromJSON(json: any): PaylinkCart {
 }
 
 export function PaylinkCartFromJSONTyped(json: any, ignoreDiscriminator: boolean): PaylinkCart {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'contents': !exists(json, 'contents') ? undefined : ((json['contents'] as Array<any>).map(PaylinkCartItemModelFromJSON)),
-        'coupon': !exists(json, 'coupon') ? undefined : json['coupon'],
-        'mode': !exists(json, 'mode') ? undefined : json['mode'],
-        'productDescription': !exists(json, 'product_description') ? undefined : json['product_description'],
-        'productInformation': !exists(json, 'product_information') ? undefined : json['product_information'],
-        'shipping': !exists(json, 'shipping') ? undefined : json['shipping'],
-        'tax': !exists(json, 'tax') ? undefined : json['tax'],
+        'contents': json['contents'] == null ? undefined : ((json['contents'] as Array<any>).map(PaylinkCartItemModelFromJSON)),
+        'coupon': json['coupon'] == null ? undefined : json['coupon'],
+        'mode': json['mode'] == null ? undefined : json['mode'],
+        'productDescription': json['product_description'] == null ? undefined : json['product_description'],
+        'productInformation': json['product_information'] == null ? undefined : json['product_information'],
+        'shipping': json['shipping'] == null ? undefined : json['shipping'],
+        'tax': json['tax'] == null ? undefined : json['tax'],
     };
 }
 
 export function PaylinkCartToJSON(value?: PaylinkCart | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'contents': value.contents === undefined ? undefined : ((value.contents as Array<any>).map(PaylinkCartItemModelToJSON)),
-        'coupon': value.coupon,
-        'mode': value.mode,
-        'product_description': value.productDescription,
-        'product_information': value.productInformation,
-        'shipping': value.shipping,
-        'tax': value.tax,
+        'contents': value['contents'] == null ? undefined : ((value['contents'] as Array<any>).map(PaylinkCartItemModelToJSON)),
+        'coupon': value['coupon'],
+        'mode': value['mode'],
+        'product_description': value['productDescription'],
+        'product_information': value['productInformation'],
+        'shipping': value['shipping'],
+        'tax': value['tax'],
     };
 }
 
