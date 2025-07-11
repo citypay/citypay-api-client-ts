@@ -12,7 +12,7 @@ describe('Can run AuthorisationAndPayment calls', () => {
         }
 
         const requestParameters: CityPay.AuthRequest = {
-            identifier: "example5",
+            identifier: `test-${Math.random().toString(36).substring(2)}`,
             cardnumber: "4000 0000 0000 0002",
             csc: "123",
             expmonth: 12,
