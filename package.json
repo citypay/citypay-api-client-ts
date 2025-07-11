@@ -11,7 +11,7 @@
     "typings": "./dist/index.d.ts",
     "scripts": {
         "clean": "rimraf dist",
-        "build": "npx tsc && tsc-alias",
+        "build": "tsc",
         "prepare": "npm run build",
     "test": "jest --testPathPatterns=./test/**/*.spec.ts"
     },
