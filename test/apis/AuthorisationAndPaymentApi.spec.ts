@@ -12,7 +12,7 @@ describe('Can run AuthorisationAndPayment calls', () => {
         }
 
         const requestParameters: CityPay.AuthRequest = {
-            identifier: "example1",
+            identifier: `test-${Math.random().toString(36).substring(2)}`,
             cardnumber: "4000 0000 0000 0002",
             csc: "123",
             expmonth: 12,
@@ -39,17 +39,20 @@ describe('Can run AuthorisationAndPayment calls', () => {
         expect(requestChallengeAcsUrl).not.toBeUndefined();
 
         if (requestChallengeAcsUrl) {
-            const cres = await fetch(requestChallengeAcsUrl, {
-                    method: 'POST', // Specifying the request method
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        threeDSSessionData: requestChallengedThreeDSSessionData,
-                        creq: requestChallengedCreq
-                    })
-                }
-            )
+            const formData = new URLSearchParams({
+                transStatus: "Y",
+                reason: "01",
+                threeDSSessionData: requestChallengedThreeDSSessionData!,
+                creq: requestChallengedCreq!
+            });
+
+            const cres = await fetch("https://sandbox.citypay.com/3dsv2/gen-rreq", {
+                method: 'POST', // Specifying the request method
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
+            })
 
             expect(cres.status).toBe(200);
 

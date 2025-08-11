@@ -1,5 +1,5 @@
 
-import {PaylinkPostback} from "../../src";
+import {PaylinkPostback} from "../../src/utils";
 
 /*
  * Test for the generated model are kept with the rest of the generated model tests.
