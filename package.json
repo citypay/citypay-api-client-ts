@@ -5,7 +5,7 @@
     "author": "CityPay",
     "repository": {
         "type": "git",
-        "url": "https://github.com/citypay/citypay-api-client-ts-priv.git"
+        "url": "https://github.com/citypay/citypay-api-client-ts.git"
     },
     "main": "./dist/index.js",
     "typings": "./dist/index.d.ts",
@@ -28,6 +28,6 @@
         "typescript": "^5.8.3"
     },
     "publishConfig": {
-        "registry": "https://github.com/citypay/citypay-api-client-ts-priv.git"
+        "registry": "https://github.com/citypay/citypay-api-client-ts.git"
     }
 }
