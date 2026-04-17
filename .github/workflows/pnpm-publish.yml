@@ -60,6 +60,7 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/release/')
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -73,7 +74,6 @@ jobs:
       - run: pnpm install
       - run: pnpm publish --publish-branch "${GITHUB_REF_NAME}"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
           CP_CLIENT_ID: ${{ secrets.CP_CLIENT_ID }}
           CP_MERCHANT_ID: ${{ secrets.CP_MERCHANT_ID }}
           CP_LICENCE_KEY: ${{ secrets.CP_LICENCE_KEY }}
